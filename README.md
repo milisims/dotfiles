@@ -15,4 +15,5 @@ TODO:
  * deoplete configuration for python files
  * Yamakaky/vim-test
  * vim-terminal https://gist.github.com/tarruda/37f7a3e22996addf8921
+ * git-prompt colors
 
