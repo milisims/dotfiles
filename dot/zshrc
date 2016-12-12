@@ -1,0 +1,5 @@
+#!/usr/bin/zsh
+
+for zsh_config in $HOME/.config/zsh/[0-9][0-9]*.zsh; do
+    source $zsh_config
+done

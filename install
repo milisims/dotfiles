@@ -1,0 +1,91 @@
+#!/bin/bash
+
+install_dir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $install_dir
+cfgdir="$HOME/.config"
+
+function rm_broken_links {
+    find -L $1 -name . -o -type d -prune -o -type l -exec rm {} +
+}
+
+###===========-------------------------------------------------------------
+# ZSH Settings                                                            -
+# the real settings are all in ~/.config/zsh, so we have a place to put   -
+# things like zsh-syntax-highlighting and modular scripts                 -
+echo -n "Linking dotfiles and setting up zsh... "
+rm_broken_links $HOME
+for dotfile in $(ls dot); do
+    rm $HOME/.$dotfile 2> /dev/null
+    ln -s $install_dir/dot/$dotfile $HOME/.$dotfile
+done
+
+mkdir -p $cfgdir/zsh
+rm_broken_links $cfgdir/zsh
+ln -sf $install_dir/zsh/* $cfgdir/zsh
+
+echo -n 'Installing zsh-syntax-highlighting... '
+zsh_git_dir="$cfgdir/zsh/zsh-syntax-highlighting"
+zsh_git_repo='https://github.com/zsh-users/zsh-syntax-highlighting.git'
+
+[[ -d $zsh_git_dir ]] && rm -rf $zsh_git_dir
+
+git clone $zsh_git_repo $zsh_git_dir > /dev/null 2>&1
+[[ "$?" -ne 0 ]] && echo -n "failed. "
+
+echo "Done"
+echo
+
+###===========-------------------------------------------------------------
+# VIM Settings                                                            -
+# Because we want nvim to look at the vim settings, and also have its own -
+# additional settings, this is pretty messy. Basically, vims settings are -
+# linked to both vim and nvim dirs. This seems to work a little better    -
+# than putting the vim runtime in nvim settings.                          -
+
+echo -n "Installing vim and neovim settings... "
+mkdir -p $cfgdir/nvim
+rm_broken_links $cfgdir/nvim
+ln -sf $install_dir/nvim/* $cfgdir/nvim
+
+mkdir -p $cfgdir/vim
+rm_broken_links $cfgdir/vim
+ln -sf $install_dir/vim/* $cfgdir/vim
+ln -sf $install_dir/vim/vimrc $HOME/.vimrc
+mkdir -p $HOME/.local/share/vim/view
+
+echo "Done"
+
+echo -n "Installing plug-vim... "
+vimaudir="$cfgdir/vim/autoload"
+nvimaudir="$cfgdir/nvim/autoload"
+plugurl='https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+tmpout=$(mktemp)
+curl -fLo $vimaudir/plug.vim --silent --create-dirs $plugurl
+if [[ "$?" -eq 0 ]]; then
+    mkdir -p $nvimaudir
+    cp $vimaudir/plug.vim $nvimaudir
+else
+    echo "failed."
+fi
+
+if ! type pip3 > /dev/null; then
+    echo
+    echo "pip3 does not appear to be installed. Required for neovim"
+else
+    if ! pip3 show neovim > /dev/null; then
+        echo -n 'Installing python2 neovim support... '
+        pip2 install --user neovim > /dev/null 2>&1
+        [[ $? -ne 0 ]] && echo -n 'failed. '
+        echo -n 'Installing python3 neovim support... '
+        pip3 install --user neovim > /dev/null 2>&1
+        [[ $? -ne 0 ]] && echo -n 'failed. '
+    fi
+    if ! pip3 show jedi > /dev/null; then
+        echo -n 'Installing jedi for python3... '
+        pip3 install --user jedi > /dev/null 2>&1
+        [[ $? -ne 0 ]] && echo -n 'failed. '
+    fi
+fi
+echo "Done"
+echo "To complete installation, please open (n)vim and execute :PlugInstall"

@@ -1,0 +1,40 @@
+# all aliases across shells
+
+LSOPTS="-h --color=auto"
+
+alias python=python3
+
+# space removes from hist for zsh
+alias ls=" ls $LSOPTS"
+alias l="ls -l"
+alias la="ls -Al"
+alias lx="ls -lX"
+alias lt="ls -lt"
+alias lm="ls -l | more"
+
+# Space removes from hist.
+alias fg=" fg"
+
+# alias rm="rm -i" # -i confirms EVERYTHING. Annoying, ubersafe.
+# nocorrect fixes odd behaviors
+alias cp="nocorrect cp -i"
+alias mv="nocorrect mv -i"
+alias mkdir="nocorrect mkdir"
+alias md='mkdir -p'
+alias rd='rmdir'
+
+alias mkdir="mkdir -p"
+alias which="type -a"
+alias .='popd'
+alias d='dirs -v | head -10'
+alias path='echo -e ${PATH//:/\\n}'
+alias du='du -sh'
+
+# Mmm. Vim.
+alias crontab='VIM_CRONTAB=true crontab'
+alias mvim='gvim'
+
+if type nvim > /dev/null; then
+    alias vim=$(/usr/bin/env which nvim)
+    alias vi=$(/usr/bin/env which vim)
+fi

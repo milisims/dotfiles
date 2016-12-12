@@ -1,0 +1,25 @@
+" Section: General
+" obsolete in nvim
+set nocompatible
+set history=10000       " welp
+filetype plugin on      " allow plugins
+filetype indent on      " auto indenting
+set autoread            " external file change -> load file
+set mouse=a             " enable mouse
+
+set runtimepath+=~/.config/vim
+
+" Other
+let &viewdir=$HOME.'/.local/share/vim/view'
+
+" Section: plugins
+" Set up plugins, non nvim go here, shared plugins go in the plugins.vim
+call plug#begin('~/.config/vim/plugged')
+source ~/.config/vim/plugins.vim
+call plug#end()
+
+" Section: modular configs
+runtime! config/*.vim
+runtime! config/plugins/*.vim
+runtime! local.vim
+
