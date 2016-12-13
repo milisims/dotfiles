@@ -3,6 +3,8 @@ let g:deoplete#enable_at_startup = 1
 " for detailed config, see :
 " https://github.com/rafi/vim-config/blob/master/config/plugins/deoplete.vim
 
+set completeopt=menu
+
 " Use smartcase.
 let g:deoplete#enable_smart_case = 1
 
@@ -16,11 +18,14 @@ function! s:my_cr_function() abort
   return deoplete#close_popup() . "\<CR>"
 endfunction
 
-"testing
-
-" let g:deoplete#sources#jedi#statement_length = 50
+let g:deoplete#sources#jedi#statement_length = 200
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#short_types = 1
+let g:deoplete#sources#jedi#enable_cache = 1
+
+
+let g:deoplete#auto_complete_delay=10
+let g:deoplete#auto_refresh_delay=50
 
 inoremap <expr><C-g> deoplete#undo_completion()
 
@@ -47,8 +52,8 @@ snoremap <silent><expr><Tab> pumvisible() ? "\<C-n>"
 
 inoremap <expr><S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
 
-function! s:is_whitespace() "{{{
+function! s:is_whitespace()
     let col = col('.') - 1
     return ! col || getline('.')[col - 1] =~? '\s'
-endfunction "}}}
+endfunction
 
