@@ -12,6 +12,8 @@ alias lx="ls -lX"
 alias lt="ls -lt"
 alias lm="ls -l | more"
 
+alias grep="grep --color=auto"
+
 # Space removes from hist.
 alias fg=" fg"
 
@@ -23,7 +25,6 @@ alias mkdir="nocorrect mkdir"
 alias md='mkdir -p'
 alias rd='rmdir'
 
-alias mkdir="mkdir -p"
 alias which="type -a"
 alias .='popd'
 alias d='dirs -v | head -10'

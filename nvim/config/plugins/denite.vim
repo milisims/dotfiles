@@ -1,5 +1,7 @@
 nnoremap <C-p> :Denite line<CR>
-nnoremap <C-f> :Denite file_rec<CR>
+nnoremap <C-f> :Denite file_mru file_rec<CR>
+
+nnoremap <C-n> :Denite quickfix location_list<CR>
 
 " Change mappings.
 call denite#custom#map(
