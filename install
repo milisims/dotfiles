@@ -69,11 +69,11 @@ else
     echo "failed."
 fi
 
-if ! type pip3 > /dev/null; then
+if ! type pip3 > /dev/null 2>&1; then
     echo
     echo "pip3 does not appear to be installed. Required for neovim"
 else
-    if ! pip3 show neovim > /dev/null; then
+    if ! pip3 show neovim > /dev/null 2>&1; then
         echo -n 'Installing python2 neovim support... '
         pip2 install --user neovim > /dev/null 2>&1
         [[ $? -ne 0 ]] && echo -n 'failed. '
@@ -81,7 +81,7 @@ else
         pip3 install --user neovim > /dev/null 2>&1
         [[ $? -ne 0 ]] && echo -n 'failed. '
     fi
-    if ! pip3 show jedi > /dev/null; then
+    if ! pip3 show jedi > /dev/null 2>&1; then
         echo -n 'Installing jedi for python3... '
         pip3 install --user jedi > /dev/null 2>&1
         [[ $? -ne 0 ]] && echo -n 'failed. '
