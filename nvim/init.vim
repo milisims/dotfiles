@@ -16,11 +16,15 @@ Plug 'chemzqm/unite-location'        " quickfix and location list source
 Plug 'Konfekt/FastFold'              " updates only when necessary
 
 " for linting and automatic execution of linting
-Plug 'neomake/neomake' | Plug 'dojoteef/neomake-autolint'
+Plug 'neomake/neomake'
 
 source ~/.config/vim/plugins.vim     " basic plugins, visual stuff
 
 call plug#end()
+
+" might be able to remove this after an update soon:
+" Tue 24 Jan 2017 06:08:18 PM EST
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 0
 
 " Section: modular configs
 runtime! config/*.vim

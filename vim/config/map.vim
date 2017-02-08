@@ -17,9 +17,6 @@ cnoremap <C-E> <End>
 cnoremap <C-K> <C-U>
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
-" Remove the Windows ^M - when the encodings gets messed up
-" TODO: Make this a function...
-noremap <Leader>m mmHmt:%s/<C-V><CR>//ge<CR>'tzt'm
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SECTION: Normal mode
@@ -46,6 +43,8 @@ nnoremap <leader>ba :1,300 bd!<CR>
 " Use the arrows to something usefull
 nnoremap <right> :bn<CR>
 nnoremap <left> :bp<CR>
+nnoremap <up> :lprev<CR>
+nnoremap <down> :lnext<CR>
 
 " Windows, wk for window kill, wc still works
 nnoremap <leader>w <C-w>
