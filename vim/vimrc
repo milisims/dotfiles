@@ -5,7 +5,6 @@ set history=10000       " welp
 filetype plugin on      " allow plugins
 filetype indent on      " auto indenting
 set autoread            " external file change -> load file
-set mouse=a             " enable mouse
 
 set runtimepath+=~/.config/vim
 

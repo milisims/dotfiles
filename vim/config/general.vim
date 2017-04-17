@@ -5,5 +5,8 @@ autocmd BufReadPost *
 \   exe "normal! g`\"" |
 \ endif
 
+set mouse=a             " enable mouse
+
+set showcmd        " shows cmd mode keystrokes
 
 set clipboard^=unnamed,unnamedplus

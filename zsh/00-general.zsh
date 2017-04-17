@@ -26,7 +26,12 @@ setopt pushd_silent auto_pushd pushd_ignore_dups
 # disable ^S/^Q for flow control
 setopt noflowcontrol
 
-export PATH=$HOME/.scripts/bin:$PATH
+if ! echo "$PATH" | grep -q "$HOME/.local/bin"; then
+    export PATH=$HOME/.scripts/bin:$PATH
+fi
+if ! echo "$PATH" | grep -q "$HOME/.scripts/bin"; then
+    export PATH=$HOME/.local/bin:$PATH
+fi
 
 #------------------------------------------////
 # Color man pages:
