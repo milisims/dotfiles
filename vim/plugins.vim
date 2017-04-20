@@ -11,5 +11,9 @@ if exists(':Plug')
     Plug 'jonathanfilip/vim-lucius'
     Plug 'maxbrunsfeld/vim-yankstack'
     Plug 'junegunn/vim-easy-align'
+
+    Plug 'vim-scripts/indentpython.vim'
+    Plug 'tmhedberg/SimpylFold'
+    Plug 'Konfekt/FastFold'
 endif
 
