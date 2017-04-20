@@ -86,6 +86,11 @@ else
         pip3 install --user jedi > /dev/null 2>&1
         [[ $? -ne 0 ]] && echo -n 'failed. '
     fi
+    if ! pip3 show numpydoc > /dev/null 2>&1; then
+        echo -n 'Installing numpydoc for python3... '
+        pip3 install --user numpydoc > /dev/null 2>&1
+        [[ $? -ne 0 ]] && echo -n 'failed. '
+    fi
 fi
 echo "Done"
 echo "To complete installation, please open (n)vim and execute :PlugInstall"
