@@ -1,8 +1,2 @@
-
-
-if v:version >= 704
-    nnoremap <F2> :call NumberToggle()<CR>
-endif
-
+nnoremap <F2> :call NumberToggle()<CR>
 let g:UseNumberToggleTrigger = 0
-
