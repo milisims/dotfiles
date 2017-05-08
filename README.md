@@ -94,25 +94,25 @@ TODO
 TODO
 
 ### Plugin: Denite
-TODO
+`<leader>d` essentially acts like "Tell denite to..."
 
 Key   | Mode | Action
 ----- |:----:| ------------------
-`<localleader>`+`r` | Normal | Resumes last Denite window
-`<localleader>`+`f` | Normal | File search
-`<localleader>`+`b` | Normal | Buffers and MRU
-`<localleader>`+`d` | Normal | Directories
-`<localleader>`+`l` | Normal | Location list
-`<localleader>`+`q` | Normal | Quick fix
-`<localleader>`+`n` | Normal | Dein plugin list
-`<localleader>`+`g` | Normal | Grep search
-`<localleader>`+`j` | Normal | Jump points
-`<localleader>`+`o` | Normal | Outline tags
-`<localleader>`+`s` | Normal | Sessions
-`<localleader>`+`h` | Normal | Help
-`<localleader>`+`/` | Normal | Buffer lines
-`<localleader>`+`*` | Normal | Match line
-`<localleader>`+`z` | Normal | Z (jump around)
+`<leader>d`+`r` | Normal | Resumes last Denite window
+`<leader>d`+`f` | Normal | File search
+`<leader>d`+`b` | Normal | Buffers and MRU
+`<leader>d`+`d` | Normal | Directories
+`<leader>d`+`l` | Normal | Location list
+`<leader>d`+`q` | Normal | Quick fix
+`<leader>d`+`n` | Normal | Dein plugin list
+`<leader>d`+`g` | Normal | Grep search
+`<leader>d`+`j` | Normal | Jump points
+`<leader>d`+`o` | Normal | Outline tags
+`<leader>d`+`s` | Normal | Sessions
+`<leader>d`+`h` | Normal | Help
+`<leader>d`+`/` | Normal | Buffer lines
+`<leader>d`+`*` | Normal | Match line
+`<leader>`+`z` | Normal | Z (jump around)
 `<leader>`+`gl` | Normal | Git log
 `<leader>`+`gs` | Normal | Git status
 `<leader>`+`gf` | Normal | Grep word under cursor

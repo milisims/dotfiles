@@ -1,23 +1,23 @@
-nnoremap <C-f> :Denite file_mru file_rec<CR>
-nnoremap <C-p> :Denite -mode=normal grep<CR>
-nnoremap <C-n> :Denite -mode=normal quickfix location_list<CR>
+" nnoremap <C-f> :Denite file_mru file_rec<CR>
+" nnoremap <C-p> :Denite -mode=normal grep<CR>
+" nnoremap <C-n> :Denite -mode=normal quickfix location_list<CR>
 
-nnoremap <silent><LocalLeader>r :<C-u>Denite -resume<CR>
-nnoremap <silent><LocalLeader>f :<C-u>Denite file_rec<CR>
-nnoremap <silent><LocalLeader>b :<C-u>Denite buffer file_old -default-action=switch<CR>
-nnoremap <silent><LocalLeader>d :<C-u>Denite directory_rec -default-action=cd<CR>
-nnoremap <silent><LocalLeader>l :<C-u>Denite location_list -buffer-name=list<CR>
-nnoremap <silent><LocalLeader>q :<C-u>Denite quickfix -buffer-name=list<CR>
-nnoremap <silent><LocalLeader>g :<C-u>Denite grep<CR>
-nnoremap <silent><LocalLeader>j :<C-u>Denite jump change file_point<CR>
-nnoremap <silent><LocalLeader>o :<C-u>Denite outline<CR>
-nnoremap <silent><LocalLeader>s :<C-u>Denite session<CR>
-nnoremap <silent><LocalLeader>h :<C-u>Denite help<CR>
-nnoremap <silent><LocalLeader>m :<C-u>Denite mpc -buffer-name=mpc<CR>
-nnoremap <silent><LocalLeader>/ :<C-u>Denite line<CR>
-nnoremap <silent><LocalLeader>* :<C-u>DeniteCursorWord line<CR>
+nnoremap <silent> <Leader>dr :<C-u>Denite -resume<CR>
+nnoremap <silent> <Leader>df :<C-u>Denite file_rec<CR>
+nnoremap <silent> <Leader>db :<C-u>Denite buffer file_mru -default-action=switch<CR>
+nnoremap <silent> <Leader>dd :<C-u>Denite directory_rec -default-action=cd<CR>
+nnoremap <silent> <Leader>dl :<C-u>Denite location_list -mode=normal -buffer-name=list<CR>
+nnoremap <silent> <Leader>dq :<C-u>Denite quickfix -mode=normal -buffer-name=list<CR>
+nnoremap <silent> <Leader>dg :<C-u>Denite -mode=normal grep<CR>
+nnoremap <silent> <Leader>dj :<C-u>Denite jump change file_point<CR>
+nnoremap <silent> <Leader>do :<C-u>Denite outline<CR>
+nnoremap <silent> <Leader>ds :<C-u>Denite session<CR>
+nnoremap <silent> <Leader>dh :<C-u>Denite help<CR>
+nnoremap <silent> <Leader>dm :<C-u>Denite mpc -buffer-name=mpc<CR>
+nnoremap <silent> <Leader>d/ :<C-u>Denite line<CR>
 
 " Open Denite with word under cursor or selection
+nnoremap <silent> <Leader>d* :<C-u>DeniteCursorWord line<CR>
 nnoremap <silent> <Leader>gf :DeniteCursorWord file_rec<CR>
 nnoremap <silent> <Leader>gg :DeniteCursorWord grep<CR>
 vnoremap <silent> <Leader>gg
@@ -30,37 +30,6 @@ function! s:get_selection(cmdtype) "{{{
 	let @/ = substitute(escape(@s, '\'.a:cmdtype), '\n', '\\n', 'g')
 	let @s = temp
 endfunction "}}}
-
-" TODO: ripgrep
-
-" Change mappings.
-call denite#custom#map(
-	\ 'insert',
-	\ '<C-j>',
-	\ '<denite:move_to_next_line>',
-	\ 'noremap'
-	\)
-
-call denite#custom#map(
-	\ 'insert',
-	\ '<C-k>',
-	\ '<denite:move_to_previous_line>',
-	\ 'noremap'
-	\)
-
-call denite#custom#map(
-	\ 'insert',
-	\ '<C-a>',
-	\ '<denite:move_caret_to_head>',
-	\ 'noremap'
-	\)
-
-call denite#custom#map(
-	\ 'normal',
-	\ '<C-q>',
-	\ '<denite:do_action:quickfix>',
-	\ 'noremap'
-	\)
 
 " Change default prompt
 " call denite#custom#option('default', 'prompt', '>')
@@ -105,6 +74,14 @@ call denite#custom#option('mpc', {
 " SORTERS
 " Default is 'sorter_rank'
 
+" TODO: understand this a bit better, before adding it to map list
+call denite#custom#map(
+	\ 'normal',
+	\ '<C-q>',
+	\ '<denite:do_action:quickfix>',
+	\ 'noremap'
+	\)
+
 " CONVERTERS
 " Default is none
 call denite#custom#source(
@@ -115,10 +92,10 @@ call denite#custom#source(
 let insert_mode_mappings = [
 	\  ['jk', '<denite:enter_mode:normal>', 'noremap'],
 	\  ['<Esc>', '<denite:enter_mode:normal>', 'noremap'],
+	\  ['<C-j>', '<denite:move_to_next_line>', 'noremap'],
+	\  ['<C-k>', '<denite:move_to_previous_line>', 'noremap'],
 	\  ['<C-N>', '<denite:assign_next_matched_text>', 'noremap'],
 	\  ['<C-P>', '<denite:assign_previous_matched_text>', 'noremap'],
-	\  ['<Up>', '<denite:assign_previous_text>', 'noremap'],
-	\  ['<Down>', '<denite:assign_next_text>', 'noremap'],
 	\  ['<C-Y>', '<denite:redraw>', 'noremap'],
 	\ ]
 
@@ -127,10 +104,9 @@ let normal_mode_mappings = [
 	\  ['<C-n>', '<denite:jump_to_next_source>', 'noremap'],
 	\  ['<C-p>', '<denite:jump_to_previous_source>', 'noremap'],
 	\  ['gg', '<denite:move_to_first_line>', 'noremap'],
-	\  ['st', '<denite:do_action:tabopen>', 'noremap'],
-	\  ['sg', '<denite:do_action:vsplit>', 'noremap'],
-	\  ['sv', '<denite:do_action:split>', 'noremap'],
-	\  ['sc', '<denite:quit>', 'noremap'],
+	\  ['t', '<denite:do_action:tabopen>', 'noremap'],
+	\  ['v', '<denite:do_action:vsplit>', 'noremap'],
+	\  ['s', '<denite:do_action:split>', 'noremap'],
 	\  ['r', '<denite:redraw>', 'noremap'],
 	\ ]
 

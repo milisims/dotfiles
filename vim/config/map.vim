@@ -43,6 +43,8 @@ nnoremap <C-l> <C-W>l
 
 " Close the current buffer
 nnoremap <leader>bd :bd<CR>
+nnoremap <leader>bn :bn<CR>
+nnoremap <leader>bp :bp<CR>
 
 " Close all the buffers
 nnoremap <leader>ba :1,300 bd!<CR>
@@ -80,8 +82,8 @@ cnoreabbrev Q q
 cnoreabbrev Qa qa
 cnoreabbrev Bd bd
 cnoreabbrev bD bd
-cnoreabbrev t tabe
-cnoreabbrev T tabe
+" cnoreabbrev t tabe  " can't search for the letter t ? mapping would be better
+" cnoreabbrev T tabe
 
 " Start new line from any cursor position
 inoremap <S-Return> <C-o>o
@@ -211,12 +213,14 @@ endfunction "}}}
 nmap <Leader>j :lnext<CR>
 nmap <Leader>k :lprev<CR>
 
-" Duplicate lines
-nnoremap <Leader>d m`YP``
-vnoremap <Leader>d YPgv
-vnoremap <Leader>d YPgv
+" " Duplicate lines
+" cute, but I want <leader>d for denite commands
+" nnoremap <Leader>d m`YP``
+" vnoremap <Leader>d YPgv
+" vnoremap <Leader>d YPgv
 
 " Source line and selection in vim
+" TODO: put in autobuffer for vim files
 vnoremap <Leader>S y:execute @@<CR>:echo 'Sourced selection.'<CR>
 nnoremap <Leader>S ^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>
 
