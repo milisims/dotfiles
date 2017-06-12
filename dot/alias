@@ -36,8 +36,10 @@ alias crontab='VIM_CRONTAB=true crontab'
 alias mvim='gvim'
 
 if type nvim > /dev/null 2>&1; then
-    alias vim=$(/usr/bin/env which nvim)
-    alias vi=$(/usr/bin/env which vim)
+  # TODO: temporary fix for vertical scrolling bug in nvim
+  # alias vim=$(/usr/bin/env which nvim)
+  alias vim='TERM="" nvim'
+  alias vi=$(/usr/bin/env which vim)
 fi
 
 alias pep8='pycodestyle'
