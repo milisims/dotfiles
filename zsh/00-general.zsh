@@ -7,6 +7,7 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt append_history       # add history entries as they are used
 setopt inc_append_history   # as above, per line
+# setopt share_history        # can use fc -RI instead, maybe?
 setopt extended_history     # store date and duration
 setopt hist_ignore_dups     # replace older dups with newer executions
 setopt hist_ignore_space    # ignore ' cmd' from history

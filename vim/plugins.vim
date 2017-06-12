@@ -6,6 +6,7 @@
 " NOTE: to install without exiting, select the new lines, yank, execute :@"
 "       then :PlugInstall
 if exists(':Plug')
+
 	Plug 'tpope/vim-surround'                " surrounding text object
 	Plug 'tpope/vim-commentary'              " easier comments (gc)
 	Plug 'Lokaltog/vim-easymotion'           " move around more easily!
@@ -24,7 +25,7 @@ if exists(':Plug')
 	Plug 'tpope/vim-eunuch'                  " vim sugar for unix shell cmds
 	Plug 'tpope/vim-abolish'                 " easier abbreviations
 	Plug 'tpope/vim-speeddating'             " <c-a> on dates/times
-	Plug 'Konfekt/FastFold'                  " sparsely recalculate vim fodls
+	" Plug 'Konfekt/FastFold'                  " sparsely recalculate vim fodls
 	Plug 'mbbill/undotree'                   " provides undotree visualization
 
 	" christoomey/tmux-navigator
@@ -46,5 +47,6 @@ if exists(':Plug')
 	Plug 'vim-jp/syntax-vim-ex'              " , { 'for': 'vim' }
 
 	Plug 'andreshazard/vim-logreview'
+
 endif
 

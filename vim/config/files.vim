@@ -51,6 +51,9 @@ augroup MyAutoCmd
 
 	autocmd FileType gitcommit,qfreplace setlocal nofoldenable
 
+	autocmd FileType python setlocal expandtab tabstop=4
+	autocmd FileType bash setlocal expandtab tabstop=4
+
 	autocmd FileType markdown
 				\ setlocal spell expandtab autoindent
 				\ formatoptions=tcroqn2 comments=n:>

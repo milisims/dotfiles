@@ -22,8 +22,8 @@ map! <Nul> <C-Space>
 " Disable arrow movement, resize splits instead.
 nnoremap <Up>    :resize +2<CR>
 nnoremap <Down>  :resize -2<CR>
-nnoremap <Left>  :vertical resize +2<CR>
-nnoremap <Right> :vertical resize -2<CR>
+nnoremap <Left>  :bp<CR>
+nnoremap <Right> :bn<CR>
 
 " Toggle fold
 nnoremap <CR> za
@@ -43,8 +43,8 @@ nnoremap <C-l> <C-W>l
 
 " Close the current buffer
 nnoremap <leader>bd :bd<CR>
-nnoremap <leader>bn :bn<CR>
-nnoremap <leader>bp :bp<CR>
+nnoremap <leader>n :bn<CR>
+nnoremap <leader>p :bp<CR>
 
 " Close all the buffers
 nnoremap <leader>ba :1,300 bd!<CR>
@@ -98,8 +98,8 @@ nnoremap <expr> zz (winline() == (winheight(0)+1) / 2) ?
 " 	\ ."\<C-d>".(line('w$') >= line('$') ? "L" : "M")
 " noremap <expr> <C-b> max([winheight(0) - 2, 1])
 " 	\ ."\<C-u>".(line('w0') <= 1 ? "H" : "M")
-noremap <expr> <C-e> (line("w$") >= line('$') ? "j" : "2\<C-e>")
-noremap <expr> <C-y> (line("w0") <= 1         ? "k" : "2\<C-y>")
+" noremap <expr> <C-e> (line("w$") >= line('$') ? "j" : "2\<C-e>")
+" noremap <expr> <C-y> (line("w0") <= 1         ? "k" : "2\<C-y>")
 
 " Window control
 nnoremap <C-q> <C-w>
