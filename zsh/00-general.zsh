@@ -34,9 +34,8 @@ fi
 if ! echo "$PATH" | grep -q "$HOME/.scripts/bin"; then
   export PATH=$HOME/.local/bin:$PATH
 fi
-
 if ! echo "$PATH" | grep -q "$HOME/miniconda3/bin"; then
-  export PATH=$HOME/miniconda3/bin
+  export PATH=$HOME/miniconda3/bin:$PATH
 fi
 
 #------------------------------------------////
