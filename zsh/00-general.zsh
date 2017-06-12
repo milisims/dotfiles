@@ -27,11 +27,16 @@ setopt pushd_silent auto_pushd pushd_ignore_dups
 # disable ^S/^Q for flow control
 setopt noflowcontrol
 
+# TODO: make this a function?
 if ! echo "$PATH" | grep -q "$HOME/.local/bin"; then
-    export PATH=$HOME/.scripts/bin:$PATH
+  export PATH=$HOME/.scripts/bin:$PATH
 fi
 if ! echo "$PATH" | grep -q "$HOME/.scripts/bin"; then
-    export PATH=$HOME/.local/bin:$PATH
+  export PATH=$HOME/.local/bin:$PATH
+fi
+
+if ! echo "$PATH" | grep -q "$HOME/miniconda3/bin"; then
+  export PATH=$HOME/miniconda3/bin
 fi
 
 #------------------------------------------////
