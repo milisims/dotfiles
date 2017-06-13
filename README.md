@@ -74,6 +74,7 @@ Key   | Mode | Action
 `<leader>`+`w` | Normal | Enter window mode (\<C-w>)
 
 Additional window mode commands (`:help windows`):
+
 Key   | Mode | Action
 ----- |:----:| ------------------
 `s` | Normal | Horizontal (:split)
@@ -150,6 +151,7 @@ Key   | Mode | Action
 
 ### Plugin: Easymotion
 TODO: remap
+
 Key   | Mode | Action
 ----- |:----:| ------------------
 `s`+`s` | Normal | Jump to two characters from input
