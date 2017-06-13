@@ -28,6 +28,8 @@ nnoremap <Right> :bn<CR>
 " Toggle fold
 nnoremap <CR> za
 
+nnoremap <leader>to :e ~/.vimtodo<CR>
+
 " Focus the current fold by closing all others
 nnoremap <S-Return> zMza
 
@@ -46,14 +48,12 @@ nnoremap <leader>bd :bd<CR>
 nnoremap <leader>n :bn<CR>
 nnoremap <leader>p :bp<CR>
 
-" Close all the buffers
-nnoremap <leader>ba :1,300 bd!<CR>
-
 " Windows, wk for window kill, wc still works
 nnoremap <leader>w <C-w>
 
 "Remap VIM 0
 nnoremap 0 ^
+nnoremap ^ 0
 
 " Make cmd work as alt
 if has("mac")
@@ -86,7 +86,7 @@ cnoreabbrev bD bd
 " cnoreabbrev T tabe
 
 " Start new line from any cursor position
-inoremap <S-Return> <C-o>o
+" inoremap <S-CR> <C-o>o
 
 " Quick substitute within selected area
 xnoremap s :s//g<Left><Left>

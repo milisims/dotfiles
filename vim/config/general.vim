@@ -7,7 +7,6 @@ set report=0                 " Don't report on line changes
 set noerrorbells             " DO NOT Trigger bell on error
 set novisualbell             " NO Use visual bell instead of beeping
 set hidden                   " hide buffers when abandoned instead of unload
-set fileformats=unix,dos,mac " Use Unix as the standard file type
 set magic                    " Set vims regex to the same as greps
 set path=.,**                " Directories to search when using gf
 set virtualedit=block        " Position cursor anywhere in visual block

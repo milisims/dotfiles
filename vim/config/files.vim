@@ -1,7 +1,7 @@
 set nobackup         " Auto backup
 set nowritebackup    " Backup overwrite
 set noswapfile       " Nerp
-set ffs=unix,dos,mac " Default file types
+set fileformats=unix,dos,mac " Use Unix as the standard file type
 
 " " Delete trailing white space on each line
 " func! DeleteTrailingWS()
