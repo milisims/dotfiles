@@ -33,9 +33,6 @@ if exists(':Plug')
 
 	" Configuration checks for loaded plugins via exists('g:loaded_<pl>')
 	" so just skip the lazy loading. Loading all plugins adds < 1 ms load time
-	Plug 'jalvesaq/Nvim-R'                   " , { 'for': 'r' }
-	Plug 'WolfgangMehner/bash-support'       " , { 'for': 'sh' }
-
 	" Plug 'python-mode/python-mode'           " , { 'for': 'python' }
 	Plug 'vim-python/python-syntax'          " , { 'for': 'python' }
 	Plug 'Vimjas/vim-python-pep8-indent'     " , { 'for': 'python' }
