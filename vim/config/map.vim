@@ -1,10 +1,6 @@
 
 " Global Mappings "{{{
 " ---------------
-let g:mapleader=' '
-let g:maplocalleader=';'
-inoremap jk <ESC>
-
 " Release keymappings prefixes, evict entirely for use of plug-ins.
 nnoremap <Space>  <Nop>
 xnoremap <Space>  <Nop>
@@ -14,6 +10,11 @@ nnoremap ;        <Nop>
 xnoremap ;        <Nop>
 nnoremap m        <Nop>
 xnoremap m        <Nop>
+
+" set up leaders
+let g:mapleader=' '
+let g:maplocalleader=';'
+inoremap jk <ESC>
 
 " Fix keybind name for Ctrl+Spacebar
 map <Nul> <C-Space>
@@ -103,7 +104,6 @@ nnoremap <expr> zz (winline() == (winheight(0)+1) / 2) ?
 
 " Window control
 nnoremap <C-q> <C-w>
-nnoremap <C-x> <C-w>x
 nnoremap <silent><C-w>z :vert resize<CR>:resize<CR>:normal! ze<CR>
 
 " Select blocks after indenting
@@ -167,10 +167,6 @@ cmap W!! w !sudo tee % >/dev/null
 set pastetoggle=<F2>
 nnoremap cp yap<S-}>p
 nnoremap <leader>a =ip
-
-" I like to :quit with 'q', shrug.
-nnoremap <silent> q :<C-u>:quit<CR>
-nnoremap gQ <Nop>
 
 " Macros
 nnoremap Q q

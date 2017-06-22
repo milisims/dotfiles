@@ -58,7 +58,6 @@ augroup MyAutoCmd
 				\ setlocal spell expandtab autoindent
 				\ formatoptions=tcroqn2 comments=n:>
 
-	" TODO: disable autocompletion of quotes in vim files
 	" TODO: if winwidth < 80, turn wrap off if it's on
 	" TODO: display tabs and buffers in tabline
 
