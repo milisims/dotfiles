@@ -52,7 +52,7 @@ augroup MyAutoCmd
 	autocmd FileType gitcommit,qfreplace setlocal nofoldenable
 
 	autocmd FileType python setlocal expandtab tabstop=4
-	autocmd FileType shell setlocal expandtab tabstop=2
+	autocmd FileType sh setlocal expandtab tabstop=2
 
 	autocmd FileType markdown
 				\ setlocal spell expandtab autoindent
