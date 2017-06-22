@@ -2,15 +2,16 @@ let g:jedi#force_py_version = 3
 
 let g:jedi#auto_initialization = 0
 let g:jedi#auto_vim_configuration = 0
-let g:jedi#use_splits_not_buffers = 'right'
-
-let g:jedi#completions_command = ''                   " disable completion
-let g:jedi#goto_command = '<localleader>d'
-" let g:jedi#goto_assignments_command = '<leader>g'
-" let g:jedi#goto_definitions_command = ''
-let g:jedi#documentation_command = '<localleader>K'
-let g:jedi#usages_command = '<localleader>n'
-let g:jedi#rename_command = '<localleader>r'
-
 let g:jedi#smart_auto_mappings = 0
 let g:jedi#popup_on_dot = 0
+let g:jedi#use_splits_not_buffers = 'right'
+
+
+" augroup MyAutoCmd
+" 	au FileType python nnoremap <buffer><localleader>d :call jedi#goto()<CR>
+" 	au FileType python nnoremap <buffer><silent><localleader>r :call jedi#rename()<CR>
+" 	au FileType python nnoremap <buffer><silent>K :call jedi#show_documentation()<CR>
+" 	" au FileType rst nnoremap <buffer><silent>q :bd<CR>
+" 	au FileType rst nnoremap <buffer>q :bd<CR>
+" augroup END
+
