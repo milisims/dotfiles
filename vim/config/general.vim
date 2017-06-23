@@ -148,7 +148,7 @@ set sidescrolloff=2     " Keep at least 8 lines left/right
 set number              " Show line numbers
 set relativenumber      " Show relative line numbers from cursor
 set noruler             " Disable default status ruler    enabled?
-set list                " Show hidden characters
+set nolist              " Don't show hidden characters in vim by default
 set lazyredraw          " Don't redraw while executing macros
 
 set showtabline=2       " Always show the tabs line
