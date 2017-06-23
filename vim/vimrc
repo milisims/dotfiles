@@ -7,7 +7,8 @@ filetype indent on      " auto indenting
 set runtimepath+=~/.config/vim
 
 " Other
-let &viewdir=$HOME.'/.local/share/vim/view'
+let $VARPATH=$HOME.'/.local/share/vim'
+let &viewdir=$VARPATH.'/view'
 
 " Set up plugins, non nvim go here, shared plugins go in the plugins.vim
 call plug#begin('~/.config/vim/plugged')

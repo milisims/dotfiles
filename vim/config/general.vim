@@ -66,7 +66,7 @@ if has('nvim')
 	"   h - Disable the effect of 'hlsearch' when loading the shada
 	set shada='300,<10,@50,s100,h
 else
-	set viminfo='300,<10,@50,h,n$VARPATH/viminfo
+	set viminfo='300,<10,@50,h,n$VARPATH/viminfo  " set in  vimrc
 endif
 if has ("persistent_undo")
 	set undodir=~/.vim_undo
