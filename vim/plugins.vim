@@ -18,6 +18,8 @@ if exists(':Plug')
 	Plug 'Raimondi/delimitMate'              " autocomplete ()s, etc
 	Plug 'maxbrunsfeld/vim-yankstack'        " scroll through yanks
 	Plug 'junegunn/vim-easy-align'           " align comments, etc
+	Plug 'AndrewRadev/sideways.vim'          " function parameter text obj (a)
+	Plug 'AndrewRadev/splitjoin.vim'         " gJ, gS to split or join statements
 
 	Plug 'guns/vim-sexp'                     " more text objects
 	Plug 'tpope/vim-sexp-mappings-for-regular-people'

@@ -21,8 +21,10 @@ map <Nul> <C-Space>
 map! <Nul> <C-Space>
 
 " Disable arrow movement, resize splits instead.
-nnoremap <Up>    :resize +2<CR>
-nnoremap <Down>  :resize -2<CR>
+" nnoremap <Up>    :resize +2<CR>
+" nnoremap <Down>  :resize -2<CR>
+nnoremap <Up>    <Nop>
+nnoremap <Down>  <Nop>
 nnoremap <Left>  :bp<CR>
 nnoremap <Right> :bn<CR>
 
