@@ -54,6 +54,9 @@ augroup MyAutoCmd
 	autocmd FileType python setlocal expandtab tabstop=4
 	autocmd FileType sh setlocal expandtab tabstop=2
 
+	" fixes unindenting comments
+	autocmd FileType python setlocal nosmartindent
+
 	autocmd FileType markdown
 				\ setlocal spell expandtab autoindent
 				\ formatoptions=tcroqn2 comments=n:>
