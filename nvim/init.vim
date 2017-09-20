@@ -1,7 +1,8 @@
 " Section: General
 " adds to front, so it will be overridden by everything else
 set runtimepath+=~/.config/vim
-" exec "set runtimepath=~/.config/vim," . &runtimepath
+
+let $VARPATH=$HOME.'/.local/share/nvim'    " Not sure where, but this should depend  on XDG_CONFIG
 
 " Section: plugins
 call plug#begin('~/.config/nvim/plugged')

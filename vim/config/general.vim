@@ -14,6 +14,7 @@ set synmaxcol=1000           " Don't syntax highlight long lines
 set formatoptions+=1         " Don't break lines after a one-letter word
 set formatoptions-=t         " Don't auto-wrap text
 set ttyfast                  " Makes drawing nicer - nvim on by default
+set updatetime=250           " update faster (eg, gitgutter plugin)
 if has('patch-7.3.541')
 	set formatoptions+=j       " Remove comment leader when joining lines
 endif
@@ -240,5 +241,6 @@ let g:loaded_vimball = 1
 let g:loaded_vimballPlugin = 1
 let g:loaded_zip = 1
 let g:loaded_zipPlugin = 1
+let g:loaded_matchparen = 1
 " }}}
 

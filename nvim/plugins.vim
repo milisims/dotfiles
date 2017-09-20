@@ -2,21 +2,23 @@ if exists(':Plug')
 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 	Plug 'zchee/deoplete-jedi'           " Jedi (python) completion
 	Plug 'Shougo/neco-vim'               " vim completion
-	" davidhalter/jedi-vim (necessary with deoplete-jedi?)
+	" try roxma/nvim-completion-manager someday
 
 	Plug 'Shougo/denite.nvim'            " makes a nice buffer to search through
 	Plug 'Shougo/neomru.vim'             " most recently used files source
 	Plug 'Shougo/neoinclude.vim'         " include files source
 	Plug 'chemzqm/unite-location'        " quickfix and location list source
+	Plug 'neoclide/denite-git'           " gitlog, status, change source
 	Plug 'Shougo/neosnippet.vim'         " snippets!
 	Plug 'Shougo/neosnippet-snippets'
-	" Plug 'nixprime/cpsm'              " for denite matching.. doesn't work?
+	Plug 'Shougo/neco-syntax'            " syntax source
 
-	" for linting and automatic execution of linting
-	Plug 'neomake/neomake'
+	Plug 'neomake/neomake'               " linting
+	Plug 'ludovicchabant/vim-gutentags'  " automatic ctags generation
+	Plug 'airblade/vim-gitgutter'        " signs for git changes
 
-	Plug 'jalvesaq/Nvim-R'
+	Plug 'vimwiki/vimwiki'               " self management
+	Plug 'thaerkh/vim-workspace'         " session management
 
-	" Plug 'python-mode/python-mode'
 endif
 

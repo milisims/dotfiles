@@ -1,8 +1,6 @@
 " not sure if needed:
-let g:deoplete#enable_at_startup = 1
 set completeopt=menu
-
-inoremap <expr><C-g> deoplete#undo_completion()
+let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 
 " General settings " {{{
@@ -14,7 +12,7 @@ let g:deoplete#enable_camel_case = 1
 let g:deoplete#max_abbr_width = 35
 let g:deoplete#max_menu_width = 20
 let g:deoplete#skip_chars = ['(', ')', '<', '>']
-let g:deoplete#tag#cache_limit_size = 800000
+let g:deoplete#tag#cache_limit_size = 8000000
 let g:deoplete#file#enable_buffer_path = 1
 
 let g:deoplete#sources#jedi#statement_length = 1
@@ -31,6 +29,8 @@ let g:deoplete#sources = get(g:, 'deoplete#sources', {})
 " let g:deoplete#sources.jsx = ['file', 'ternjs']
 
 let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})
+let g:deoplete#ignore_sources._ = ['buffer']
+
 " let g:deoplete#ignore_sources.html = ['syntax']
 " let g:deoplete#ignore_sources.python = ['syntax']
 
@@ -77,12 +77,11 @@ call deoplete#custom#set('omni',          'mark', '⌾')
 call deoplete#custom#set('jedi',          'mark', '⌁')
 call deoplete#custom#set('vim',           'mark', '⌁')
 call deoplete#custom#set('neosnippet',    'mark', '⌘')
-" call deoplete#custom#set('around',        'mark', '@')
+call deoplete#custom#set('around',        'mark', '@')
 call deoplete#custom#set('syntax',        'mark', '♯')
 " call deoplete#custom#set('tmux-complete', 'mark', '⊶')
 
 call deoplete#custom#set('vim',           'rank', 630)
-" call deoplete#custom#set('ternjs',        'rank', 620)
 call deoplete#custom#set('jedi',          'rank', 610)
 call deoplete#custom#set('omni',          'rank', 600)
 call deoplete#custom#set('neosnippet',    'rank', 510)
@@ -93,7 +92,6 @@ call deoplete#custom#set('tag',           'rank', 400)
 call deoplete#custom#set('around',        'rank', 330)
 call deoplete#custom#set('buffer',        'rank', 320)
 call deoplete#custom#set('dictionary',    'rank', 310)
-call deoplete#custom#set('tmux-complete', 'rank', 300)
 call deoplete#custom#set('syntax',        'rank', 200)
 
 " }}}
@@ -133,11 +131,13 @@ inoremap <expr><C-g> deoplete#undo_completion()
 " Redraw candidates
 inoremap <expr><C-l> deoplete#refresh()
 
-" <CR>: If popup menu visible, expand snippet or close popup with selection,
-"       Otherwise, check if within empty pair and use delimitMate.
+" <CR>:
+" 1. If popup menu visible, expand snippet or close popup with selection, 
+" 2. Otherwise, AutoPairsReturn for clean insertion of parens
 imap <silent><expr><CR> pumvisible() ?
-	\ (neosnippet#expandable() ? "\<Plug>(neosnippet_expand)" : deoplete#close_popup())
-		\ : (delimitMate#WithinEmptyPair() ? "\<Plug>delimitMateCR" : "\<CR>")
+	\ (neosnippet#expandable() ? "\<Plug>(neosnippet_expand)"
+	\ : deoplete#close_popup())
+	\ : "\<CR>\<Plug>AutoPairsReturn"
 
 " <Tab> completion:
 " 1. If popup menu is visible, select and insert next item

@@ -10,6 +10,9 @@ nnoremap ;        <Nop>
 xnoremap ;        <Nop>
 nnoremap m        <Nop>
 xnoremap m        <Nop>
+nnoremap \|       <Nop>
+xnoremap \|       <Nop>
+onoremap \|       <Nop>
 
 " set up leaders
 let g:mapleader=' '

@@ -9,13 +9,15 @@ if exists(':Plug')
 
 	Plug 'tpope/vim-surround'                " surrounding text object
 	Plug 'tpope/vim-commentary'              " easier comments (gc)
-	Plug 'Lokaltog/vim-easymotion'           " move around more easily!
+	Plug 'justinmk/vim-sneak'                " move around more easily!
 	Plug 'bling/vim-airline'                 " pretty statusbars
 	Plug 'jeffkreeftmeijer/vim-numbertoggle' " F2 for numbers vs relanus
 	Plug 'rafi/awesome-vim-colorschemes'     " current: LuciusDark
-	Plug 'thinca/vim-localrc'                " dirs can have a local vimrc!
 	Plug 'itchyny/vim-cursorword'            " highlight same word under cursor
-	Plug 'Raimondi/delimitMate'              " autocomplete ()s, etc
+	" Plug 'Raimondi/delimitMate'              " autocomplete ()s, etc
+	Plug 'jiangmiao/auto-pairs'              " autocomplete ()s, etc
+	Plug 'itchyny/vim-parenmatch'            " faster default plugin for matching
+	Plug 'sheerun/vim-polyglot'              " vim language pack
 	Plug 'maxbrunsfeld/vim-yankstack'        " scroll through yanks
 	Plug 'junegunn/vim-easy-align'           " align comments, etc
 	Plug 'AndrewRadev/sideways.vim'          " function parameter text obj (a)
@@ -25,8 +27,6 @@ if exists(':Plug')
 	Plug 'tpope/vim-sexp-mappings-for-regular-people'
 	Plug 'tpope/vim-repeat'                  " allows more plugin . usage
 	Plug 'tpope/vim-eunuch'                  " vim sugar for unix shell cmds
-	Plug 'tpope/vim-abolish'                 " easier abbreviations
-	Plug 'tpope/vim-speeddating'             " <c-a> on dates/times
 	" Plug 'Konfekt/FastFold'                  " sparsely recalculate vim fodls
 	Plug 'mbbill/undotree'                   " provides undotree visualization
 
