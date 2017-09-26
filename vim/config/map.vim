@@ -242,9 +242,6 @@ nmap <Leader>se :<C-u>SessionSave last<CR>
 nmap <Leader>os :<C-u>execute 'source '.g:session_directory.'/last.vim'<CR>
 
 " }}}
-" Display diff from last save {{{
-command! DiffOrig vert new | setlocal bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
-" }}}
 " Append modeline to EOF {{{
 nnoremap <silent> <Leader>ml :call <SID>append_modeline()<CR>
 
