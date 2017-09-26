@@ -17,7 +17,7 @@ if exists(':Plug')
 	" Plug 'Raimondi/delimitMate'              " autocomplete ()s, etc
 	Plug 'jiangmiao/auto-pairs'              " autocomplete ()s, etc
 	Plug 'itchyny/vim-parenmatch'            " faster default plugin for matching
-	Plug 'sheerun/vim-polyglot'              " vim language pack
+	" Plug 'sheerun/vim-polyglot'              " vim language pack
 	Plug 'maxbrunsfeld/vim-yankstack'        " scroll through yanks
 	Plug 'junegunn/vim-easy-align'           " align comments, etc
 	Plug 'AndrewRadev/sideways.vim'          " function parameter text obj (a)
