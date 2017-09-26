@@ -5,6 +5,8 @@
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
+[[ "$TERM" == "xterm" ]] && export TERM=xterm-256color
+
 setopt append_history       # add history entries as they are used
 setopt inc_append_history   # as above, per line
 # setopt share_history        # can use fc -RI instead, maybe?

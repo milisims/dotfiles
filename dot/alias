@@ -2,8 +2,6 @@
 
 LSOPTS="-h --color=auto"
 
-alias python=python3
-
 # space removes from hist for zsh
 alias ls=" ls $LSOPTS"
 alias l="ls -l"
@@ -34,4 +32,4 @@ alias du='du -sh'
 # Mmm. Vim.
 alias crontab='VIM_CRONTAB=true crontab'
 alias mvim='gvim'
-alias nev='TERM="" nvim'  # TERM is for fixing scroll issue in nvim
+alias nev='nvim'

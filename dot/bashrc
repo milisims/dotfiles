@@ -1,5 +1,4 @@
 # ignore dumb
-# [ x$TERM = xdumb ] && return
 # If we've sourced this, don't do it again.
 [ -z $MYBASH ] || return
 MYBASH_SET="set"
@@ -42,7 +41,6 @@ KWHT='\[\e[47m\]'   # White
 # Prompt
 if [ x$TERM == xdumb ]; then
     PS1="\u@\h:\w \$ "
-    alias vim="echo If not in vim, run vim from complete path."
 else
     PS1="\n${CCYN}\u${NC}@${CGRN}\h${NC}:${BYLW}\w ${NC}\n\$ "
     # PS1="\u@\h:\w \$ "
@@ -92,11 +90,6 @@ pushd()
 alias cd='pushd'
 
 source ~/.alias
-
-#------------------------------------------////
-# Hacks/stupid fixes
-#------------------------------------------////
-[ x${TERM:0:4} = "xrxvt" ] && export TERM=rxvt-color
 
 #------------------------------------------////
 # Color man pages:
