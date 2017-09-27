@@ -2,6 +2,8 @@
 " adds to front, so it will be overridden by everything else
 set runtimepath+=~/.config/vim
 
+let $TERM='xterm'
+let $COLORTERM='gnome-terminal'
 let $VARPATH=$HOME.'/.local/share/nvim'    " Not sure where, but this should depend  on XDG_CONFIG
 
 " Section: plugins
