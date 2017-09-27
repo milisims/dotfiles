@@ -20,7 +20,6 @@ if exists(':Plug')
 	Plug 'ludovicchabant/vim-gutentags'  " automatic ctags generation
 	Plug 'Shougo/echodoc.vim'
 
-
 	Plug 'vimwiki/vimwiki'               " self management
 	Plug 'thaerkh/vim-workspace'         " session management
 

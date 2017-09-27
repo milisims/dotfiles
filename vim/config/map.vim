@@ -34,8 +34,6 @@ nnoremap <Right> :bn<CR>
 " Toggle fold
 nnoremap <CR> za
 
-nnoremap <leader>to :e ~/.vimtodo<CR>
-
 " Focus the current fold by closing all others
 nnoremap <S-Return> zMza
 
@@ -53,9 +51,6 @@ nnoremap <C-l> <C-W>l
 nnoremap <leader>bd :bd<CR>
 nnoremap <leader>n :bn<CR>
 nnoremap <leader>p :bp<CR>
-
-" Windows, wk for window kill, wc still works
-nnoremap <leader>w <C-w>
 
 "Remap VIM 0
 nnoremap 0 ^
@@ -118,8 +113,6 @@ xnoremap > >gv|
 " Use tab for indenting in visual mode
 vnoremap <Tab> >gv|
 vnoremap <S-Tab> <gv
-nnoremap > >>_
-nnoremap < <<_
 
 " Select last paste
 nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'

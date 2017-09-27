@@ -1,13 +1,13 @@
 ## dotfiles
 
-This is my repo for my dotfiles. Primarily, zsh/(n)vim.
+This is my repo for my dotfiles. Primarily, zsh/(n)vim. Bash is very old
+settings
 
-neovim reads the vim runtime dir, so global changes go there, otherwise
-you can just change neovim's configuration.
+neovim reads the vim runtime dir, so global (vim and neovim) changes go there,
+neovim specific settings are in nvim dir. The following documentation doesn't
+distinguish between the two.
 
-TODO:
- * investigate:
- * kana/vim-operator-user and related plugins (operator section)
+TODO: unimpaired, vim-eunuch, rewrite for WHEN they are used, not per-plugin
 
 ## Key-mappings and useful Commands: reference
 ### Vim
@@ -38,6 +38,15 @@ Key | Mode | Action
 `<leader>`+`d` | Normal/Visual | Duplicate line or selection
 `<leader>`+`S` | Normal/Visual | Source selection (TODO: make vim only)
 `<leader>`+`ml` | Normal | Append modeline
+
+### Text Objects
+
+Source     | Key          | Text
+------     | -----        | ------------------
+commentary | `gc`         | Commented region
+sideways   | `aa` | Toggle comments over motion
+sideways   | `ia`        | `change` a commented region
+surround | |
 
 ### File Operations
 
@@ -85,13 +94,7 @@ Key   | Mode | Action
 `H/J/K/L` | Normal | Move window to absolute left/bottom/top/right
 `z` | Normal | Close any "preview" windows that are open
 
-### Plugin: yankstack
-TODO
-
 ### Plugin: vim-easy-align
-TODO
-
-### Plugin: sexp
 TODO
 
 ### Plugin: Denite
@@ -100,32 +103,36 @@ TODO
 Key   | Mode | Action
 ----- |:----:| ------------------
 `<leader>d`+`r` | Normal | Resumes last Denite window
-`<leader>d`+`f` | Normal | File search
-`<leader>d`+`b` | Normal | Buffers and MRU
-`<leader>d`+`d` | Normal | Directories
+`<leader>d`+`f` | Normal | File search (recursive from cwd, and MRU)
+`<leader>d`+`b` | Normal | Buffers
 `<leader>d`+`l` | Normal | Location list
-`<leader>d`+`q` | Normal | Quick fix
-`<leader>d`+`n` | Normal | Dein plugin list
-`<leader>d`+`g` | Normal | Grep search
+`<leader>d`+`q` | Normal | Quick fix list
+`<leader>d`+`g` | Normal | Grep search  NOTE: searches in cwd recursively
 `<leader>d`+`j` | Normal | Jump points
 `<leader>d`+`o` | Normal | Outline tags
 `<leader>d`+`s` | Normal | Sessions
-`<leader>d`+`h` | Normal | Help
+`<leader>d`+`h` | Normal | Help  Use over :help!
 `<leader>d`+`/` | Normal | Buffer lines
-`<leader>d`+`*` | Normal | Match line
+`<leader>d`+`*` | Normal | Match word under cursor
 `<leader>`+`z` | Normal | Z (jump around)
-`<leader>`+`gl` | Normal | Git log
-`<leader>`+`gs` | Normal | Git status
-`<leader>`+`gf` | Normal | Grep word under cursor
 `<leader>`+`gg` | Normal/Visual | Grep word under cursor
 | **Within _Denite_ mode** |||
 `Escape` | Normal/Insert | Toggle modes
-`jj` | Insert | Leave Insert mode
+`<C-j>` | Insert | Move to next line
+`<C-k>` | Insert | Move to previous line
+`<C-n>` | Insert | Next in denite insert history
+`<C-p>` | Insert | Previous in denite insert history
+`jk` | Insert | Leave Insert mode
 `Ctrl`+`y` | Insert | Redraw
 `r` | Normal | Redraw
-`st` | Normal | Open in a new tab
-`sg` | Normal | Open in a vertical split
-`sv` | Normal | Open in a split
+`'` | Normal | Select
+`<C-q>` | Normal | Send selection/current line to quickfix list (see: help cdo)
+`<C-n>` | Normal | Move to next source
+`<C-p>` | Normal | Move to previous source
+`gg` | Normal | Move to first line of search
+`t` | Normal | Open in a new tab
+`v` | Normal | Open in a vertical split
+`s` | Normal | Open in a split
 `'` | Normal | Toggle mark current candidate
 
 ### Plugin: Deoplete
@@ -135,7 +142,6 @@ Key   | Mode | Action
 `Enter` | Insert | Select completion or expand snippet
 `Tab` | Insert/select | Smart tab movement or completion
 `Ctrl`+`j/k/f/b/d/u` | Insert | Movement in completion pop-up
-`Ctrl`+`<Return>` | Insert | Expand Emmet sequence
 `Ctrl`+`g` | Insert | Undo completion
 `Ctrl`+`l` | Insert | Refresh candidates
 `Ctrl`+`e` | Insert | Cancel selection and close pop-up
@@ -147,36 +153,19 @@ Key   | Mode | Action
 ----- |:----:| ------------------
 `gcc` | Normal | Toggle single line comment
 `gc{motion}` | Normal | Toggle comments over motion
-`gc` | Visual | Toggle comments over selection
+`cgc` | Normal | `change` a commented region
+`gcu` | Visual | Uncomment a commented region
 
-### Plugin: Easymotion
-TODO: remap
+### Plugin: Sideways
 
-Key   | Mode | Action
------ |:----:| ------------------
-`s`+`s` | Normal | Jump to two characters from input
-`s`+`d` | Normal | Jump to a character from input
-`s`+`f` | Normal | Jump over-windows
-`s`+`h` | Normal | Jump backwards in-line
-`s`+`l` | Normal | Jump forwards in-line
-`s`+`j` | Normal | Jump downwards
-`s`+`k` | Normal | Jump upwards
-`s`+`/` | Normal/operator | Jump to free-search
-`s`+`n` | Normal | Smart next occurrence
-`s`+`p` | Normal | Smart previous occurrence
-
-### Plugin: Nvim-R
-TODO
+Key               | Mode   | Action
+-----             | :----: | ------------------
+`Shift` + `Left`  | Normal | Move function argument left
+`Shift` + `right` | Normal | Move function argument right
 
 ### Misc Plugins
 
 Key   | Mode | Action
 ----- |:----:| ------------------
-`<leader>`+`o` | Normal | Open tag-bar
 `<F5>` | Normal | Open undo tree
-
-## Credits & Contribution
-
-[Rafi] - Most of my customization was a merge of my old one and his.
-
-[Rafi]: https://github.com/rafi/vim-config
+`<M-p>` | Normal/Insert | Access yankring after `put`

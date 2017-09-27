@@ -5,7 +5,6 @@
 nnoremap <silent> <Leader>dr :<C-u>Denite -resume<CR>
 nnoremap <silent> <Leader>df :<C-u>Denite file_rec file_mru <CR>
 nnoremap <silent> <Leader>db :<C-u>Denite buffer -default-action=switch<CR>
-nnoremap <silent> <Leader>dd :<C-u>Denite directory_rec -default-action=cd<CR>
 nnoremap <silent> <Leader>dl :<C-u>Denite location_list -mode=normal -buffer-name=list<CR>
 nnoremap <silent> <Leader>dq :<C-u>Denite quickfix -mode=normal -buffer-name=list<CR>
 nnoremap <silent> <Leader>dg :<C-u>Denite -mode=normal grep<CR>
@@ -13,11 +12,8 @@ nnoremap <silent> <Leader>dj :<C-u>Denite jump change file_point<CR>
 nnoremap <silent> <Leader>do :<C-u>Denite outline<CR>
 nnoremap <silent> <Leader>ds :<C-u>Denite session<CR>
 nnoremap <silent> <Leader>dh :<C-u>Denite help<CR>
-nnoremap <silent> <Leader>dm :<C-u>Denite mpc -buffer-name=mpc<CR>
 nnoremap <silent> <Leader>d/ :<C-u>Denite line<CR>
-
-" Open Denite with word under cursor or selection
-nnoremap <silent> <Leader>d* :<C-u>DeniteCursorWord line<CR>
+nnoremap <silent> <Leader>d* :<C-u>DeniteCursorWord -mode=normal line<CR>
 nnoremap <silent> <Leader>gf :DeniteCursorWord file_rec<CR>
 nnoremap <silent> <Leader>gg :DeniteCursorWord grep<CR>
 vnoremap <silent> <Leader>gg
@@ -74,14 +70,6 @@ call denite#custom#option('mpc', {
 " SORTERS
 " Default is 'sorter_rank'
 
-" TODO: understand this a bit better, before adding it to map list
-call denite#custom#map(
-	\ 'normal',
-	\ '<C-q>',
-	\ '<denite:do_action:quickfix>',
-	\ 'noremap'
-	\)
-
 " CONVERTERS
 " Default is none
 call denite#custom#source(
@@ -94,13 +82,14 @@ let insert_mode_mappings = [
 	\  ['<Esc>', '<denite:enter_mode:normal>', 'noremap'],
 	\  ['<C-j>', '<denite:move_to_next_line>', 'noremap'],
 	\  ['<C-k>', '<denite:move_to_previous_line>', 'noremap'],
-	\  ['<C-N>', '<denite:assign_next_matched_text>', 'noremap'],
-	\  ['<C-P>', '<denite:assign_previous_matched_text>', 'noremap'],
+	\  ['<C-n>', '<denite:assign_next_matched_text>', 'noremap'],
+	\  ['<C-p>', '<denite:assign_previous_matched_text>', 'noremap'],
 	\  ['<C-Y>', '<denite:redraw>', 'noremap'],
 	\ ]
 
 let normal_mode_mappings = [
 	\  ["'", '<denite:toggle_select_down>', 'noremap'],
+	\  ['<C-q>', '<denite:do_action:quickfix>', 'noremap'],
 	\  ['<C-n>', '<denite:jump_to_next_source>', 'noremap'],
 	\  ['<C-p>', '<denite:jump_to_previous_source>', 'noremap'],
 	\  ['gg', '<denite:move_to_first_line>', 'noremap'],
