@@ -1,2 +1,3 @@
 " To disable:
-" let g:polyglot_disabled = ['css']
+let g:polyglot_disabled = ['python', 'vim']
+
