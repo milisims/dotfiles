@@ -12,6 +12,7 @@ function rm_broken_links {
 # ZSH Settings                                                            -
 # the real settings are all in ~/.config/zsh, so we have a place to put   -
 # things like zsh-syntax-highlighting and modular scripts                 -
+
 echo -n "Linking dotfiles and setting up zsh... "
 rm_broken_links $HOME
 for dotfile in $(ls dot); do
@@ -70,28 +71,4 @@ else
     echo "failed."
 fi
 
-if ! type pip3 > /dev/null 2>&1; then
-    echo
-    echo "pip3 does not appear to be installed. Required for neovim"
-else
-    if ! pip3 show neovim > /dev/null 2>&1; then
-        echo -n 'Installing python2 neovim support... '
-        pip2 install --user neovim > /dev/null 2>&1
-        [[ $? -ne 0 ]] && echo -n 'failed. '
-        echo -n 'Installing python3 neovim support... '
-        pip3 install --user neovim > /dev/null 2>&1
-        [[ $? -ne 0 ]] && echo -n 'failed. '
-    fi
-    if ! pip3 show jedi > /dev/null 2>&1; then
-        echo -n 'Installing jedi for python3... '
-        pip3 install --user jedi > /dev/null 2>&1
-        [[ $? -ne 0 ]] && echo -n 'failed. '
-    fi
-    if ! pip3 show numpydoc > /dev/null 2>&1; then
-        echo -n 'Installing numpydoc for python3... '
-        pip3 install --user numpydoc > /dev/null 2>&1
-        [[ $? -ne 0 ]] && echo -n 'failed. '
-    fi
-fi
-echo "Done"
 echo "To complete installation, please open (n)vim and execute :PlugInstall"
