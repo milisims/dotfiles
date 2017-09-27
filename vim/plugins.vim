@@ -14,17 +14,15 @@ if exists(':Plug')
 	Plug 'jeffkreeftmeijer/vim-numbertoggle' " F2 for numbers vs relanus
 	Plug 'rafi/awesome-vim-colorschemes'     " current: LuciusDark
 	Plug 'itchyny/vim-cursorword'            " highlight same word under cursor
-	" Plug 'Raimondi/delimitMate'              " autocomplete ()s, etc
 	Plug 'jiangmiao/auto-pairs'              " autocomplete ()s, etc
 	Plug 'itchyny/vim-parenmatch'            " faster default plugin for matching
-	" Plug 'sheerun/vim-polyglot'              " vim language pack
+	Plug 'sheerun/vim-polyglot'              " vim language pack
 	Plug 'maxbrunsfeld/vim-yankstack'        " scroll through yanks
 	Plug 'junegunn/vim-easy-align'           " align comments, etc
 	Plug 'AndrewRadev/sideways.vim'          " function parameter text obj (a)
 	Plug 'AndrewRadev/splitjoin.vim'         " gJ, gS to split or join statements
 
-	Plug 'guns/vim-sexp'                     " more text objects
-	Plug 'tpope/vim-sexp-mappings-for-regular-people'
+	Plug 'tpope/vim-unimpaired'              " mapping for common pairs of actions
 	Plug 'tpope/vim-repeat'                  " allows more plugin . usage
 	Plug 'tpope/vim-eunuch'                  " vim sugar for unix shell cmds
 	" Plug 'Konfekt/FastFold'                  " sparsely recalculate vim fodls
@@ -41,7 +39,6 @@ if exists(':Plug')
 	Plug 'vim-scripts/python_match.vim'      " , { 'for': 'python' }
 	Plug 'tmhedberg/SimpylFold'              " , { 'for': 'python' }
 	Plug 'raimon49/requirements.txt.vim'     " , { 'for': 'python' }
-	Plug 'davidhalter/jedi-vim'              " , { 'for': 'python' }
 
 	Plug 'vim-jp/syntax-vim-ex'              " , { 'for': 'vim' }
 
