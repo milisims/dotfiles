@@ -1,4 +1,3 @@
-
 " Global Mappings "{{{
 " ---------------
 " Release keymappings prefixes, evict entirely for use of plug-ins.
@@ -34,9 +33,6 @@ nnoremap <Right> :bn<CR>
 " Toggle fold
 nnoremap <CR> za
 
-" Focus the current fold by closing all others
-nnoremap <S-Return> zMza
-
 " Makes up and down work as expected
 nnoremap j gj
 nnoremap k gk
@@ -47,12 +43,12 @@ nnoremap <C-k> <C-W>k
 nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
 
-" Close the current buffer
+" Some buffer stuff
 nnoremap <leader>bd :bd<CR>
 nnoremap <leader>n :bn<CR>
 nnoremap <leader>p :bp<CR>
 
-"Remap VIM 0
+" swap 0 and ^
 nnoremap 0 ^
 nnoremap ^ 0
 
@@ -64,9 +60,6 @@ if has("mac")
 	vnoremap <D-k> <M-k>
 endif
 
-" " Use backspace key for matchit.vim
-" nmap <BS> %
-" xmap <BS> %
 " }}}
 " Global niceties {{{
 " ---------------
@@ -74,8 +67,6 @@ endif
 " Start an external command with a single bang
 nnoremap ! :!
 
-" Allow misspellings
-" Abolish me
 cnoreabbrev qw wq
 cnoreabbrev Wq wq
 cnoreabbrev WQ wq
@@ -83,24 +74,11 @@ cnoreabbrev Q q
 cnoreabbrev Qa qa
 cnoreabbrev Bd bd
 cnoreabbrev bD bd
-" cnoreabbrev t tabe  " can't search for the letter t ? mapping would be better
-" cnoreabbrev T tabe
-
-" Start new line from any cursor position
-" inoremap <S-CR> <C-o>o
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
 
 " Quick substitute within selected area
 xnoremap s :s//g<Left><Left>
-
-" Improve scroll, credits: https://github.com/Shougo
-nnoremap <expr> zz (winline() == (winheight(0)+1) / 2) ?
-	\ 'zt' : (winline() == 1) ? 'zb' : 'zz'
-" noremap <expr> <C-f> max([winheight(0) - 2, 1])
-" 	\ ."\<C-d>".(line('w$') >= line('$') ? "L" : "M")
-" noremap <expr> <C-b> max([winheight(0) - 2, 1])
-" 	\ ."\<C-u>".(line('w0') <= 1 ? "H" : "M")
-" noremap <expr> <C-e> (line("w$") >= line('$') ? "j" : "2\<C-e>")
-" noremap <expr> <C-y> (line("w0") <= 1         ? "k" : "2\<C-y>")
 
 " Window control
 nnoremap <C-q> <C-w>
@@ -114,28 +92,8 @@ xnoremap > >gv|
 vnoremap <Tab> >gv|
 vnoremap <S-Tab> <gv
 
-" Select last paste
-nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
-
-" Navigation in command line
-cnoremap <C-j> <Left>
-cnoremap <C-k> <Right>
-cnoremap <C-h> <Home>
-cnoremap <C-l> <End>
-cnoremap <C-f> <Right>
-cnoremap <C-b> <Left>
-cnoremap <C-d> <C-w>
-
-" Switch history search pairs, matching my bash shell
-cnoremap <C-p>  <Up>
-cnoremap <C-n>  <Down>
-cnoremap <Up>   <C-p>
-cnoremap <Down> <C-n>
-
-" maybe
-cnoremap $h e $HOME/
-cnoremap $d <C-\>eCurrentFileDir("e")<CR>
-cnoremap $j e ./
+" Select last edited text. improved over `[v`], eg works with visual block
+nnoremap <expr> <leader>v '`['.strpart(getregtype(), 0, 1).'`]'
 
 nnoremap <leader><CR> :nohlsearch<CR>
 
@@ -145,13 +103,6 @@ nnoremap <leader><CR> :nohlsearch<CR>
 
 " When pressing <leader>cd switch to the directory of the open buffer
 nnoremap <Leader>cd :lcd %:p:h<CR>:pwd<CR>
-
-" " Fast saving
-" nnoremap <silent><Leader>w :write<CR>:nohlsearch<CR>
-" vnoremap <silent><Leader>w <Esc>:write<CR>:nohlsearch<CR>
-" nnoremap <silent><C-s> :<C-u>write<CR>:nohlsearch<CR>
-" vnoremap <silent><C-s> :<C-u>write<CR>:nohlsearch<CR>
-" cnoremap <silent><C-s> <C-u>write<CR>:nohlsearch<CR>
 
 " Save a file with sudo
 " http://forrst.com/posts/Use_w_to_sudo_write_a_file_with_Vim-uAN
@@ -169,12 +120,6 @@ nnoremap <leader>a =ip
 " Macros
 nnoremap Q q
 nnoremap M @q
-vnoremap M :norm @q<CR>
-
-" Show highlight names under cursor
-nmap gh :echo 'hi<'.synIDattr(synID(line('.'), col('.'), 1), 'name')
-	\.'> trans<'.synIDattr(synID(line('.'), col('.'), 0), 'name').'> lo<'
-	\.synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name').'>'<CR>
 
 " Toggle editor visuals
 nmap <silent> <Leader>ts :setlocal spell!<cr>
@@ -207,25 +152,20 @@ endfunction "}}}
 nmap <Leader>j :lnext<CR>
 nmap <Leader>k :lprev<CR>
 
-" " Duplicate lines
-" cute, but I want <leader>d for denite commands
-" nnoremap <Leader>d m`YP``
-" vnoremap <Leader>d YPgv
-" vnoremap <Leader>d YPgv
-
-" Source line and selection in vim
-" TODO: put in autobuffer for vim files
-vnoremap <Leader>S y:execute @@<CR>:echo 'Sourced selection.'<CR>
-nnoremap <Leader>S ^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>
+augroup MyAutoCmd
+	" Source line and selection in vim
+	autocmd FileType vim vnoremap <buffer> <Leader>S y:execute @@<CR>:echo 'Sourced selection.'<CR>
+	autocmd FileType vim nnoremap <buffer> <Leader>S ^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>
+augroup END
 
 " Yank buffer's absolute path to X11 clipboard
 nnoremap <Leader>y :let @+=expand("%:p")<CR>:echo 'Copied to clipboard.'<CR>
 
 " Drag current line/s vertically and auto-indent
-vnoremap <M-k> :move-2<CR>gv=gv
-vnoremap <M-j> :move'>+<CR>gv=gv
-noremap  <M-k> :move-2<CR>
-noremap  <M-j> :move+<CR>
+vnoremap <M-j> :move '>+1<CR>gv=gv
+vnoremap <M-k> :move '<-2<CR>gv=gv
+noremap  <M-j> :move .+1<CR>==
+noremap  <M-k> :move .-2<CR>==
 
 " Insert a newline from cursor
 nnoremap g<CR> i<CR><Esc>
@@ -247,26 +187,3 @@ function! s:append_modeline() "{{{
 	call append(line('$'), l:modeline)
 endfunction "}}}
 " }}}
-" s: Windows and buffers {{{
-
-" nnoremap <silent> [Window]v  :<C-u>split<CR>
-" nnoremap <silent> [Window]g  :<C-u>vsplit<CR>
-" nnoremap <silent> [Window]t  :tabnew<CR>
-" nnoremap <silent> [Window]o  :<C-u>only<CR>
-" nnoremap <silent> [Window]b  :b#<CR>
-" nnoremap <silent> [Window]c  :close<CR>
-" nnoremap <silent> [Window]x  :<C-u>call <SID>BufferEmpty()<CR>
-
-" " Split current buffer, go to previous window and previous buffer
-" nnoremap <silent> [Window]sv :split<CR>:wincmd p<CR>:e#<CR>
-" nnoremap <silent> [Window]sg :vsplit<CR>:wincmd p<CR>:e#<CR>
-
-function! s:BufferEmpty() "{{{
-	let l:current = bufnr('%')
-	if ! getbufvar(l:current, '&modified')
-		enew
-		silent! execute 'bdelete '.l:current
-	endif
-endfunction "}}}
-" }}}
-"
