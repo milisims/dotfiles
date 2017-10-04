@@ -67,6 +67,19 @@ call denite#custom#option('mpc', {
 " 		\ 'matchers', ['matcher_cpsm', 'matcher_fuzzy'])
 " endif
 
+" use ag for grep and file_rec
+call denite#custom#var(
+	\ 'file_rec', 'command',
+	\ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+
+call denite#custom#var('grep', 'command', ['ag'])
+call denite#custom#var('grep', 'default_opts',
+		\ ['-i', '--vimgrep'])
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', [])
+call denite#custom#var('grep', 'separator', ['--'])
+call denite#custom#var('grep', 'final_opts', [])
+
 " SORTERS
 " Default is 'sorter_rank'
 
@@ -79,7 +92,7 @@ call denite#custom#source(
 " KEY MAPPINGS
 let insert_mode_mappings = [
 	\  ['jk', '<denite:enter_mode:normal>', 'noremap'],
-	\  ['<Esc>', '<denite:enter_mode:normal>', 'noremap'],
+	\  ['<Tab>', '<denite:enter_mode:normal>', 'noremap'],
 	\  ['<C-j>', '<denite:move_to_next_line>', 'noremap'],
 	\  ['<C-k>', '<denite:move_to_previous_line>', 'noremap'],
 	\  ['<C-n>', '<denite:assign_next_matched_text>', 'noremap'],
