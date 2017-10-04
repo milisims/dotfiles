@@ -1,5 +1,3 @@
-" General Settings
-"---------------------------------------------------------
 " General {{{
 set mouse=nv                 " Disable mouse in command-line mode
 set modeline                 " automatically setting options from modelines
@@ -15,6 +13,7 @@ set formatoptions+=1         " Don't break lines after a one-letter word
 set formatoptions-=t         " Don't auto-wrap text
 set ttyfast                  " Makes drawing nicer - nvim on by default
 set updatetime=250           " update faster (eg, gitgutter plugin)
+set winaltkeys=no            " Don't let windows handle the alt key
 if has('patch-7.3.541')
 	set formatoptions+=j       " Remove comment leader when joining lines
 endif
@@ -45,7 +44,7 @@ endif
 " Wildmenu {{{
 " --------
 if has('wildmenu')
-	set nowildmenu    " why is this off?
+	set nowildmenu
 	set wildmode=list:longest,full
 	set wildoptions=tagfile
 	set wildignorecase
@@ -91,15 +90,9 @@ set shiftround      " Round indent to multiple of 'shiftwidth'
 " ------
 set timeout ttimeout
 set timeoutlen=750  " Time out on mappings
+set ttimeoutlen=250 " for key codes
 set updatetime=2000 " Idle time to write swap and trigger CursorHold
 
-" Time out on key codes
-if has('nvim')
-	" https://github.com/neovim/neovim/issues/2017
-	set ttimeoutlen=-1
-else
-	set ttimeoutlen=250
-endif
 " }}}
 " Searching {{{
 " ---------
@@ -144,7 +137,7 @@ endif
 set noshowmode          " Don't show mode in cmd window
 set shortmess=aoOTI     " Shorten messages and don't show intro
 set scrolloff=4         " Keep at least 2 lines above/below
-set sidescrolloff=2     " Keep at least 8 lines left/right
+set sidescrolloff=2     " Keep at least 2 lines left/right
 set number              " Show line numbers
 set relativenumber      " Show relative line numbers from cursor
 set noruler             " Disable default status ruler    enabled?
@@ -159,7 +152,7 @@ set pumheight=20        " Pop-up menu's line height
 set helpheight=12       " Minimum help window height
 set previewheight=12    " Completion preview height
 
-set showcmd             " Don't show command in status line
+set showcmd             " Show command in status line
 set cmdheight=2         " Height of the command line
 set cmdwinheight=5      " Command-line lines
 set equalalways         " Resize all windows on split or close
@@ -223,7 +216,7 @@ let g:loaded_getscript = 1
 let g:loaded_getscriptPlugin = 1
 let g:loaded_gzip = 1
 let g:loaded_logiPat = 1
-" let g:loaded_matchit = 1
+let g:loaded_matchit = 1
 let g:loaded_netrw = 1
 let g:loaded_netrwPlugin = 1
 let g:loaded_netrwFileHandlers = 1
@@ -242,4 +235,3 @@ let g:loaded_zip = 1
 let g:loaded_zipPlugin = 1
 let g:loaded_matchparen = 1
 " }}}
-
