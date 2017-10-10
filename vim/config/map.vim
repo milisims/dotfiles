@@ -152,10 +152,13 @@ endfunction "}}}
 nmap <Leader>j :lnext<CR>
 nmap <Leader>k :lprev<CR>
 
-augroup MyAutoCmd
+augroup AutoMaps
+	autocmd!
 	" Source line and selection in vim
 	autocmd FileType vim vnoremap <buffer> <Leader>S y:execute @@<CR>:echo 'Sourced selection.'<CR>
 	autocmd FileType vim nnoremap <buffer> <Leader>S ^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>
+
+	autocmd FileType help nnoremap <buffer> q :q<CR>
 augroup END
 
 " Yank buffer's absolute path to X11 clipboard

@@ -3,17 +3,10 @@ set nowritebackup    " Backup overwrite
 set noswapfile       " Nerp
 set fileformats=unix,dos,mac " Use Unix as the standard file type
 
-" " Delete trailing white space on each line
-" func! DeleteTrailingWS()
-" 	exe "normal mz"
-" 	%s/\s\+$//ge
-" 	exe "normal `z"
-" endfunc
-" autocmd BufWrite * :call DeleteTrailingWS()
-
 " My autocommands {{{
 " ---------------
 augroup MyAutoCmd
+	autocmd!
 
 	au BufWinLeave ?* mkview            " Save fold
 	au BufWinEnter ?* silent! loadview   " load fold
@@ -23,25 +16,25 @@ augroup MyAutoCmd
 
 	" Update filetype on save if empty
 	autocmd BufWritePost * nested
-				\ if &l:filetype ==# '' || exists('b:ftdetect')
-				\ |   unlet! b:ftdetect
-				\ |   filetype detect
-				\ | endif
+		\ if &l:filetype ==# '' || exists('b:ftdetect')
+		\ |   unlet! b:ftdetect
+		\ |   filetype detect
+		\ | endif
 
 	" When editing a file, always jump to the last known cursor position.
 	" Don't do it when the position is invalid or when inside an event handler
 	autocmd BufReadPost *
-				\ if &ft !~ '^git\c' && ! &diff && line("'\"") > 0 && line("'\"") <= line("$")
-				\|   execute 'normal! g`"zvzz'
-				\| endif
+		\ if &ft !~ '^git\c' && ! &diff && line("'\"") > 0 && line("'\"") <= line("$")
+		\|   execute 'normal! g`"zvzz'
+		\| endif
 
 	" Disable paste and/or update diff when leaving insert mode
 	autocmd InsertLeave *
-				\ if &paste | setlocal nopaste mouse=a | echo 'nopaste' | endif |
-			\ if &l:diff | diffupdate | endif
+		\ if &paste | setlocal nopaste mouse=a | echo 'nopaste' | endif |
+		\ if &l:diff | diffupdate | endif
 
 	autocmd FileType help
-				\ setlocal iskeyword+=: | setlocal iskeyword+=# | setlocal iskeyword+=-
+		\ setlocal iskeyword+=: | setlocal iskeyword+=# | setlocal iskeyword+=-
 
 	autocmd FileType crontab setlocal nobackup nowritebackup
 
