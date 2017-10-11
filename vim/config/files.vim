@@ -54,6 +54,12 @@ augroup MyAutoCmd
 				\ setlocal spell expandtab autoindent
 				\ formatoptions=tcroqn2 comments=n:>
 
+	if executable('yapf')
+		autocmd FileType python setlocal formatprg=yapf
+	endif
+
+	autocmd BufNewFile,BufRead *.yapf set filetype=cfg
+
 	" TODO: if winwidth < 80, turn wrap off if it's on
 	" TODO: display tabs and buffers in tabline
 
