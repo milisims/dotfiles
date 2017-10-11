@@ -21,7 +21,6 @@ if exists(':Plug')
 	Plug 'Shougo/echodoc.vim'
 
 	Plug 'vimwiki/vimwiki'               " self management
-	Plug 'thaerkh/vim-workspace'         " session management
 
 endif
 
