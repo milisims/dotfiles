@@ -24,7 +24,6 @@ if exists(':Plug')
 	Plug 'tpope/vim-unimpaired'              " mapping for common pairs of actions
 	Plug 'tpope/vim-repeat'                  " allows more plugin . usage
 	Plug 'tpope/vim-eunuch'                  " vim sugar for unix shell cmds
-	" Plug 'Konfekt/FastFold'                  " sparsely recalculate vim fodls
 	Plug 'mbbill/undotree'                   " provides undotree visualization
 
 	" christoomey/tmux-navigator
@@ -37,6 +36,7 @@ if exists(':Plug')
 	Plug 'Vimjas/vim-python-pep8-indent'     " , { 'for': 'python' }
 	Plug 'vim-scripts/python_match.vim'      " , { 'for': 'python' }
 	Plug 'tmhedberg/SimpylFold'              " , { 'for': 'python' }
+	Plug 'Konfekt/FastFold'                  " sparsely recalculate vim fodls
 	Plug 'raimon49/requirements.txt.vim'     " , { 'for': 'python' }
 
 	Plug 'vim-jp/syntax-vim-ex'              " , { 'for': 'vim' }
