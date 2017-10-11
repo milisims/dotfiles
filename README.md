@@ -116,7 +116,7 @@ Key             | Mode                     | Action
 `<leader>d`+`*` | Normal                   | Match word under cursor
 `<leader>`+`z`  | Normal                   | Z (jump around)
 `<leader>`+`gg` | Normal/Visual            | Grep word under cursor
-                | **Within _Denite_ mode** |  |  |
+                | **Within _Denite_ mode** |
 `Escape`        | Normal/Insert            | Toggle modes
 `<C-j>`         | Insert                   | Move to next line
 `<C-k>`         | Insert                   | Move to previous line
