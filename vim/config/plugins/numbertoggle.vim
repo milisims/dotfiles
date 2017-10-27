@@ -1,2 +1,1 @@
-nnoremap <F2> :call NumberToggle()<CR>
-let g:UseNumberToggleTrigger = 0
+nnoremap <silent> <F2> :set relativenumber!<CR>
