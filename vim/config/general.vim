@@ -18,7 +18,7 @@ if has('patch-7.3.541')
 	set formatoptions+=j       " Remove comment leader when joining lines
 endif
 
-if has('vim_starting')
+if has('vim_starting')       " not entirely sure why I have this...
 	set encoding=utf-8
 	scriptencoding utf-8
 endif
@@ -122,8 +122,8 @@ set diffopt=filler,iwhite       " Diff mode: show fillers, ignore white
 set showfulltag                 " Show tag and tidy search in completion
 set complete=.                  " No wins, buffs, tags, include scanning
 set completeopt=menuone         " Show menu even for one item
-set completeopt+=noselect       " Do not select a match in the menu
-if has('patch-7.4.775')
+if has('patch-7.4.784')
+	set completeopt+=noselect       " Do not select a match in the menu
 	set completeopt+=noinsert
 endif
 
@@ -233,5 +233,7 @@ let g:loaded_vimball = 1
 let g:loaded_vimballPlugin = 1
 let g:loaded_zip = 1
 let g:loaded_zipPlugin = 1
-let g:loaded_matchparen = 1
+if has('patch-7.4.786')           " aligns with parenmatch in plugins.vim
+	let g:loaded_matchparen = 1
+endif
 " }}}

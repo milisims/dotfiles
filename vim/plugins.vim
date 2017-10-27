@@ -15,11 +15,14 @@ if exists(':Plug')
 	Plug 'rafi/awesome-vim-colorschemes'     " current: LuciusDark
 	Plug 'itchyny/vim-cursorword'            " highlight same word under cursor
 	Plug 'jiangmiao/auto-pairs'              " autocomplete ()s, etc
-	Plug 'itchyny/vim-parenmatch'            " faster default plugin for matching
 	Plug 'sheerun/vim-polyglot'              " vim language pack
 	Plug 'junegunn/vim-easy-align'           " align comments, etc
 	Plug 'AndrewRadev/sideways.vim'          " function parameter text obj (a)
 	Plug 'AndrewRadev/splitjoin.vim'         " gJ, gS to split or join statements
+
+  if has('patch-7.4.786')
+		Plug 'itchyny/vim-parenmatch'          " faster default plugin for matching
+	endif
 
 	Plug 'tpope/vim-unimpaired'              " mapping for common pairs of actions
 	Plug 'tpope/vim-repeat'                  " allows more plugin . usage
