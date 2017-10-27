@@ -1,29 +1,36 @@
 # all aliases across shells
 
-LSOPTS="-h --color=auto"
+LSOPTS='-h --color=auto'
 
 # space removes from hist for zsh
 alias ls=" ls $LSOPTS"
-alias l="ls -l"
-alias la="ls -Al"
-alias lx="ls -lX"
-alias lt="ls -lt"
-alias lm="ls -l | more"
+alias l='ls -l'
+alias la='ls -Al'
+alias lx='ls -lX'
+alias lt='ls -lt'
+alias lm='ls -l | more'
 
-alias grep="grep --color=auto"
+alias grep='grep --color=auto'
 
 # Space removes from hist.
-alias fg=" fg"
+alias fg=' fg'
 
 # alias rm="rm -i" # -i confirms EVERYTHING. Annoying, ubersafe.
 # nocorrect fixes odd behaviors
-alias cp="nocorrect cp -i"
-alias mv="nocorrect mv -i"
-alias mkdir="nocorrect mkdir"
+if [ command -v nocorrect > /dev/null 2>&1 ]; then
+  alias cp='nocorrect cp -i'
+  alias mv='nocorrect mv -i'
+  alias mkdir='nocorrect mkdir'
+else
+  alias cp='cp -i'
+  alias mv='mv -i'
+  alias mkdir='mkdir'
+fi
+
 alias md='mkdir -p'
 alias rd='rmdir'
 
-alias which="type -a"
+alias which='type -a'
 alias .='popd'
 alias d='dirs -v | head -10'
 alias path='echo -e ${PATH//:/\\n}'
