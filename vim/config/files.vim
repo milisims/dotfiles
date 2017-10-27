@@ -44,11 +44,11 @@ augroup MyAutoCmd
 
 	autocmd FileType gitcommit,qfreplace setlocal nofoldenable
 
-	autocmd FileType python setlocal expandtab tabstop=4
+	autocmd FileType python,pyrex setlocal expandtab tabstop=4
 	autocmd FileType sh setlocal expandtab tabstop=2
 
 	" fixes unindenting comments
-	autocmd FileType python setlocal nosmartindent
+	autocmd FileType python,pyrex setlocal nosmartindent
 
 	autocmd FileType markdown
 				\ setlocal spell expandtab autoindent
