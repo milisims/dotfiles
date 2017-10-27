@@ -53,12 +53,13 @@ plugurl='https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 tmpout=$(mktemp)
 curl -fLo $vimaudir/plug.vim --silent --create-dirs $plugurl
-if [ "$?" -eq 0 ] && [ command -v nvim > /dev/null 2>&1 ]; then
+if [ "$?" -eq 0 ]; then
+  vim +'PlugInstall --sync' +'PlugUpdate' +qa
+  if [ command -v nvim > /dev/null 2>&1 ]; then
     mkdir -p $nvimaudir
     cp $vimaudir/plug.vim $nvimaudir
+    nvim +'PlugInstall --sync' +'PlugUpdate' +qa
+  fi
 else
-    echo "failed."
+  echo "failed."
 fi
-
-vim +'PlugInstall --sync' +'PlugUpdate' +qa
-command -v nvim > /dev/null 2>&1 && nvim +'PlugInstall --sync' +'PlugUpdate' +qa
