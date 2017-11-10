@@ -11,14 +11,16 @@ if exists(':Plug')
 	Plug 'tpope/vim-commentary'              " easier comments (gc)
 	Plug 'justinmk/vim-sneak'                " move around more easily!
 	Plug 'bling/vim-airline'                 " pretty statusbars
-	Plug 'jeffkreeftmeijer/vim-numbertoggle' " F2 for numbers vs relanus
+	Plug 'jeffkreeftmeijer/vim-numbertoggle' " automatic relanums
 	Plug 'rafi/awesome-vim-colorschemes'     " current: LuciusDark
 	Plug 'itchyny/vim-cursorword'            " highlight same word under cursor
 	Plug 'jiangmiao/auto-pairs'              " autocomplete ()s, etc
 	Plug 'sheerun/vim-polyglot'              " vim language pack
+	Plug 'raimon49/requirements.txt.vim'
 	Plug 'junegunn/vim-easy-align'           " align comments, etc
 	Plug 'AndrewRadev/sideways.vim'          " function parameter text obj (a)
 	Plug 'AndrewRadev/splitjoin.vim'         " gJ, gS to split or join statements
+	Plug 'takac/vim-hardtime'								 " stop repeating hjkl!
 
   if has('patch-7.4.786')
 		Plug 'itchyny/vim-parenmatch'          " faster default plugin for matching
@@ -35,12 +37,11 @@ if exists(':Plug')
 	" Configuration checks for loaded plugins via exists('g:loaded_<pl>')
 	" so just skip the lazy loading. Loading all plugins adds < 1 ms load time
 	" Plug 'python-mode/python-mode'           " , { 'for': 'python' }
-	Plug 'vim-python/python-syntax'          " , { 'for': 'python' }
+	" Plug 'vim-python/python-syntax'          " , { 'for': 'python' }
 	Plug 'Vimjas/vim-python-pep8-indent'     " , { 'for': 'python' }
 	Plug 'vim-scripts/python_match.vim'      " , { 'for': 'python' }
-	Plug 'tmhedberg/SimpylFold'              " , { 'for': 'python' }
-	Plug 'Konfekt/FastFold'                  " sparsely recalculate vim fodls
-	Plug 'raimon49/requirements.txt.vim'     " , { 'for': 'python' }
+	" Plug 'tmhedberg/SimpylFold'              " , { 'for': 'python' }
+	" Plug 'Konfekt/FastFold'                  " sparsely recalculate vim fodls
 
 	Plug 'vim-jp/syntax-vim-ex'              " , { 'for': 'vim' }
 
