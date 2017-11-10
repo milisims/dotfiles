@@ -10,5 +10,3 @@ call neomake#configure#automake({
   \ 'BufWritePost': {'delay': 0},
   \ 'BufWinEnter': {},
   \ }, 500)
-
-" TODO: investigate automake!

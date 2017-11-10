@@ -3,7 +3,8 @@
 " nnoremap <C-n> :Denite -mode=normal quickfix location_list<CR>
 
 nnoremap <silent> <Leader>dr :<C-u>Denite -resume<CR>
-nnoremap <silent> <Leader>df :<C-u>Denite file_rec file_mru <CR>
+nnoremap <silent> <Leader>df :<C-u>Denite file_rec <CR>
+" nnoremap <silent> <Leader>df :<C-u>Denite file_rec file_mru <CR>
 nnoremap <silent> <Leader>db :<C-u>Denite buffer -default-action=switch<CR>
 nnoremap <silent> <Leader>dl :<C-u>Denite location_list -mode=normal -buffer-name=list<CR>
 nnoremap <silent> <Leader>dq :<C-u>Denite quickfix -mode=normal -buffer-name=list<CR>
@@ -70,7 +71,7 @@ call denite#custom#option('mpc', {
 " use ag for grep and file_rec
 call denite#custom#var(
 	\ 'file_rec', 'command',
-	\ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+	\ ['ag', '--nocolor', '--nogroup', '-g', ''])
 
 call denite#custom#var('grep', 'command', ['ag'])
 call denite#custom#var('grep', 'default_opts',
