@@ -3,10 +3,6 @@
 " Release keymappings prefixes, evict entirely for use of plug-ins.
 nnoremap <Space>  <Nop>
 xnoremap <Space>  <Nop>
-nnoremap ,        <Nop>
-xnoremap ,        <Nop>
-nnoremap ;        <Nop>
-xnoremap ;        <Nop>
 nnoremap m        <Nop>
 xnoremap m        <Nop>
 nnoremap \|       <Nop>
@@ -15,7 +11,7 @@ onoremap \|       <Nop>
 
 " set up leaders
 let g:mapleader=' '
-let g:maplocalleader=';'
+let g:maplocalleader='\'
 inoremap jk <ESC>
 
 " Fix keybind name for Ctrl+Spacebar
@@ -29,6 +25,9 @@ nnoremap <Up>    <Nop>
 nnoremap <Down>  <Nop>
 nnoremap <Left>  :bp<CR>
 nnoremap <Right> :bn<CR>
+
+" make Y act like D, C
+nnoremap Y y$
 
 " Toggle fold
 nnoremap <CR> za
