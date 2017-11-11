@@ -31,20 +31,9 @@ if exists(':Plug')
 	Plug 'tpope/vim-eunuch'                  " vim sugar for unix shell cmds
 	Plug 'mbbill/undotree'                   " provides undotree visualization
 
-	" christoomey/tmux-navigator
-	" tmux-plugins/vim-tmux
-
-	" Configuration checks for loaded plugins via exists('g:loaded_<pl>')
-	" so just skip the lazy loading. Loading all plugins adds < 1 ms load time
-	" Plug 'python-mode/python-mode'           " , { 'for': 'python' }
-	" Plug 'vim-python/python-syntax'          " , { 'for': 'python' }
-	Plug 'Vimjas/vim-python-pep8-indent'     " , { 'for': 'python' }
-	Plug 'vim-scripts/python_match.vim'      " , { 'for': 'python' }
-	" Plug 'tmhedberg/SimpylFold'              " , { 'for': 'python' }
-	" Plug 'Konfekt/FastFold'                  " sparsely recalculate vim fodls
-
-	Plug 'vim-jp/syntax-vim-ex'              " , { 'for': 'vim' }
-
+	Plug 'Vimjas/vim-python-pep8-indent'
+	Plug 'vim-scripts/python_match.vim'
+	Plug 'vim-jp/syntax-vim-ex'
 	Plug 'andreshazard/vim-logreview'
 
 endif
