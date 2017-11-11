@@ -1,3 +1,4 @@
+set signcolumn="yes"
 " let g:neomake_open_list = 0  " will open quickfix
 let g:neomake_verbose = 1
 let g:airline#extensions#neomake#enabled = 1
