@@ -115,18 +115,22 @@ for m in normal_mode_mappings
 endfor
 " }}}
 " }}}
+
 " echodoc: {{{
 " --------
 let g:echodoc#enable_at_startup = 1
 " }}}
+
 " gitgutter {{{
 let g:gitgutter_max_signs = 1000
 " }}}
+
 " gutentags: {{{
 " ----------
 let g:gutentags_cache_dir = $VARPATH.'/tags'
 let g:gutentags_ctags_executable = $HOME.'/bin/ctags'
 " }}}
+
 " nvim-completion-manager: {{{
 
 " Note: a snippet needs to be completed by the suggestions
@@ -137,12 +141,14 @@ imap <expr> <Plug>(expand) (cm#completed_is_snippet() ? "\<C-U>" : "")
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " }}}
+
 " Ultisnips: {{{
 let g:UltiSnipsExpandTrigger            = "<Plug>(ultisnips_expand)"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 " optional
 inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<cr>
 " }}}
+
 " LanguageClient: {{{
 " ---------------
 let g:LanguageClient_serverCommands = { 'python' : ['pyls', '-v'] }
@@ -154,13 +160,18 @@ nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 " TODO: :help LanguageClientFunctions
 " }}}
-" ALE: {{{
-set signcolumn="yes"
-let g:ale_sign_column_always = 1
-let g:airline#extensions#ale#enabled = 1
-let g:ale_set_highlights = 0
-" let g:ale_change_sign_column_color = 1
-"
-let g:ale_linters = { 'python': ['pyls'] }
-" TODO :help ale-highlights
+
+" Neomake: {{{
+set signcolumn=yes
+let g:neomake_verbose = 1
+let g:airline#extensions#neomake#enabled = 1
+
+let g:neomake_python_enabled_makers = ['pycodestyle', 'pydocstyle', 'pyflakes']
+
+call neomake#configure#automake({
+  \ 'TextChanged': {},
+  \ 'InsertLeave': {},
+  \ 'BufWritePost': {'delay': 0},
+  \ 'BufWinEnter': {},
+  \ }, 100)
 " }}}

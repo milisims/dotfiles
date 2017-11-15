@@ -10,7 +10,7 @@ if exists(':Plug')
 
 	Plug 'roxma/nvim-completion-manager', { 'do': ':UpdateRemotePlugins' }
 	Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
-	Plug 'w0rp/ale'
+	Plug 'neomake/neomake'
 
 	Plug 'airblade/vim-gitgutter'        " signs for git changes
 	Plug 'ludovicchabant/vim-gutentags'  " automatic ctags generation

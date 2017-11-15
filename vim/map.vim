@@ -1,4 +1,4 @@
-" Global Mappings "{{{
+" Global Mappings: {{{
 " ---------------
 " Release keymappings prefixes, evict entirely for use of plug-ins.
 nnoremap <Space>  <Nop>
@@ -58,8 +58,8 @@ if has("mac")
 	vnoremap <D-j> <M-j>
 	vnoremap <D-k> <M-k>
 endif
-
 " }}}
+
 " Global niceties {{{
 " ---------------
 
@@ -95,8 +95,8 @@ vnoremap <S-Tab> <gv
 nnoremap <expr> <leader>v '`['.strpart(getregtype(), 0, 1).'`]'
 
 nnoremap <leader><CR> :nohlsearch<CR>
-
 " }}}
+
 " File operations {{{
 " ---------------
 
@@ -106,8 +106,8 @@ nnoremap <Leader>cd :lcd %:p:h<CR>:pwd<CR>
 " Save a file with sudo
 " http://forrst.com/posts/Use_w_to_sudo_write_a_file_with_Vim-uAN
 cmap W!! w !sudo tee % >/dev/null
-
 " }}}
+
 " Editor UI {{{
 " ---------
 
@@ -131,8 +131,8 @@ nmap <silent> <Leader>tw :setlocal wrap! breakindent!<CR>
 nnoremap <silent> g0 :<C-u>tabfirst<CR>
 nnoremap <silent> g$ :<C-u>tablast<CR>
 nnoremap <silent> gr :<C-u>tabprevious<CR>
-
 " }}}
+
 " Totally Custom {{{
 " --------------
 
@@ -175,8 +175,8 @@ nnoremap g<CR> i<CR><Esc>
 " Last session management shortcuts
 nmap <Leader>se :<C-u>SessionSave last<CR>
 nmap <Leader>os :<C-u>execute 'source '.g:session_directory.'/last.vim'<CR>
-
 " }}}
+
 " Append modeline to EOF {{{
 nnoremap <silent> <Leader>ml :call <SID>append_modeline()<CR>
 

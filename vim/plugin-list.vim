@@ -1,8 +1,3 @@
-" List of plugins for vim and nvim.
-" Want to keep the primary functionality of the way I use
-" vim available to as low a version as possible, which is
-" determined here by vim-airline, something like vim-7.4
-"
 " NOTE: to install without exiting, select the new lines, yank, execute :@"
 "       then :PlugInstall
 if exists(':Plug')
