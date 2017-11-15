@@ -107,3 +107,5 @@ export LESS_TERMCAP_us=$'\E[01;32m'      # begin underline
 [[ -f ~/.bashrc.local ]] && source ~/.bashrc.local
 
 [[ -d $HOME/miniconda3/bin ]] && export PATH=$HOME/miniconda3/bin:$PATH
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

@@ -1,4 +1,5 @@
-" General {{{
+" General: {{{
+" --------
 set mouse=nv                 " Disable mouse in command-line mode
 set modeline                 " automatically setting options from modelines
 set report=0                 " Don't report on line changes
@@ -41,8 +42,8 @@ if ( ! has('nvim') || $DISPLAY !=? '') && has('clipboard')
 endif
 
 " }}}
-" Wildmenu {{{
-" --------
+" Wildmenu: {{{
+" ---------
 if has('wildmenu')
 	set nowildmenu
 	set wildmode=list:longest,full
@@ -54,8 +55,8 @@ if has('wildmenu')
 	set wildignore+=__pycache__,*.egg-info
 endif
 " }}}
-" History and undo saving {{{
-" --------------
+" History and undo saving: {{{
+" ------------------------
 set history=10000
 if has('nvim')
 	"  ShaDa/viminfo:
@@ -68,14 +69,14 @@ if has('nvim')
 else
 	set viminfo='300,<10,@50,h,n$VARPATH/viminfo  " set in  vimrc
 endif
-if has ("persistent_undo")
+if has ("persistent_undo")  " for both nvim and vim
 	set undodir=~/.vim_undo
 	set undofile
 endif
 
 " }}}
-" Tabs and Indents {{{
-" ----------------
+" Tabs and Indents: {{{
+" -----------------
 set textwidth=80    " Text width maximum chars before wrapping
 set noexpandtab     " Don't expand tabs to spaces.
 set tabstop=2       " The number of spaces a tab is
@@ -86,16 +87,15 @@ set autoindent      " Use same indenting on new lines
 set smartindent     " Smart autoindenting on new lines
 set shiftround      " Round indent to multiple of 'shiftwidth'
 " }}}
-" Timing {{{
-" ------
+" Timing: {{{
+" -------
 set timeout ttimeout
 set timeoutlen=750  " Time out on mappings
 set ttimeoutlen=250 " for key codes
 set updatetime=2000 " Idle time to write swap and trigger CursorHold
-
 " }}}
-" Searching {{{
-" ---------
+" Searching: {{{
+" ----------
 set ignorecase      " Search ignoring case
 set smartcase       " Keep case when searching with *
 set infercase       " Adjust case in insert completion mode
@@ -108,8 +108,8 @@ set matchtime=1     " Tenths of a second to show the matching paren
 set cpoptions-=m    " showmatch will wait 0.5s or until a char is typed
 
 " }}}
-" Behavior {{{
-" --------
+" Behavior: {{{
+" ---------
 set nowrap                      " No wrap by default
 set linebreak                   " Break long lines at 'breakat'
 set breakat=\ \	;:,!?           " Long lines break chars
@@ -132,8 +132,8 @@ if exists('+inccommand')
 endif
 
 " }}}
-" Editor UI Appearance {{{
-" --------------------
+" Editor UI Appearance: {{{
+" ---------------------
 set noshowmode          " Don't show mode in cmd window
 set shortmess=aoOTI     " Shorten messages and don't show intro
 set scrolloff=4         " Keep at least 2 lines above/below
@@ -177,8 +177,8 @@ if has('conceal') && v:version >= 703
 endif
 
 " }}}
-" Folds {{{
-" -----
+" Folds: {{{
+" ------
 if has('folding')
 	set foldenable
 	set foldmethod=syntax
@@ -210,8 +210,8 @@ function! FoldText()
 endfunction
 
 " }}}
-" Disable default plugins {{{
-" -----------------------
+" Disable default plugins: {{{
+" ------------------------
 let g:loaded_getscript = 1
 let g:loaded_getscriptPlugin = 1
 let g:loaded_gzip = 1
@@ -236,4 +236,12 @@ let g:loaded_zipPlugin = 1
 if has('patch-7.4.786')           " aligns with parenmatch in plugins.vim
 	let g:loaded_matchparen = 1
 endif
+" }}}
+" Numbertoggle: {{{
+" -------------
+augroup numbertoggle
+	autocmd!
+	autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu | set rnu   | endif
+	autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu | set nornu | endif
+augroup END
 " }}}

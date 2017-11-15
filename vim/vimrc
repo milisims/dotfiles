@@ -14,11 +14,11 @@ let &viewdir=$VARPATH.'/view'
 
 " Set up plugins, non nvim go here, shared plugins go in the plugins.vim
 call plug#begin('~/.config/vim/plugged')
-source ~/.config/vim/plugins.vim
+runtime plugin-list.vim
 call plug#end()
 
-" Section: modular configs
-runtime! config/*.vim
-runtime! config/plugins/*.vim
-runtime! local.vim
-
+runtime general.vim
+runtime file.vim
+runtime map.vim
+runtime plugin-configs.vim
+runtime local.vim

@@ -5,7 +5,7 @@ set fileformats=unix,dos,mac " Use Unix as the standard file type
 
 " My autocommands {{{
 " ---------------
-augroup MyAutoCmd
+augroup vimrc_general
 	autocmd!
 
 	au BufWinLeave ?* mkview            " Save fold

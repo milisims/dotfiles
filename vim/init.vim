@@ -8,11 +8,15 @@ let $VARPATH=$HOME.'/.local/share/nvim'   " should depend on XDG_CONFIG?
 
 " Section: plugins
 call plug#begin('~/.config/nvim/plugged')
-source ~/.config/vim/plugins.vim     " basic plugins, visual stuff, kept lightweight
-source ~/.config/nvim/plugins.vim    " neovim specific or 'bigger' plugins
+runtime plugin-list.vim
+runtime plugin-list-neovim.vim
 call plug#end()
 
-" Section: modular configs
-runtime! config/*.vim
-runtime! config/plugins/*.vim
-runtime! local.vim
+runtime general.vim
+runtime file.vim
+runtime map.vim
+runtime plugin-configs.vim
+runtime local.vim
+
+runtime plugin-configs-neovim.vim
+runtime local-neovim.vim

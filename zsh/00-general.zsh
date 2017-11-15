@@ -42,6 +42,7 @@ if ! echo "$PATH" | grep -q "$HOME/bin"; then
   export PATH=$HOME/bin:$PATH
 fi
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 #------------------------------------------////
 # Color man pages:
 #------------------------------------------////
