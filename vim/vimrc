@@ -8,13 +8,8 @@ set runtimepath+=~/.config/vim
 let $VARPATH=$HOME.'/.local/share/vim'
 let &viewdir=$VARPATH.'/view'
 
-" Set up plugins, non nvim go here, shared plugins go in the plugins.vim
-call plug#begin('~/.config/vim/plugged')
-runtime plugin-list.vim
-call plug#end()
-
 runtime general.vim
 runtime file.vim
 runtime map.vim
-runtime plugin-configs.vim
+runtime plugins.vim
 runtime local.vim

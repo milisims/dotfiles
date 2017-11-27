@@ -1,3 +1,139 @@
+" NOTE: to install without exiting, select the new lines, yank, execute :@"
+"       then :PlugInstall
+call plug#begin('~/.config/vim/plugged')
+" Vim: {{{
+if exists(':Plug')
+
+	Plug 'tpope/vim-surround'                " surrounding text object
+	Plug 'tpope/vim-commentary'              " easier comments (gc)
+	Plug 'tpope/vim-unimpaired'              " mapping for common pairs of actions
+	Plug 'tpope/vim-repeat'                  " allows more plugin . usage
+	Plug 'tpope/vim-eunuch'                  " vim sugar for unix shell cmds
+	Plug 'justinmk/vim-sneak'                " move around more easily!
+	Plug 'jiangmiao/auto-pairs'              " autocomplete ()s, etc
+	Plug 'sheerun/vim-polyglot'              " vim language pack
+	Plug 'raimon49/requirements.txt.vim'
+	Plug 'junegunn/vim-easy-align'           " align comments, etc
+	Plug 'AndrewRadev/sideways.vim'          " function parameter text obj (a)
+	Plug 'AndrewRadev/splitjoin.vim'         " gJ, gS to split or join statements
+	Plug 'mbbill/undotree'                   " provides undotree visualization
+
+	Plug 'bling/vim-airline'                 " pretty statusbars
+	Plug 'jonathanfilip/vim-lucius'					 " Colorscheme
+	Plug 'itchyny/vim-cursorword'            " highlight same word under cursor
+
+	Plug 'vim-jp/syntax-vim-ex'
+	Plug 'Vimjas/vim-python-pep8-indent'
+	Plug 'vim-scripts/python_match.vim'
+	Plug 'andreshazard/vim-logreview'
+
+	if has('patch-7.4.786')
+		Plug 'itchyny/vim-parenmatch'          " faster default plugin for matching
+	endif
+
+endif
+" }}}
+" Neovim: {{{
+if exists(':Plug') && has('nvim')
+
+	Plug 'Shougo/denite.nvim'            " makes a nice buffer to search through
+	Plug 'Shougo/neomru.vim'             " most recently used files source
+	Plug 'chemzqm/unite-location'        " quickfix and location list source
+	Plug 'SirVer/ultisnips'              " snippets!
+	Plug 'matthsims/vim-snippets'
+	Plug 'roxma/nvim-completion-manager', { 'do': ':UpdateRemotePlugins' }
+	Plug 'neomake/neomake'
+	Plug '5long/pytest-vim-compiler'
+	Plug 'airblade/vim-gitgutter'        " signs for git changes
+	Plug 'ludovicchabant/vim-gutentags'  " automatic ctags generation
+	Plug 'junegunn/fzf.vim'
+	Plug 'vimwiki/vimwiki'               " self management
+	Plug 'machakann/vim-highlightedyank'
+
+endif
+" }}}
+call plug#end()
+
+" airline {{{
+let g:airline#extensions#tabline#enabled = 1
+" let g:airline_left_sep='|'
+" let g:airline_right_sep = '|'
+" }}}
+" auto-pairs {{{
+let g:AutoPairsMapBS = 1
+let g:AutoPairsMapCR = 0
+let g:AutoPairsShortcutToggle = ''
+" }}}
+" colorscheme {{{
+if !empty(globpath(&rtp, 'colors/lucius.vim'))
+	colorscheme lucius
+	LuciusDark
+endif
+" }}}
+" commentary {{{
+xmap gc  <Plug>Commentary
+nmap gc  <Plug>Commentary
+omap gc  <Plug>Commentary
+nmap gcc <Plug>CommentaryLine
+nmap cgc <Plug>ChangeCommentary
+nmap gcu <Plug>Commentary<Plug>Commentary
+" }}}
+" easy-align {{{
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+" }}}
+" hardtime {{{
+let g:hardtime_default_on = 1
+let g:hardtime_timeout = 200
+let g:hardtime_allow_different_key = 1
+let g:hardtime_maxcount = 2
+
+let g:list_of_normal_keys = ["h", "j", "k", "l"]
+let g:list_of_visual_keys = ["h", "j", "k", "l"]
+" }}}
+" polyglot {{{
+let g:polyglot_disabled = ['python', 'vim']
+" }}}
+" sideways {{{
+omap aa <Plug>SidewaysArgumentTextobjA
+xmap aa <Plug>SidewaysArgumentTextobjA
+omap ia <Plug>SidewaysArgumentTextobjI
+xmap ia <Plug>SidewaysArgumentTextobjI
+
+nnoremap <S-Left> :SidewaysLeft<CR>
+nnoremap <S-Right> :SidewaysRight<CR>
+" }}}
+" sneak {{{
+nmap f <plug>Sneak_f
+nmap F <plug>Sneak_F
+xmap f <plug>Sneak_f
+xmap F <plug>Sneak_F
+omap f <plug>Sneak_f
+omap F <plug>Sneak_F
+
+nmap t <plug>Sneak_t
+nmap T <plug>Sneak_T
+xmap t <plug>Sneak_t
+xmap T <plug>Sneak_T
+omap t <plug>Sneak_t
+omap T <plug>Sneak_T
+
+nmap ; <Plug>Sneak_;
+xmap ; <Plug>Sneak_;
+nmap , <Plug>Sneak_,
+xmap , <Plug>Sneak_,
+" }}}
+" undotree {{{
+let g:undotree_WindowLayout = 3
+let g:undotree_ShortIndicators = 1
+
+nnoremap <F5> :UndotreeToggle<cr>
+" }}}
+
+if has('nvim')
 " denite: {{{
 " -------
 " Keybinds: {{{
@@ -115,22 +251,18 @@ for m in normal_mode_mappings
 endfor
 " }}}
 " }}}
-
 " echodoc: {{{
 " --------
 let g:echodoc#enable_at_startup = 1
 " }}}
-
 " gitgutter {{{
 let g:gitgutter_max_signs = 1000
 " }}}
-
 " gutentags: {{{
 " ----------
 let g:gutentags_cache_dir = $VARPATH.'/tags'
 let g:gutentags_ctags_executable = $HOME.'/bin/ctags'
 " }}}
-
 " nvim-completion-manager: {{{
 imap <expr> <CR>  (pumvisible() ?  "\<c-y>\<Plug>(expand)" : "\<CR>")
 " imap <expr> <Plug>(expand) (cm#completed_is_snippet() ? "\<c-y>\<C-U>" : "")
@@ -139,33 +271,18 @@ imap <expr> <Plug>(expand) (cm#completed_is_snippet() ? "\<Plug>(ultisnips_expan
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " }}}
-
 " Vimwiki: {{{
 augroup vimrc_vimwiki
 	autocmd!
 	autocmd FileType vimwiki setlocal expandtab
 augroup END
 " }}}
-
 " Ultisnips: {{{
 let g:UltiSnipsExpandTrigger            = "<Plug>(ultisnips_expand)"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 " optional
 inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<cr>
 " }}}
-
-" " LanguageClient: {{{
-" " ---------------
-" let g:LanguageClient_serverCommands = { 'python' : ['pyls', '-v'] }
-" let g:LanguageClient_autoStart = 1
-" let g:LanguageClient_diagnosticsEnable = 0  " managed by ale
-
-" nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-" nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-" nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-" " TODO: :help LanguageClientFunctions
-" " }}}
-
 " Neomake: {{{
 set signcolumn=yes
 let g:neomake_verbose = 1
@@ -174,9 +291,10 @@ let g:airline#extensions#neomake#enabled = 1
 let g:neomake_python_enabled_makers = ['pycodestyle', 'pydocstyle', 'pyflakes']
 
 call neomake#configure#automake({
-  \ 'TextChanged': {},
-  \ 'InsertLeave': {},
-  \ 'BufWritePost': {'delay': 0},
-  \ 'BufWinEnter': {},
-  \ }, 100)
+	\ 'TextChanged': {},
+	\ 'InsertLeave': {},
+	\ 'BufWritePost': {'delay': 0},
+	\ 'BufWinEnter': {},
+	\ }, 100)
 " }}}
+endif
