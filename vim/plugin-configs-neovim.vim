@@ -6,7 +6,7 @@ nnoremap <C-p> :Denite -mode=normal grep<CR>
 nnoremap <C-n> :Denite -mode=normal quickfix location_list<CR>
 
 nnoremap <silent> <Leader>dr :<C-u>Denite -resume<CR>
-nnoremap <silent> <Leader>df :<C-u>Denite file_rec file_mru<CR>
+nnoremap <silent> <Leader>df :<C-u>Denite file_mru file_rec<CR>
 nnoremap <silent> <Leader>db :<C-u>Denite buffer -default-action=switch<CR>
 nnoremap <silent> <Leader>dl :<C-u>Denite location_list -mode=normal<CR>
 nnoremap <silent> <Leader>dq :<C-u>Denite quickfix -mode=normal<CR>
@@ -132,14 +132,19 @@ let g:gutentags_ctags_executable = $HOME.'/bin/ctags'
 " }}}
 
 " nvim-completion-manager: {{{
-
-" Note: a snippet needs to be completed by the suggestions
-" TODO : "\<CR>\<Plug>AutoPairsReturn"
 imap <expr> <CR>  (pumvisible() ?  "\<c-y>\<Plug>(expand)" : "\<CR>")
-imap <expr> <Plug>(expand) (cm#completed_is_snippet() ? "\<C-U>" : "")
+" imap <expr> <Plug>(expand) (cm#completed_is_snippet() ? "\<c-y>\<C-U>" : "")
+imap <expr> <Plug>(expand) (cm#completed_is_snippet() ? "\<Plug>(ultisnips_expand)" : "")
 
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" }}}
+
+" Vimwiki: {{{
+augroup vimrc_vimwiki
+	autocmd!
+	autocmd FileType vimwiki setlocal expandtab
+augroup END
 " }}}
 
 " Ultisnips: {{{
@@ -149,17 +154,17 @@ let g:UltiSnipsRemoveSelectModeMappings = 0
 inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<cr>
 " }}}
 
-" LanguageClient: {{{
-" ---------------
-let g:LanguageClient_serverCommands = { 'python' : ['pyls', '-v'] }
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_diagnosticsEnable = 0  " managed by ale
+" " LanguageClient: {{{
+" " ---------------
+" let g:LanguageClient_serverCommands = { 'python' : ['pyls', '-v'] }
+" let g:LanguageClient_autoStart = 1
+" let g:LanguageClient_diagnosticsEnable = 0  " managed by ale
 
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-" TODO: :help LanguageClientFunctions
-" }}}
+" nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+" nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+" nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+" " TODO: :help LanguageClientFunctions
+" " }}}
 
 " Neomake: {{{
 set signcolumn=yes
