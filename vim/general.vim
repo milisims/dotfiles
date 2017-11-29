@@ -41,7 +41,6 @@ if ( ! has('nvim') || $DISPLAY !=? '') && has('clipboard')
 	set clipboard& clipboard+=unnamedplus
 endif
 " }}}
-
 " Wildmenu: {{{
 " ---------
 if has('wildmenu')
@@ -55,7 +54,6 @@ if has('wildmenu')
 	set wildignore+=__pycache__,*.egg-info
 endif
 " }}}
-
 " History and undo saving: {{{
 " ------------------------
 set history=10000
@@ -75,7 +73,6 @@ if has ("persistent_undo")  " for both nvim and vim
 	set undofile
 endif
 " }}}
-
 " Tabs and Indents: {{{
 " -----------------
 set textwidth=80    " Text width maximum chars before wrapping
@@ -88,7 +85,6 @@ set autoindent      " Use same indenting on new lines
 set smartindent     " Smart autoindenting on new lines
 set shiftround      " Round indent to multiple of 'shiftwidth'
 " }}}
-
 " Timing: {{{
 " -------
 set timeout ttimeout
@@ -96,7 +92,6 @@ set timeoutlen=750  " Time out on mappings
 set ttimeoutlen=250 " for key codes
 set updatetime=2000 " Idle time to write swap and trigger CursorHold
 " }}}
-
 " Searching: {{{
 " ----------
 set ignorecase      " Search ignoring case
@@ -110,7 +105,6 @@ set matchpairs+=<:> " Add HTML brackets to pair matching
 set matchtime=1     " Tenths of a second to show the matching paren
 set cpoptions-=m    " showmatch will wait 0.5s or until a char is typed
 " }}}
-
 " Behavior: {{{
 " ---------
 set nowrap                      " No wrap by default
@@ -134,7 +128,6 @@ if exists('+inccommand')
 	set inccommand=nosplit
 endif
 " }}}
-
 " Editor UI Appearance: {{{
 " ---------------------
 set noshowmode          " Don't show mode in cmd window
@@ -179,7 +172,6 @@ if has('conceal') && v:version >= 703
 	set conceallevel=2 concealcursor=niv
 endif
 " }}}
-
 " Folds: {{{
 " ------
 if has('folding')
@@ -212,7 +204,6 @@ function! FoldText()
 	return line . expansionString . foldSizeStr . foldPercentage . foldLevelStr
 endfunction
 " }}}
-
 " Disable default plugins: {{{
 " ------------------------
 let g:loaded_getscript = 1
@@ -240,7 +231,6 @@ if has('patch-7.4.786')           " aligns with parenmatch in plugins.vim
 	let g:loaded_matchparen = 1
 endif
 " }}}
-
 " Numbertoggle: {{{
 " -------------
 augroup numbertoggle

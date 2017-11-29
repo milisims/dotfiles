@@ -1,5 +1,3 @@
-" NOTE: to install without exiting, select the new lines, yank, execute :@"
-"       then :PlugInstall
 call plug#begin('~/.config/vim/plugged')
 " Vim: {{{
 if exists(':Plug')
