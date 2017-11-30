@@ -47,6 +47,7 @@ if exists(':Plug') && has('nvim')
 	Plug 'junegunn/fzf.vim'
 	Plug 'vimwiki/vimwiki'               " self management
 	Plug 'machakann/vim-highlightedyank'
+	Plug 'yuttie/comfortable-motion.vim' " pretty scrolling
 
 endif
 " }}}
@@ -298,5 +299,9 @@ call neomake#configure#automake({
 	\ 'BufWritePost': {'delay': 0},
 	\ 'BufWinEnter': {},
 	\ }, 100)
+" }}}
+" comfortable-motion: {{{
+noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
+noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
 " }}}
 endif
