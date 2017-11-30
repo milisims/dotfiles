@@ -1,13 +1,10 @@
-set nobackup         " Auto backup
-set nowritebackup    " Backup overwrite
-set noswapfile       " Nerp
+set nobackup                 " Auto backup
+set nowritebackup            " Backup overwrite
 set fileformats=unix,dos,mac " Use Unix as the standard file type
 
-" My autocommands {{{
-" ---------------
 augroup vimrc_general
 	autocmd!
-
+	" General: {{{
 	au BufWinLeave ?* mkview            " Save fold
 	au BufWinEnter ?* silent! loadview   " load fold
 
@@ -33,39 +30,28 @@ augroup vimrc_general
 		\ if &paste | setlocal nopaste mouse=a | echo 'nopaste' | endif |
 		\ if &l:diff | diffupdate | endif
 
+	" }}}
+	" Filetype: {{{
 	autocmd FileType help
 		\ setlocal iskeyword+=: | setlocal iskeyword+=# | setlocal iskeyword+=-
-
-	autocmd FileType crontab setlocal nobackup nowritebackup
 
 	autocmd FileType vim setlocal foldmethod=marker
 
 	autocmd FileType gitcommit setlocal spell
-
 	autocmd FileType gitcommit,qfreplace setlocal nofoldenable
 
-	autocmd FileType python,pyrex setlocal expandtab tabstop=4
-	autocmd FileType sh setlocal expandtab tabstop=2
-
-	" fixes unindenting comments
 	autocmd FileType python,pyrex setlocal nosmartindent
-
-	autocmd FileType markdown
-				\ setlocal spell expandtab autoindent
-				\ formatoptions=tcroqn2 comments=n:>
-
+	autocmd FileType python,pyrex setlocal expandtab tabstop=4
 	if executable('yapf')
 		autocmd FileType python setlocal formatprg=yapf
 	endif
-
 	autocmd BufNewFile,BufRead *.yapf set filetype=cfg
 
-	" TODO: if winwidth < 80, turn wrap off if it's on
-	" TODO: display tabs and buffers in tabline
-
+	autocmd FileType sh setlocal expandtab tabstop=2
+	autocmd FileType markdown
+				\ setlocal spell expandtab autoindent
+				\ formatoptions=tcroqn2 comments=n:>
+	" }}}
 augroup END
-" }}}
 
 let g:python_highlight_all = 1
-" au FileType python syn keyword pythonDecorator True None False self
-
