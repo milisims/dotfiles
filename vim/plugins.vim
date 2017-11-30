@@ -275,7 +275,11 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 augroup vimrc_vimwiki
 	autocmd!
 	autocmd FileType vimwiki setlocal expandtab
+	autocmd FileType vimwiki setlocal concealcursor=nc
 augroup END
+nmap gwf <Plug>VimwikiFollowLink
+nmap gwb <Plug>VimwikiGoBackLink
+let g:vimwiki_folding =	'syntax'
 " }}}
 " Ultisnips: {{{
 let g:UltiSnipsExpandTrigger            = "<Plug>(ultisnips_expand)"
