@@ -1,0 +1,12 @@
+[/]
+foreground-color='rgb(204,204,204)'
+visible-name='Default-M'
+palette=['rgb(0,0,0)', 'rgb(221,34,34)', 'rgb(0,170,0)', 'rgb(205,205,0)', 'rgb(30,144,255)', 'rgb(205,34,205)', 'rgb(0,205,205)', 'rgb(187,187,187)', 'rgb(76,76,76)', 'rgb(255,51,51)', 'rgb(85,221,85)', 'rgb(255,255,0)', 'rgb(70,130,180)', 'rgb(255,85,255)', 'rgb(0,255,255)', 'rgb(221,221,221)']
+cursor-shape='block'
+use-system-font=false
+use-theme-colors=false
+font='DejaVu Sans Mono 10'
+allow-bold=true
+bold-color-same-as-fg=false
+bold-color='rgb(221,221,221)'
+background-color='rgb(19,25,38)'
