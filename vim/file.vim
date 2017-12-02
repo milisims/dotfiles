@@ -1,5 +1,6 @@
 set nobackup                 " Auto backup
 set nowritebackup            " Backup overwrite
+let &directory=$DATADIR.'/swap//'
 set fileformats=unix,dos,mac " Use Unix as the standard file type
 
 augroup vimrc_general

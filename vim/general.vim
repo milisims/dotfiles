@@ -19,7 +19,7 @@ if has('patch-7.3.541')
 	set formatoptions+=j       " Remove comment leader when joining lines
 endif
 
-if has('vim_starting')       " not entirely sure why I have this...
+if has('vim_starting')
 	set encoding=utf-8
 	scriptencoding utf-8
 endif
@@ -66,10 +66,10 @@ if has('nvim')
 	"   h - Disable the effect of 'hlsearch' when loading the shada
 	set shada='300,<10,@50,s100,h
 else
-	set viminfo='300,<10,@50,h,n$VARPATH/viminfo  " set in  vimrc
+	set viminfo='300,<10,@50,h,n$DATADIR/viminfo  " set in  vimrc
 endif
-if has ("persistent_undo")  " for both nvim and vim
-	set undodir=~/.vim_undo
+if has("persistent_undo")  " for both nvim and vim
+	set undodir=$DATADIR/undo
 	set undofile
 endif
 " }}}

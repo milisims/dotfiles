@@ -36,13 +36,14 @@ echo
 echo -n "Installing vim and neovim settings... "
 mkdir -p $cfgdir/nvim
 rm_broken_links $cfgdir/nvim
-ln -sf $install_dir/nvim/* $cfgdir/nvim
+ln -sf $install_dir/vim/init.vim $cfgdir/nvim
 
 mkdir -p $cfgdir/vim
 rm_broken_links $cfgdir/vim
 ln -sf $install_dir/vim/* $cfgdir/vim
 ln -sf $install_dir/vim/vimrc $HOME/.vimrc
 mkdir -p $HOME/.local/share/vim/view
+mkdir -p $HOME/.local/share/vim/swap
 
 echo "Done"
 

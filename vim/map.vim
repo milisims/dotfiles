@@ -3,8 +3,6 @@
 " Release keymappings prefixes, evict entirely for use of plug-ins.
 nnoremap <Space>  <Nop>
 xnoremap <Space>  <Nop>
-nnoremap m        <Nop>
-xnoremap m        <Nop>
 nnoremap \|       <Nop>
 xnoremap \|       <Nop>
 onoremap \|       <Nop>
