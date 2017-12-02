@@ -8,5 +8,6 @@ $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   )
 )
 
+Copy-Item -Path dot\gitconfig -Destination ~\.gitconfig
 Copy-Item -Path vim\* -Filter *.vim -Destination ~\AppData\Local\nvim
 nvim +'PlugInstall --sync' +qa
