@@ -1,6 +1,6 @@
 " General: {{{
 " --------
-set mouse=nv                 " Disable mouse in command-line mode
+set mouse=niv                " Disable mouse in command-line mode
 set modeline                 " automatically setting options from modelines
 set report=0                 " Don't report on line changes
 set noerrorbells             " DO NOT Trigger bell on error
@@ -37,7 +37,7 @@ set sessionoptions-=help
 set sessionoptions-=buffers
 set sessionoptions+=tabpages
 
-if ( ! has('nvim') || $DISPLAY !=? '') && has('clipboard')
+if has('clipboard')
 	set clipboard& clipboard+=unnamedplus
 endif
 " }}}
