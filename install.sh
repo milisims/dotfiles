@@ -5,7 +5,7 @@ cd $install_dir
 cfgdir="$HOME/.config"
 
 function rm_broken_links {
-    find -L $1 -name . -o -type d -prune -o -type l -exec rm {} +
+    find $1/* -prune -type l ! -exec test -e {} \; -exec rm {} +
 }
 
 # ZSH Settings
@@ -15,6 +15,7 @@ for dotfile in $(ls dot); do
     rm $HOME/.$dotfile 2> /dev/null
     ln -s $install_dir/dot/$dotfile $HOME/.$dotfile
 done
+echo "Done"
 
 mkdir -p $cfgdir/zsh
 rm_broken_links $cfgdir/zsh
@@ -27,9 +28,9 @@ zsh_git_repo='https://github.com/zsh-users/zsh-syntax-highlighting.git'
 [ -d $zsh_git_dir ] && rm -rf $zsh_git_dir
 
 git clone $zsh_git_repo $zsh_git_dir > /dev/null 2>&1
-[ "$?" -ne 0 ] && echo -n "failed. "
-
-echo "Done"
+MSG="Done"
+[ "$?" -ne 0 ] && MSG="FAILED "  # to install zsh-syntax-highlighting
+echo $MSG
 echo
 
 # VIM Settings
@@ -47,20 +48,22 @@ mkdir -p $HOME/.local/share/vim/swap
 
 echo "Done"
 
-echo -n "Installing plug-vim... "
 vimaudir="$cfgdir/vim/autoload"
-nvimaudir="$cfgdir/nvim/autoload"
+echo -n "Installing plug-vim to $vimaudir... "
 plugurl='https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 tmpout=$(mktemp)
 curl -fLo $vimaudir/plug.vim --silent --create-dirs $plugurl
 if [ "$?" -eq 0 ]; then
+  echo "Done"
+  echo -n "Installing and updating vim plugins..."
   vim +'PlugInstall --sync' +'PlugUpdate' +qa
-  if [ command -v nvim > /dev/null 2>&1 ]; then
-    mkdir -p $nvimaudir
-    cp $vimaudir/plug.vim $nvimaudir
+  echo "Done"
+  if command -v nvim > /dev/null 2>&1; then
+    echo -n "Installing and updating nvim plugins..."
     nvim +'PlugInstall --sync' +'PlugUpdate' +qa
+    echo "Done"
   fi
 else
-  echo "failed."
+  echo "FAILED"  # to install plug-vim
 fi
