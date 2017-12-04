@@ -33,8 +33,12 @@ augroup vimrc_general
 
 	" }}}
 	" Filetype: {{{
-	autocmd FileType help
-		\ setlocal iskeyword+=: | setlocal iskeyword+=# | setlocal iskeyword+=-
+	autocmd FileType help setlocal nu rnu signcolumn=no
+	if exists(':helpclose')
+		autocmd FileType help nnoremap <buffer> q :helpclose<CR>
+	else
+		autocmd FileType help nnoremap <buffer> q :q<CR>
+	endif
 
 	autocmd FileType vim setlocal foldmethod=marker
 
@@ -49,8 +53,7 @@ augroup vimrc_general
 	autocmd BufNewFile,BufRead *.yapf set filetype=cfg
 
 	autocmd FileType sh setlocal expandtab tabstop=2
-	autocmd FileType markdown
-				\ setlocal spell expandtab autoindent
+	autocmd FileType markdown setlocal spell expandtab autoindent
 				\ formatoptions=tcroqn2 comments=n:>
 	" }}}
 augroup END
