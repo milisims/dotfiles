@@ -14,6 +14,7 @@ if exists(':Plug')
 	Plug 'junegunn/vim-easy-align'           " align comments, etc
 	Plug 'AndrewRadev/sideways.vim'          " function parameter text obj (a)
 	Plug 'AndrewRadev/splitjoin.vim'         " gJ, gS to split or join statements
+	Plug 'tommcdo/vim-exchange'              " cx exchange 'operator'
 	Plug 'mbbill/undotree'                   " provides undotree visualization
 
 	Plug 'bling/vim-airline'                 " pretty statusbars
@@ -135,7 +136,6 @@ nnoremap <F5> :UndotreeToggle<cr>
 if has('nvim')
 " denite: {{{
 " -------
-if exists('*denite#custom#option')  " To prevent errors on :call ...
 	" Keybinds: {{{
 	" ---------
 	nnoremap <C-p> :Denite -mode=normal grep<CR>
@@ -250,7 +250,6 @@ if exists('*denite#custom#option')  " To prevent errors on :call ...
 		call denite#custom#map('normal', m[0], m[1], m[2])
 	endfor
 	" }}}
-endif
 " }}}
 " echodoc: {{{
 " --------
@@ -299,17 +298,25 @@ let g:airline#extensions#neomake#enabled = 1
 
 let g:neomake_python_enabled_makers = ['pycodestyle', 'pydocstyle', 'pyflakes']
 
-if exists('*neomake#configure#automake')
-	call neomake#configure#automake({
-		\ 'TextChanged': {},
-		\ 'InsertLeave': {},
-		\ 'BufWritePost': {'delay': 0},
-		\ 'BufWinEnter': {},
-		\ }, 100)
-endif
+call neomake#configure#automake({
+	\ 'TextChanged': {},
+	\ 'InsertLeave': {},
+	\ 'BufWritePost': {'delay': 0},
+	\ 'BufWinEnter': {},
+	\ }, 100)
 " }}}
 " comfortable-motion: {{{
-noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
-noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
+let g:comfortable_motion_interval = 15.0
+let g:comfortable_motion_friction = 80.0
+let g:comfortable_motion_air_drag = 10.0
+
+let g:comfortable_motion_no_default_key_mappings = 1
+nnoremap <silent> <C-d> :call comfortable_motion#flick(6 * winheight(0))<CR>
+nnoremap <silent> <C-u> :call comfortable_motion#flick(-6 * winheight(0))<CR>
+nnoremap <silent> <C-f> :call comfortable_motion#flick(12 * winheight(0))<CR>
+nnoremap <silent> <C-b> :call comfortable_motion#flick(-12 * winheight(0))<CR>
+
+noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(60)<CR>
+noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-60)<CR>
 " }}}
 endif
