@@ -132,7 +132,7 @@ endif
 " ---------------------
 set noshowmode          " Don't show mode in cmd window
 set shortmess=aoOTI     " Shorten messages and don't show intro
-set scrolloff=4         " Keep at least 2 lines above/below
+set scrolloff=4         " Keep at least 4 lines above/below
 set sidescrolloff=2     " Keep at least 2 lines left/right
 set number              " Show line numbers
 set relativenumber      " Show relative line numbers from cursor
@@ -154,6 +154,7 @@ set cmdwinheight=5      " Command-line lines
 set equalalways         " Resize all windows on split or close
 set laststatus=2        " Always show a status line
 set colorcolumn=80      " Highlight the 80th character limit
+set cursorline
 set display=lastline
 
 " Do not display completion messages
@@ -169,7 +170,7 @@ endif
 
 " For snippet_complete marker
 if has('conceal') && v:version >= 703
-	set conceallevel=2 concealcursor=niv
+	set conceallevel=2 concealcursor=
 endif
 " }}}
 " Folds: {{{
@@ -217,8 +218,6 @@ let g:loaded_netrwFileHandlers = 1
 let g:loaded_netrwSettings = 1
 let g:loaded_rrhelper = 1
 let g:loaded_ruby_provider = 1
-let g:loaded_shada_plugin = 1
-let g:loaded_spellfile_plugin  = 1
 let g:loaded_tar = 1
 let g:loaded_tarPlugin = 1
 let g:loaded_tutor_mode_plugin = 1
