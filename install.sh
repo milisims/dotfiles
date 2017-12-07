@@ -62,6 +62,7 @@ if [ "$?" -eq 0 ]; then
   if command -v nvim > /dev/null 2>&1; then
     echo -n "Installing and updating nvim plugins..."
     nvim +'PlugInstall --sync' +'PlugUpdate' +qa
+    nvim -u NORC +'set spell' +qa
     echo "Done"
   fi
 else
