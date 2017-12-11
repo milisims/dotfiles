@@ -50,6 +50,7 @@ if exists(':Plug') && has('nvim')
 	Plug 'machakann/vim-highlightedyank'
 	Plug 'yuttie/comfortable-motion.vim' " pretty scrolling
 
+	Plug 'Ron89/thesaurus_query.vim'
 endif
 " }}}
 call plug#end()
