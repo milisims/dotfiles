@@ -25,6 +25,7 @@ if exists(':Plug')
 	Plug 'Vimjas/vim-python-pep8-indent'
 	Plug 'vim-scripts/python_match.vim'
 	Plug 'andreshazard/vim-logreview'
+	Plug 'matthsims/vim-yass'                " pretty scrolling
 
 	if has('patch-7.4.786')
 		Plug 'itchyny/vim-parenmatch'          " faster default plugin for matching
@@ -35,20 +36,19 @@ endif
 " Neovim: {{{
 if exists(':Plug') && has('nvim')
 
-	Plug 'Shougo/denite.nvim'            " makes a nice buffer to search through
-	Plug 'Shougo/neomru.vim'             " most recently used files source
-	Plug 'chemzqm/unite-location'        " quickfix and location list source
-	Plug 'SirVer/ultisnips'              " snippets!
+	Plug 'Shougo/denite.nvim'                " makes a nice buffer to search through
+	Plug 'Shougo/neomru.vim'                 " most recently used files source
+	Plug 'chemzqm/unite-location'            " quickfix and location list source
+	Plug 'SirVer/ultisnips'                  " snippets!
 	Plug 'matthsims/vim-snippets'
 	Plug 'roxma/nvim-completion-manager', { 'do': ':UpdateRemotePlugins' }
 	Plug 'neomake/neomake'
 	Plug '5long/pytest-vim-compiler'
-	Plug 'airblade/vim-gitgutter'        " signs for git changes
-	Plug 'ludovicchabant/vim-gutentags'  " automatic ctags generation
+	Plug 'airblade/vim-gitgutter'            " signs for git changes
+	Plug 'ludovicchabant/vim-gutentags'      " automatic ctags generation
 	Plug 'junegunn/fzf.vim'
-	Plug 'vimwiki/vimwiki'               " self management
+	Plug 'vimwiki/vimwiki'                   " self management
 	Plug 'machakann/vim-highlightedyank'
-	Plug 'yuttie/comfortable-motion.vim' " pretty scrolling
 
 	Plug 'Ron89/thesaurus_query.vim'
 endif
@@ -96,7 +96,7 @@ let g:list_of_normal_keys = ["h", "j", "k", "l"]
 let g:list_of_visual_keys = ["h", "j", "k", "l"]
 " }}}
 " polyglot {{{
-let g:polyglot_disabled = ['python', 'vim']
+let g:polyglot_disabled = ['python']
 " }}}
 " sideways {{{
 omap aa <Plug>SidewaysArgumentTextobjA
@@ -305,19 +305,5 @@ call neomake#configure#automake({
 	\ 'BufWritePost': {'delay': 0},
 	\ 'BufWinEnter': {},
 	\ }, 100)
-" }}}
-" comfortable-motion: {{{
-let g:comfortable_motion_interval = 15.0
-let g:comfortable_motion_friction = 80.0
-let g:comfortable_motion_air_drag = 10.0
-
-let g:comfortable_motion_no_default_key_mappings = 1
-nnoremap <silent> <C-d> :call comfortable_motion#flick(6 * winheight(0))<CR>
-nnoremap <silent> <C-u> :call comfortable_motion#flick(-6 * winheight(0))<CR>
-nnoremap <silent> <C-f> :call comfortable_motion#flick(12 * winheight(0))<CR>
-nnoremap <silent> <C-b> :call comfortable_motion#flick(-12 * winheight(0))<CR>
-
-noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(60)<CR>
-noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-60)<CR>
 " }}}
 endif
