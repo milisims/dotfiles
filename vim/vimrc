@@ -1,6 +1,6 @@
 set nocompatible
-set history=10000       " welp
-set t_Co=256 " sloppy, lazy. fix pls
+set history=10000
+set t_Co=16
 
 
 let $CFGDIR=empty($XDG_CONFIG_HOME) ? $HOME.'/.config/vim' : $XDG_CONFIG_HOME.'/vim'
@@ -12,3 +12,4 @@ let &viewdir=$DATADIR.'/view'
 runtime shared.vim
 runtime plugins.vim
 runtime local.vim
+" vim: set ts=2 sw=2 tw=80 noet :

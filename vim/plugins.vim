@@ -307,3 +307,4 @@ call neomake#configure#automake({
 	\ }, 100)
 " }}}
 endif
+" vim: set ts=2 sw=2 tw=80 noet :

@@ -249,7 +249,7 @@ augroup vimrc_general
 	au BufWinLeave ?* mkview            " Save fold
 	au BufWinEnter ?* silent! loadview   " load fold
 
-	" autocmd CursorHold * if &modified | silent! wa | endif
+	autocmd CursorHold * if &modified | silent! wa | endif
 	autocmd WinEnter,FocusGained * checktime
 
 	" Update filetype on save if empty
