@@ -50,6 +50,7 @@ if exists(':Plug') && has('nvim')
 	Plug 'vimwiki/vimwiki'                   " self management
 	Plug 'machakann/vim-highlightedyank'
 
+	Plug 'Ron89/thesaurus_query.vim'
 endif
 " }}}
 call plug#end()

@@ -1,7 +1,4 @@
 #!/usr/bin/zsh
-#------------------------------------------////
-# History & general
-#------------------------------------------////
 autoload -Uz colors && colors
 
 source ${0:a:h}/git-prompt.sh
