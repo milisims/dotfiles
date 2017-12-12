@@ -7,8 +7,6 @@ set runtimepath+=$CFGDIR
 let s:defaultdir=has('win32') ? $HOME.'\AppData\Local\nvim-data' : $HOME.'/.local/share/vim'
 let $DATADIR=empty($XDG_DATA_HOME) ? s:defaultdir : $XDG_DATA_HOME.'/vim'
 
-runtime general.vim
-runtime file.vim
-runtime map.vim
+runtime shared.vim
 runtime plugins.vim
 runtime local.vim

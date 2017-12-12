@@ -9,8 +9,6 @@ set runtimepath+=$CFGDIR
 let $DATADIR=empty($XDG_DATA_HOME) ? $HOME.'/.local/share/vim' : $XDG_DATA_HOME.'/vim'
 let &viewdir=$DATADIR.'/view'
 
-runtime general.vim
-runtime file.vim
-runtime map.vim
+runtime shared.vim
 runtime plugins.vim
 runtime local.vim
