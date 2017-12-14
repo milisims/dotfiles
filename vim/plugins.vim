@@ -10,12 +10,11 @@ if exists(':Plug')
 	Plug 'justinmk/vim-sneak'                " move around more easily!
 	Plug 'jiangmiao/auto-pairs'              " autocomplete ()s, etc
 	Plug 'sheerun/vim-polyglot'              " vim language pack
-	Plug 'raimon49/requirements.txt.vim'
+	Plug 'raimon49/requirements.txt.vim'     " syntax for python requirements.txt
 	Plug 'junegunn/vim-easy-align'           " align comments, etc
 	Plug 'AndrewRadev/sideways.vim'          " function parameter text obj (a)
-	Plug 'AndrewRadev/splitjoin.vim'         " gJ, gS to split or join statements
 	Plug 'tommcdo/vim-exchange'              " cx exchange 'operator'
-	Plug 'mbbill/undotree'                   " provides undotree visualization
+	" Plug 'mbbill/undotree'  Write a function to produce one tree, not 'live' ?
 
 	Plug 'bling/vim-airline'                 " pretty statusbars
 	Plug 'jonathanfilip/vim-lucius'					 " Colorscheme
@@ -24,7 +23,6 @@ if exists(':Plug')
 	Plug 'vim-jp/syntax-vim-ex'
 	Plug 'Vimjas/vim-python-pep8-indent'
 	Plug 'vim-scripts/python_match.vim'
-	Plug 'andreshazard/vim-logreview'
 	Plug 'matthsims/vim-yass'                " pretty scrolling
 
 	if has('patch-7.4.786')
