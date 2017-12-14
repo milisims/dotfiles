@@ -381,11 +381,12 @@ nnoremap <leader>a =ip
 nnoremap Q q
 
 " Drag current line/s vertically and auto-indent
-" FIXME: completely unreliable
-vnoremap <M-j> :move '>+1<CR>gv=gv
-vnoremap <M-k> :move '<-2<CR>gv=gv
-noremap  <M-j> :move .+1<CR>==
-noremap  <M-k> :move .-2<CR>==
+vnoremap <M-j> :<C-u>'<,'>move '>+1<CR>gv=gv
+vnoremap <M-k> :<C-u>'<,'>move '<-2<CR>gv=gv
+nnoremap  <M-j> :<C-u>move .+1<CR>==
+nnoremap  <M-k> :<C-u>move .-2<CR>==
+inoremap  <M-j> <C-c>:move .+1<CR>==gi
+inoremap  <M-k> <C-c>:move .-2<CR>==gi
 
 " Insert a newline from cursor
 nnoremap g<CR> i<CR><Esc>
