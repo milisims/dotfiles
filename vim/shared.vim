@@ -84,13 +84,11 @@ endif
 " Tabs and Indents: {{{
 " -----------------
 set textwidth=80    " Text width maximum chars before wrapping
-set noexpandtab     " Don't expand tabs to spaces.
-set tabstop=2       " The number of spaces a tab is
+set noexpandtab     " Don't expand tabs to spaces. aucmds for ft specific
 set softtabstop=2   " While performing editing operations
 set shiftwidth=2    " Number of spaces to use in auto(indent)
 set smarttab        " Tab insert blanks according to 'shiftwidth'
 set autoindent      " Use same indenting on new lines
-set smartindent     " Smart autoindenting on new lines
 set shiftround      " Round indent to multiple of 'shiftwidth'
 " }}}
 " Timing: {{{
@@ -228,7 +226,7 @@ let g:loaded_vimball = 1
 let g:loaded_vimballPlugin = 1
 let g:loaded_zip = 1
 let g:loaded_zipPlugin = 1
-if has('patch-7.4.786')           " aligns with parenmatch in plugins.vim
+if has('patch-7.4.786')             " aligns with parenmatch in plugins list
 	let g:loaded_matchparen = 1
 endif
 " }}}
@@ -241,7 +239,7 @@ augroup vimrc_numbertoggle
 	autocmd!
 	autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu | set rnu   | endif
 	autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu | set nornu | endif
-augroup END
+augroup END    " vimrc_numbertoggle
 " }}}
 " General: {{{
 augroup vimrc_general
@@ -270,7 +268,7 @@ augroup vimrc_general
 	autocmd InsertLeave * if &paste | setlocal nopaste | echo 'nopaste' | endif
 	autocmd InsertLeave * if &l:diff | diffupdate | endif
 
-augroup END
+augroup END    " vimrc_general
 " }}}
 " Filetype: {{{
 augroup vimrc_filetype
@@ -289,18 +287,17 @@ augroup vimrc_filetype
 	autocmd FileType gitcommit setlocal spell
 	autocmd FileType gitcommit,qfreplace setlocal nofoldenable
 
-	autocmd FileType python,pyrex setlocal nosmartindent
-	autocmd FileType python,pyrex setlocal expandtab tabstop=4
+	autocmd FileType python,pyrex setlocal expandtab tabstop=4 shiftwidth=4
 	if executable('yapf')
 		autocmd FileType python setlocal formatprg=yapf
 	endif
 	autocmd BufNewFile,BufRead *.yapf set filetype=cfg
 
-	autocmd FileType sh setlocal expandtab tabstop=2
+	autocmd FileType sh setlocal expandtab tabstop=2 shiftwidth=2
 	autocmd FileType markdown setlocal spell expandtab autoindent tw=0
 	autocmd FileType markdown setlocal formatoptions=croqn2 comments=n:>
 	autocmd FileType markdown setlocal wrap breakindent briopt=min:50,shift:2
-augroup END
+augroup END    " vimrc_filetype
 " }}}
 " }}}
 

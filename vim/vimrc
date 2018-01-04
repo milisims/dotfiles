@@ -1,7 +1,5 @@
-set nocompatible
 set history=10000
 set t_Co=16
-
 
 let $CFGDIR=empty($XDG_CONFIG_HOME) ? $HOME.'/.config/vim' : $XDG_CONFIG_HOME.'/vim'
 set runtimepath+=$CFGDIR
