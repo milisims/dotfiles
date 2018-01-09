@@ -233,14 +233,6 @@ endif
 " }}}
 
 " Autocommands: {{{
-" Numbertoggle: {{{
-" -------------
-augroup vimrc_numbertoggle
-	autocmd!
-	autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu | set rnu   | endif
-	autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu | set nornu | endif
-augroup END    " vimrc_numbertoggle
-" }}}
 " General: {{{
 augroup vimrc_general
 	autocmd!
@@ -298,6 +290,33 @@ augroup vimrc_filetype
 	autocmd FileType markdown setlocal formatoptions=croqn2 comments=n:>
 	autocmd FileType markdown setlocal wrap breakindent briopt=min:50,shift:2
 augroup END    " vimrc_filetype
+" }}}
+" Numbertoggle: {{{
+" -------------
+augroup vimrc_numbertoggle
+	autocmd!
+	autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu | set rnu   | endif
+	autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu | set nornu | endif
+augroup END    " vimrc_numbertoggle
+" }}}
+" DictionaryPopup: {{{
+let s:count=0
+function! s:PopUpDict() abort
+	let AsciiCode=char2nr(v:char)
+	if (AsciiCode <=# 122 && AsciiCode >=# 97) || (AsciiCode <=# 90 && AsciiCode >=# 65)
+		let s:count+=1
+		if s:count >=# 3
+			call feedkeys("\<c-x>\<c-k>")
+		endif
+	else
+		let s:count=0
+	endif
+endfunction
+
+augroup vimrc_dictpopup
+	autocmd!
+	autocmd InsertCharPre *.{md,txt} call <SID>PopUpDict()
+augroup END
 " }}}
 " }}}
 
