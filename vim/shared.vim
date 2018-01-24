@@ -13,9 +13,11 @@ set virtualedit=block        " Position cursor anywhere in visual block
 set synmaxcol=1000           " Don't syntax highlight long lines
 set formatoptions+=1         " Don't break lines after a one-letter word
 set formatoptions-=t         " Don't auto-wrap text
+set formatoptions-=o         " Don't insert comment leader after o or O
 set ttyfast                  " Makes drawing nicer - nvim on by default
 set updatetime=250           " update faster (eg, gitgutter plugin)
 set winaltkeys=no            " Don't let windows handle the alt key
+set pastetoggle=<F2>
 if has('patch-7.3.541')
 	set formatoptions+=j       " Remove comment leader when joining lines
 endif
@@ -287,7 +289,7 @@ augroup vimrc_filetype
 
 	autocmd FileType sh setlocal expandtab tabstop=2 shiftwidth=2
 	autocmd FileType markdown setlocal spell expandtab autoindent tw=0
-	autocmd FileType markdown setlocal formatoptions=croqn2 comments=n:>
+	autocmd FileType markdown setlocal formatoptions=crqn2 comments=n:>
 	autocmd FileType markdown setlocal wrap breakindent briopt=min:50,shift:2
 augroup END    " vimrc_filetype
 " }}}
@@ -321,7 +323,7 @@ augroup END
 " }}}
 
 " Mappings: {{{
-" --------
+" Simple: {{{
 " Release keymappings
 nnoremap <Space>  <Nop>
 xnoremap <Space>  <Nop>
@@ -346,6 +348,7 @@ nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
 nnoremap 0 ^
 nnoremap ^ 0
+nnoremap <silent> m i_<esc>r
 
 " Make cmd work as alt
 if has("mac")
@@ -363,38 +366,30 @@ cnoreabbrev Q q
 cnoreabbrev Qa qa
 cnoreabbrev Bd bd
 cnoreabbrev bD bd
+cnoreabbrev vh <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'vert help' : 'vh')<CR>
+
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
+nnoremap Q q
 
-" Quick substitute within selected area
-xnoremap s :s//g<Left><Left>
-
-" Window control
 nnoremap <C-q> <C-w>
-nnoremap <silent><C-w>z :vert resize<CR>:resize<CR>:normal! ze<CR>
-
-" Select blocks after indenting
 xnoremap < <gv
 xnoremap > >gv|
-
-" Select last edited text. improved over `[v`], eg works with visual block
-nnoremap <expr> <leader>v '`['.strpart(getregtype(), 0, 1).'`]'
-
 nnoremap <leader><CR> :nohlsearch<CR>
-
-" When pressing <leader>cd switch to the directory of the open buffer
-nnoremap <Leader>cd :lcd %:p:h<CR>:pwd<CR>
-
-" Save a file with sudo
-" http://forrst.com/posts/Use_w_to_sudo_write_a_file_with_Vim-uAN
 cmap W!! w !sudo tee % >/dev/null
-
-" Toggle paste mode
-set pastetoggle=<F2>
+nnoremap <Leader>cd :lcd %:p:h<CR>:pwd<CR>
 nnoremap cp yap<S-}>p
 nnoremap <leader>a =ip
 
-nnoremap Q q
+" }}}
+" LessSimple: {{{
+
+" Make this window big. z= makes all windows equal.
+nnoremap <silent><C-w>b :vert resize<CR>:resize<CR>:normal! ze<CR>
+" Select last edited text. improved over `[v`], eg works with visual block
+nnoremap <expr> <leader>v '`['.strpart(getregtype(), 0, 1).'`]'
+" Quick substitute within selected area
+xnoremap s :s//g<Left><Left>
 
 " Drag current line/s vertically and auto-indent
 vnoremap <M-j> :<C-u>'<,'>move '>+1<CR>gv=gv
@@ -407,8 +402,9 @@ inoremap  <M-k> <C-c>:move .-2<CR>==gi
 " Insert a newline from cursor
 nnoremap g<CR> i<CR><Esc>
 
+" }}}
+" Functions: {{{
 nnoremap <silent> <Leader>ml :call <SID>append_modeline()<CR>
-
 " Append modeline after last line in buffer
 " See: http://vim.wikia.com/wiki/Modeline_magic
 function! s:append_modeline()
@@ -417,5 +413,7 @@ function! s:append_modeline()
 	let l:modeline = substitute(&commentstring, '%s', l:modeline, '')
 	call append(line('$'), l:modeline)
 endfunction
+
+" }}}
 " }}}
 " vim: set ts=2 sw=2 tw=99 noet :
