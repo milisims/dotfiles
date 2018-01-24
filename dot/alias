@@ -1,8 +1,4 @@
-# all aliases across shells
-
-LSOPTS='-h --color=auto'
-
-# space removes from hist for zsh
+[ -z "$LSOPTS" ] && LSOPTS='-h --color=auto'
 alias ls=" ls $LSOPTS"
 alias l='ls -l'
 alias la='ls -Al'
@@ -12,11 +8,8 @@ alias lm='ls -l | more'
 
 alias grep='grep --color=auto'
 
-# Space removes from hist.
 alias fg=' fg'
 
-# alias rm="rm -i" # -i confirms EVERYTHING. Annoying, ubersafe.
-# nocorrect fixes odd behaviors
 if [ command -v nocorrect > /dev/null 2>&1 ]; then
   alias cp='nocorrect cp -i'
   alias mv='nocorrect mv -i'
@@ -29,6 +22,7 @@ fi
 
 alias md='mkdir -p'
 alias rd='rmdir'
+mcd () { mkdir -p $1; cd $1; }
 
 alias which='type -a'
 alias .='popd'
@@ -36,7 +30,41 @@ alias d='dirs -v | head -10'
 alias path='echo -e ${PATH//:/\\n}'
 alias du='du -sh'
 
-# Mmm. Vim.
 alias crontab='VIM_CRONTAB=true crontab'
 alias mvim='gvim'
 alias nev='nvim'
+
+# When the first argument is modified (TARGET), run the rest of the args as cmd
+# onmodify dissertation.md pandoc dissertation.md dissertation.pdf
+onmodify() {
+    TARGET=${1:-.}; shift
+    CMD="$@"
+
+    echo "$TARGET" "$CMD"
+    while inotifywait --exclude '.git' -qq -r -e close_write,moved_to,move_self $TARGET; do
+        sleep 0.2
+        bash -c "$CMD"
+        echo
+    done
+}
+
+alias gst='git status'
+alias gpl='git pull'
+alias gpu='git push'
+alias gadd='git add'
+alias gau='git add --update'
+alias gd='git diff'
+alias gwd='git diff --color-words'
+alias grh='git reset HEAD --'
+alias gci='git commit -v'
+alias gci='git commit -v'
+alias gcall='git commit -v -a'
+alias gbr='git branch'
+alias gbra='git branch -a'
+alias gco='git checkout'
+alias gcob='git checkout -b'
+alias gcot='git checkout -t'
+alias gcotb='git checkout --track -b'
+alias glo='git log -n 5'
+alias glog='git log'
+alias glogp='git log --pretty=format:"%h %s" --graph'

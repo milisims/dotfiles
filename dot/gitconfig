@@ -20,4 +20,11 @@
 [difftool]
     prompt = false
 [core]
-    pager = less -F -X
+    pager = less -+$LESS -FRX
+[alias]
+    st = status
+    ci = commit -v
+    co = checkout
+    br = branch
+    unstage = reset HEAD --
+    last = log -1 HEAD
