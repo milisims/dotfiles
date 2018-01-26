@@ -124,6 +124,9 @@ nmap ; <Plug>Sneak_;
 xmap ; <Plug>Sneak_;
 nmap , <Plug>Sneak_,
 xmap , <Plug>Sneak_,
+
+nmap <leader>s <plug>Sneak_s
+nmap <leader>S <plug>Sneak_S
 " }}}
 " undotree {{{
 let g:undotree_WindowLayout = 3
