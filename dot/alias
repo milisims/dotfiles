@@ -49,6 +49,8 @@ onmodify() {
 }
 
 alias gst='git status'
+alias gsh='git stash'
+alias gshl='git stash show -p'
 alias gpl='git pull'
 alias gpu='git push'
 alias gadd='git add'
@@ -57,7 +59,7 @@ alias gd='git diff'
 alias gwd='git diff --color-words'
 alias grh='git reset HEAD --'
 alias gci='git commit -v'
-alias gci='git commit -v'
+alias gcim='git commit -m'
 alias gcall='git commit -v -a'
 alias gbr='git branch'
 alias gbra='git branch -a'
