@@ -125,6 +125,8 @@ xmap ; <Plug>Sneak_;
 nmap , <Plug>Sneak_,
 xmap , <Plug>Sneak_,
 
+nmap \ <plug>Sneak_s
+nmap <leader>\ <plug>Sneak_S
 nmap <leader>s <plug>Sneak_s
 nmap <leader>S <plug>Sneak_S
 " }}}
