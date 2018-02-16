@@ -349,6 +349,11 @@ nnoremap <C-l> <C-W>l
 nnoremap 0 ^
 nnoremap ^ 0
 nnoremap <silent> m i_<esc>r
+nnoremap gU <Nop>
+nnoremap gu gU
+nnoremap gl gu
+xnoremap gu gU
+xnoremap gl gu
 
 " Make cmd work as alt
 if has("mac")
