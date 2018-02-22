@@ -7,6 +7,7 @@ if exists(':Plug')
 	Plug 'tpope/vim-unimpaired'              " mapping for common pairs of actions
 	Plug 'tpope/vim-repeat'                  " allows more plugin . usage
 	Plug 'tpope/vim-eunuch'                  " vim sugar for unix shell cmds
+	Plug 'tpope/vim-fugitive'                " git wrapper
 	Plug 'justinmk/vim-sneak'                " move around more easily!
 	Plug 'jiangmiao/auto-pairs'              " autocomplete ()s, etc
 	Plug 'sheerun/vim-polyglot'              " vim language pack
@@ -19,7 +20,10 @@ if exists(':Plug')
 	Plug 'bling/vim-airline'                 " pretty statusbars
 	Plug 'jonathanfilip/vim-lucius'					 " Colorscheme
 	Plug 'itchyny/vim-cursorword'            " highlight same word under cursor
+	Plug 'machakann/vim-highlightedyank'
 
+	Plug 'vim-pandoc/vim-pandoc'
+	Plug 'vim-pandoc/vim-pandoc-syntax'
 	Plug 'vim-jp/syntax-vim-ex'
 	Plug 'Vimjas/vim-python-pep8-indent'
 	Plug 'vim-scripts/python_match.vim'
@@ -41,12 +45,9 @@ if exists(':Plug') && has('nvim')
 	Plug 'matthsims/vim-snippets'
 	Plug 'roxma/nvim-completion-manager', { 'do': ':UpdateRemotePlugins' }
 	Plug 'neomake/neomake'
-	Plug '5long/pytest-vim-compiler'
 	Plug 'airblade/vim-gitgutter'            " signs for git changes
 	Plug 'ludovicchabant/vim-gutentags'      " automatic ctags generation
 	Plug 'junegunn/fzf.vim'
-	Plug 'vimwiki/vimwiki'                   " self management
-	Plug 'machakann/vim-highlightedyank'
 
 	Plug 'Ron89/thesaurus_query.vim'
 endif
