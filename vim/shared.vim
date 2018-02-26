@@ -1,5 +1,17 @@
 " Settings:{{{
 " General: {{{
+" Functions: {{{
+nnoremap <silent> <Leader>ml :call <SID>append_modeline()<CR>
+" Append modeline after last line in buffer
+" See: http://vim.wikia.com/wiki/Modeline_magic
+function! s:append_modeline()
+	let l:modeline = printf(' vim: set ts=%d sw=%d tw=%d %set :',
+				\ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
+	let l:modeline = substitute(&commentstring, '%s', l:modeline, '')
+	call append(line('$'), l:modeline)
+endfunction
+
+" }}}
 " --------
 set mouse=niv                " Disable mouse in command-line mode
 set modeline                 " automatically setting options from modelines
@@ -330,14 +342,14 @@ xnoremap <Space>  <Nop>
 nnoremap \|       <Nop>
 xnoremap \|       <Nop>
 onoremap \|       <Nop>
-
-let g:mapleader=' '
-let g:maplocalleader="'"
-inoremap jk <ESC>
 nnoremap <Up>    <Nop>
 nnoremap <Down>  <Nop>
 nnoremap <Left>  <Nop>
 nnoremap <Right> <Nop>
+
+let g:mapleader=' '
+let g:maplocalleader="'"
+inoremap jk <ESC>
 nnoremap Y y$
 nnoremap <CR> za
 nnoremap j gj

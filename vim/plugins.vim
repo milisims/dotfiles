@@ -47,6 +47,7 @@ if exists(':Plug') && has('nvim')
 	Plug 'junegunn/fzf.vim'
 	Plug 'vimwiki/vimwiki'                   " self management
 	Plug 'machakann/vim-highlightedyank'
+	Plug 'BurningEther/iron.nvim'
 
 	Plug 'Ron89/thesaurus_query.vim'
 endif
@@ -306,6 +307,15 @@ call neomake#configure#automake({
 	\ 'BufWritePost': {'delay': 0},
 	\ 'BufWinEnter': {},
 	\ }, 100)
+" }}}
+" Iron: {{{
+let g:iron_map_defaults = 0
+augroup vimrc_iron
+	autocmd!
+	autocmd Filetype python nmap <buffer> <localleader>t <Plug>(iron-send-motion)
+	autocmd Filetype python vmap <buffer> <localleader>t <Plug>(iron-send-motion)
+	autocmd Filetype python nmap <buffer> <localleader>l <Plug>(iron-repeat-cmd)
+augroup END
 " }}}
 endif
 " vim: set ts=2 sw=2 tw=80 noet :
