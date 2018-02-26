@@ -7,6 +7,7 @@ if exists(':Plug')
 	Plug 'tpope/vim-unimpaired'              " mapping for common pairs of actions
 	Plug 'tpope/vim-repeat'                  " allows more plugin . usage
 	Plug 'tpope/vim-eunuch'                  " vim sugar for unix shell cmds
+	Plug 'tpope/vim-fugitive'                " git wrapper
 	Plug 'justinmk/vim-sneak'                " move around more easily!
 	Plug 'jiangmiao/auto-pairs'              " autocomplete ()s, etc
 	Plug 'sheerun/vim-polyglot'              " vim language pack
@@ -19,7 +20,10 @@ if exists(':Plug')
 	Plug 'bling/vim-airline'                 " pretty statusbars
 	Plug 'jonathanfilip/vim-lucius'					 " Colorscheme
 	Plug 'itchyny/vim-cursorword'            " highlight same word under cursor
+	Plug 'machakann/vim-highlightedyank'
 
+	Plug 'vim-pandoc/vim-pandoc'
+	Plug 'vim-pandoc/vim-pandoc-syntax'
 	Plug 'vim-jp/syntax-vim-ex'
 	Plug 'Vimjas/vim-python-pep8-indent'
 	Plug 'vim-scripts/python_match.vim'
@@ -41,12 +45,9 @@ if exists(':Plug') && has('nvim')
 	Plug 'matthsims/vim-snippets'
 	Plug 'roxma/nvim-completion-manager', { 'do': ':UpdateRemotePlugins' }
 	Plug 'neomake/neomake'
-	Plug '5long/pytest-vim-compiler'
 	Plug 'airblade/vim-gitgutter'            " signs for git changes
 	Plug 'ludovicchabant/vim-gutentags'      " automatic ctags generation
-	Plug 'junegunn/fzf.vim'
-	Plug 'vimwiki/vimwiki'                   " self management
-	Plug 'machakann/vim-highlightedyank'
+	Plug 'junegunn/fzf.vim', { 'do': 'yes \| ./install' }
 	Plug 'BurningEther/iron.nvim'
 
 	Plug 'Ron89/thesaurus_query.vim'
@@ -54,23 +55,23 @@ endif
 " }}}
 call plug#end()
 
-" airline {{{
+" airline: {{{
 let g:airline#extensions#tabline#enabled = 1
 " let g:airline_left_sep='|'
 " let g:airline_right_sep = '|'
 " }}}
-" auto-pairs {{{
+" auto-pairs: {{{
 let g:AutoPairsMapBS = 1
 let g:AutoPairsMapCR = 0
 let g:AutoPairsShortcutToggle = ''
 " }}}
-" colorscheme {{{
+" colorscheme: {{{
 if !empty(globpath(&rtp, 'colors/lucius.vim'))
 	colorscheme lucius
 	LuciusDark
 endif
 " }}}
-" commentary {{{
+" commentary: {{{
 xmap gc  <Plug>Commentary
 nmap gc  <Plug>Commentary
 omap gc  <Plug>Commentary
@@ -78,14 +79,14 @@ nmap gcc <Plug>CommentaryLine
 nmap cgc <Plug>ChangeCommentary
 nmap gcu <Plug>Commentary<Plug>Commentary
 " }}}
-" easy-align {{{
+" easy-align: {{{
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 " }}}
-" hardtime {{{
+" hardtime: {{{
 let g:hardtime_default_on = 1
 let g:hardtime_timeout = 200
 let g:hardtime_allow_different_key = 1
@@ -94,10 +95,10 @@ let g:hardtime_maxcount = 2
 let g:list_of_normal_keys = ["h", "j", "k", "l"]
 let g:list_of_visual_keys = ["h", "j", "k", "l"]
 " }}}
-" polyglot {{{
+" polyglot: {{{
 let g:polyglot_disabled = ['python']
 " }}}
-" sideways {{{
+" sideways: {{{
 omap aa <Plug>SidewaysArgumentTextobjA
 xmap aa <Plug>SidewaysArgumentTextobjA
 omap ia <Plug>SidewaysArgumentTextobjI
@@ -106,7 +107,7 @@ xmap ia <Plug>SidewaysArgumentTextobjI
 nnoremap <S-Left> :SidewaysLeft<CR>
 nnoremap <S-Right> :SidewaysRight<CR>
 " }}}
-" sneak {{{
+" sneak: {{{
 nmap f <plug>Sneak_f
 nmap F <plug>Sneak_F
 xmap f <plug>Sneak_f
@@ -126,14 +127,20 @@ xmap ; <Plug>Sneak_;
 nmap , <Plug>Sneak_,
 xmap , <Plug>Sneak_,
 
+nmap \ <plug>Sneak_s
+nmap <leader>\ <plug>Sneak_S
 nmap <leader>s <plug>Sneak_s
 nmap <leader>S <plug>Sneak_S
+
 " }}}
-" undotree {{{
+" undotree: {{{
 let g:undotree_WindowLayout = 3
 let g:undotree_ShortIndicators = 1
 
 nnoremap <F5> :UndotreeToggle<cr>
+" }}}
+" pandoc: {{{
+let g:pandoc#folding#fdc = 0
 " }}}
 
 if has('nvim')
@@ -258,7 +265,7 @@ if has('nvim')
 " --------
 let g:echodoc#enable_at_startup = 1
 " }}}
-" gitgutter {{{
+" gitgutter: {{{
 let g:gitgutter_max_signs = 1000
 " }}}
 " gutentags: {{{

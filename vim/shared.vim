@@ -258,17 +258,17 @@ augroup vimrc_general
 
 	" Update filetype on save if empty
 	autocmd BufWritePost * nested
-		\ if &l:filetype ==# '' || exists('b:ftdetect')
-		\ |   unlet! b:ftdetect
-		\ |   filetype detect
-		\ | endif
+				\ if &l:filetype ==# '' || exists('b:ftdetect')
+				\ |   unlet! b:ftdetect
+				\ |   filetype detect
+				\ | endif
 
 	" When editing a file, always jump to the last known cursor position.
 	" Don't do it when the position is invalid or when inside an event handler
 	autocmd BufReadPost *
-		\ if &ft !~ '^git\c' && ! &diff && line("'\"") > 0 && line("'\"") <= line("$")
-		\|   execute 'normal! g`"zvzz'
-		\| endif
+				\ if &ft !~ '^git\c' && ! &diff && line("'\"") > 0 && line("'\"") <= line("$")
+				\|   execute 'normal! g`"zvzz'
+				\| endif
 
 	" Disable paste and/or update diff when leaving insert mode
 	autocmd InsertLeave * if &paste | setlocal nopaste | echo 'nopaste' | endif
@@ -281,11 +281,6 @@ augroup vimrc_filetype
 	autocmd!
 	if has('nvim')
 		autocmd FileType help setlocal nu rnu signcolumn=no
-	endif
-	if exists(':helpclose')
-		autocmd FileType help nnoremap <buffer> q :helpclose<CR>
-	else
-		autocmd FileType help nnoremap <buffer> q :q<CR>
 	endif
 
 	autocmd FileType vim setlocal foldmethod=marker
@@ -339,6 +334,8 @@ augroup END
 " Release keymappings
 nnoremap <Space>  <Nop>
 xnoremap <Space>  <Nop>
+nnoremap '        <Nop>
+xnoremap '        <Nop>
 nnoremap \|       <Nop>
 xnoremap \|       <Nop>
 onoremap \|       <Nop>
@@ -354,6 +351,7 @@ nnoremap Y y$
 nnoremap <CR> za
 nnoremap j gj
 nnoremap k gk
+nnoremap <BS> <c-^>
 nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
 nnoremap <C-h> <C-W>h
@@ -361,6 +359,11 @@ nnoremap <C-l> <C-W>l
 nnoremap 0 ^
 nnoremap ^ 0
 nnoremap <silent> m i_<esc>r
+nnoremap gU <Nop>
+nnoremap gu gU
+nnoremap gl gu
+xnoremap gu gU
+xnoremap gl gu
 
 " Make cmd work as alt
 if has("mac")
@@ -387,12 +390,37 @@ nnoremap Q q
 nnoremap <C-q> <C-w>
 xnoremap < <gv
 xnoremap > >gv|
-nnoremap <leader><CR> :nohlsearch<CR>
 cmap W!! w !sudo tee % >/dev/null
-nnoremap <Leader>cd :lcd %:p:h<CR>:pwd<CR>
 nnoremap cp yap<S-}>p
-nnoremap <leader>a =ip
 
+nnoremap g{ {
+nnoremap g} }
+nnoremap g= gg=G``
+nnoremap gQ gggqgG''
+nnoremap g<CR> i<CR><Esc>
+
+nnoremap <leader><CR> :nohlsearch<CR>
+nnoremap <leader>sv :w<CR>
+nnoremap <leader>cd :lcd %:p:h<CR>:pwd<CR>
+
+nnoremap <leader>evr :e $MYVIMRC<CR>
+nnoremap <leader>evs :e $CFGDIR/shared.vim<CR>
+nnoremap <leader>evp :e $CFGDIR/plugins.vim<CR>
+nnoremap <leader>rv :so $MYVIMRC<CR>
+
+" }}}
+" Filetype: {{{
+augroup vimrc_filetype_mappings
+	autocmd!
+	if exists(':helpclose')
+		autocmd FileType help nnoremap <buffer> q :helpclose<CR>
+	else
+		autocmd FileType help nnoremap <buffer> q :q<CR>
+	endif
+
+	nnoremap <silent> <Plug>FirstSuggestionFixSpelling 1z= :call repeat#set("\<Plug>FirstSuggestionFixSpelling")<CR>
+	autocmd FileType markdown nnoremap <buffer> 's <Plug>FirstSuggestionFixSpelling
+augroup END  " vimrc_filetype_mappings"
 " }}}
 " LessSimple: {{{
 
@@ -400,19 +428,23 @@ nnoremap <leader>a =ip
 nnoremap <silent><C-w>b :vert resize<CR>:resize<CR>:normal! ze<CR>
 " Select last edited text. improved over `[v`], eg works with visual block
 nnoremap <expr> <leader>v '`['.strpart(getregtype(), 0, 1).'`]'
+
+" copy/paste line number -/+[count] below the current line
+nnoremap - :<C-u>execute '-'.v:count1.'copy.'<CR>
+nnoremap + :<C-u>execute '+'.v:count1.'copy.'<CR>
+
 " Quick substitute within selected area
 xnoremap s :s//g<Left><Left>
+xnoremap gs y:%s/<C-r>"//g<Left><Left>
+" TODO: mark a region, select a region of text, hit keybinding, replace only that region.
 
 " Drag current line/s vertically and auto-indent
 vnoremap <M-j> :<C-u>'<,'>move '>+1<CR>gv=gv
 vnoremap <M-k> :<C-u>'<,'>move '<-2<CR>gv=gv
 nnoremap  <M-j> :<C-u>move .+1<CR>==
-nnoremap  <M-k> :<C-u>move .-2<CR>==
 inoremap  <M-j> <C-c>:move .+1<CR>==gi
+nnoremap  <M-k> :<C-u>move .-2<CR>==
 inoremap  <M-k> <C-c>:move .-2<CR>==gi
-
-" Insert a newline from cursor
-nnoremap g<CR> i<CR><Esc>
 
 " }}}
 " Functions: {{{
