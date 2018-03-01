@@ -1,0 +1,9 @@
+setlocal spell
+setlocal expandtab
+setlocal autoindent
+setlocal textwidth=0
+setlocal formatoptions=12crqnw
+setlocal comments=n:>
+setlocal wrap
+setlocal breakindent
+setlocal briopt=min:50,shift:2

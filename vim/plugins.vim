@@ -1,77 +1,27 @@
+scriptencoding utf-8
+
 call plug#begin($CFGDIR.'/plugged')
-" Vim: {{{
-if exists(':Plug')
-
-	Plug 'tpope/vim-surround'                " surrounding text object
-	Plug 'tpope/vim-commentary'              " easier comments (gc)
-	Plug 'tpope/vim-unimpaired'              " mapping for common pairs of actions
-	Plug 'tpope/vim-repeat'                  " allows more plugin . usage
-	Plug 'tpope/vim-eunuch'                  " vim sugar for unix shell cmds
-	Plug 'tpope/vim-fugitive'                " git wrapper
-	Plug 'justinmk/vim-sneak'                " move around more easily!
-	Plug 'jiangmiao/auto-pairs'              " autocomplete ()s, etc
-	Plug 'sheerun/vim-polyglot'              " vim language pack
-	Plug 'raimon49/requirements.txt.vim'     " syntax for python requirements.txt
-	Plug 'junegunn/vim-easy-align'           " align comments, etc
-	Plug 'AndrewRadev/sideways.vim'          " function parameter text obj (a)
-	Plug 'tommcdo/vim-exchange'              " cx exchange 'operator'
-	" Plug 'mbbill/undotree'  Write a function to produce one tree, not 'live' ?
-
-	Plug 'bling/vim-airline'                 " pretty statusbars
-	Plug 'jonathanfilip/vim-lucius'					 " Colorscheme
-	Plug 'itchyny/vim-cursorword'            " highlight same word under cursor
-	Plug 'machakann/vim-highlightedyank'
-
-	Plug 'vim-pandoc/vim-pandoc'
-	Plug 'vim-pandoc/vim-pandoc-syntax'
-	Plug 'vim-jp/syntax-vim-ex'
-	Plug 'Vimjas/vim-python-pep8-indent'
-	Plug 'vim-scripts/python_match.vim'
-	Plug 'matthsims/vim-yass'                " pretty scrolling
-
-	if has('patch-7.4.786')
-		Plug 'itchyny/vim-parenmatch'          " faster default plugin for matching
-	endif
-
-endif
+" Vim {{{
+" loupe {{{
+Plug 'wincent/loupe'                     " Prettier searching
 " }}}
-" Neovim: {{{
-if exists(':Plug') && has('nvim')
-
-	Plug 'Shougo/denite.nvim'                " makes a nice buffer to search through
-	Plug 'Shougo/neomru.vim'                 " most recently used files source
-	Plug 'chemzqm/unite-location'            " quickfix and location list source
-	Plug 'SirVer/ultisnips'                  " snippets!
-	Plug 'matthsims/vim-snippets'
-	Plug 'roxma/nvim-completion-manager', { 'do': ':UpdateRemotePlugins' }
-	Plug 'neomake/neomake'
-	Plug 'airblade/vim-gitgutter'            " signs for git changes
-	Plug 'ludovicchabant/vim-gutentags'      " automatic ctags generation
-	Plug 'junegunn/fzf.vim', { 'do': 'yes \| ./install' }
-	Plug 'BurningEther/iron.nvim'
-
-	Plug 'Ron89/thesaurus_query.vim'
-endif
+" vim-surround {{{
+Plug 'tpope/vim-surround'                " surrounding text object
 " }}}
-call plug#end()
-
-" airline: {{{
-let g:airline#extensions#tabline#enabled = 1
-" let g:airline_left_sep='|'
-" let g:airline_right_sep = '|'
+" vim-unimpaired {{{
+Plug 'tpope/vim-unimpaired'              " mapping for common pairs of actions
 " }}}
-" auto-pairs: {{{
-let g:AutoPairsMapBS = 1
-let g:AutoPairsMapCR = 0
-let g:AutoPairsShortcutToggle = ''
+" vim-repeat {{{
+Plug 'tpope/vim-repeat'                  " allows more plugin . usage
 " }}}
-" colorscheme: {{{
-if !empty(globpath(&rtp, 'colors/lucius.vim'))
-	colorscheme lucius
-	LuciusDark
-endif
+" vim-eunuch {{{
+Plug 'tpope/vim-eunuch'                  " vim sugar for unix shell cmds
 " }}}
-" commentary: {{{
+" vim-fugitive {{{
+Plug 'tpope/vim-fugitive'                " git wrapper
+" }}}
+" vim-commentary {{{
+Plug 'tpope/vim-commentary'              " easier comments (gc)
 xmap gc  <Plug>Commentary
 nmap gc  <Plug>Commentary
 omap gc  <Plug>Commentary
@@ -79,35 +29,33 @@ nmap gcc <Plug>CommentaryLine
 nmap cgc <Plug>ChangeCommentary
 nmap gcu <Plug>Commentary<Plug>Commentary
 " }}}
-" easy-align: {{{
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+" vim-exchange {{{
+Plug 'tommcdo/vim-exchange'              " cx exchange 'operator'
 " }}}
-" hardtime: {{{
-let g:hardtime_default_on = 1
-let g:hardtime_timeout = 200
-let g:hardtime_allow_different_key = 1
-let g:hardtime_maxcount = 2
-
-let g:list_of_normal_keys = ["h", "j", "k", "l"]
-let g:list_of_visual_keys = ["h", "j", "k", "l"]
+" syntax-vim-ex {{{
+Plug 'vim-jp/syntax-vim-ex'              " Accurate viml syntax
 " }}}
-" polyglot: {{{
-let g:polyglot_disabled = ['python']
+" vim-python-pep8-indent {{{
+Plug 'Vimjas/vim-python-pep8-indent'     " fix python indentation
 " }}}
-" sideways: {{{
-omap aa <Plug>SidewaysArgumentTextobjA
-xmap aa <Plug>SidewaysArgumentTextobjA
-omap ia <Plug>SidewaysArgumentTextobjI
-xmap ia <Plug>SidewaysArgumentTextobjI
-
-nnoremap <S-Left> :SidewaysLeft<CR>
-nnoremap <S-Right> :SidewaysRight<CR>
+" python_match.vim {{{
+Plug 'vim-scripts/python_match.vim'      " fix python % motion
 " }}}
-" sneak: {{{
+" vim-yass {{{
+Plug 'matthsims/vim-yass'                " pretty scrolling
+" }}}
+" vim-cursorword {{{
+Plug 'itchyny/vim-cursorword'            " highlight same word under cursor
+" }}}
+" vim-highlightedyank {{{
+Plug 'machakann/vim-highlightedyank'     " highlights yanked objects
+if !exists('##TextYankPost')
+	nmap y <Plug>(highlightedyank)
+	xmap y <Plug>(highlightedyank)
+endif
+" }}}
+" vim-sneak {{{
+Plug 'justinmk/vim-sneak'                " two character movement
 nmap f <plug>Sneak_f
 nmap F <plug>Sneak_F
 xmap f <plug>Sneak_f
@@ -133,21 +81,105 @@ nmap <leader>s <plug>Sneak_s
 nmap <leader>S <plug>Sneak_S
 
 " }}}
-" undotree: {{{
-let g:undotree_WindowLayout = 3
-let g:undotree_ShortIndicators = 1
+" sideways.vim {{{
+Plug 'AndrewRadev/sideways.vim'          " function parameter text obj (a)
+omap aa <Plug>SidewaysArgumentTextobjA
+xmap aa <Plug>SidewaysArgumentTextobjA
+omap ia <Plug>SidewaysArgumentTextobjI
+xmap ia <Plug>SidewaysArgumentTextobjI
 
-nnoremap <F5> :UndotreeToggle<cr>
+nnoremap <S-Left> :SidewaysLeft<CR>
+nnoremap <S-Right> :SidewaysRight<CR>
 " }}}
-" pandoc: {{{
+" auto-pairs {{{
+Plug 'jiangmiao/auto-pairs'              " autocomplete ()
+let g:AutoPairsMapBS = 1
+let g:AutoPairsMapCR = 0
+let g:AutoPairsShortcutToggle = ''
+" }}}
+" vim-polyglot {{{
+Plug 'sheerun/vim-polyglot'              " vim language pack
+let g:polyglot_disabled = ['python']
+" }}}
+" vim-easy-align {{{
+Plug 'junegunn/vim-easy-align'           " align comments, etc
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+" }}}
+" vim-lucius {{{
+Plug 'morhetz/gruvbox'          " Colorscheme
+" }}}
+" echodoc.vim {{{
+Plug 'Shougo/echodoc.vim'                " echo function signature
+let g:echodoc#enable_at_startup = 1
+" }}}
+" vim-gitgutter {{{
+Plug 'airblade/vim-gitgutter'           " signs for git changes
+let g:gitgutter_max_signs = 1000
+" }}}
+" pandoc {{{
+Plug 'vim-pandoc/vim-pandoc'             " Pandoc helper. to remove.
+Plug 'vim-pandoc/vim-pandoc-syntax'
 let g:pandoc#folding#fdc = 0
 " }}}
+" fzf {{{
+Plug '~/.fzf'
+Plug 'junegunn/fzf.vim'
 
+nnoremap <silent> <leader>f   :Files<CR>
+nnoremap <silent> <leader>gf  :GFiles<CR>
+nnoremap <silent> <leader>gst :GFiles?<CR>
+nnoremap <silent> <leader>b   :Buffers<CR>
+nnoremap <silent> <leader>l   :Lines<CR>
+nnoremap <silent> <leader>bl  :BLines<CR>
+nnoremap <silent> <leader>O   :Tags<CR>
+nnoremap <silent> <leader>mr  :History<CR>
+nnoremap <silent> <leader>/   :execute 'Ag ' . input('Ag/')<CR>
+nnoremap <silent> <leader>A   :Ag<CR>
+nnoremap <silent> <leader>ht  :Helptags<CR>
+
+nnoremap <expr> <silent> K ':Ag ' . expand('<cword>') . '<CR>'
+vnoremap <silent> K y:Ag <C-r>"<CR>
+nnoremap <silent> <leader>gl :Commits<CR>
+nnoremap <silent> <leader>gbl :BCommits<CR>
+
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+imap <C-x><C-f> <plug>(fzf-complete-file-ag)
+imap <C-x><C-l> <plug>(fzf-complete-line)
+
+" }}}
+" parenmatch {{{
+if has('patch-7.4.786')
+	Plug 'itchyny/vim-parenmatch'          " faster default plugin for matching
+endif
+" }}}
+" }}}
+" Neovim {{{
 if has('nvim')
-" denite: {{{
-" -------
-	" Keybinds: {{{
-	" ---------
+	" deoplete.nvim {{{
+	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins'}
+	Plug 'Shougo/neco-syntax'
+	Plug 'Shougo/neco-vim'
+	Plug 'zchee/deoplete-jedi'
+	let g:deoplete#enable_at_startup = 1
+	let g:deoplete#sources#jedi#show_docstring = 1
+	" }}}
+	" vim-snippets {{{
+	Plug 'matthsims/vim-snippets'
+	" }}}
+	" ultisnips {{{
+	Plug 'SirVer/ultisnips'                  " snippets
+	let g:UltiSnipsExpandTrigger            = "<Plug>(ultisnips_expand)"
+	let g:UltiSnipsRemoveSelectModeMappings = 0
+	" optional
+	inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<cr>
+	" }}}
+	" denite.nvim {{{
+	Plug 'Shougo/denite.nvim'                " Fuzzyfind things
 	nnoremap <C-p> :Denite -mode=normal grep<CR>
 	nnoremap <C-n> :Denite -mode=normal quickfix location_list<CR>
 
@@ -169,15 +201,60 @@ if has('nvim')
 				\ :<C-u>call <SID>get_selection('/')<CR>
 				\ :execute 'Denite grep:::'.@/<CR><CR>
 
-	function! s:get_selection(cmdtype) "{{{
+	function! s:get_selection(cmdtype)
 		let temp = @s
 		normal! gv"sy
 		let @/ = substitute(escape(@s, '\'.a:cmdtype), '\n', '\\n', 'g')
 		let @s = temp
-	endfunction "}}}
-
+	endfunction
+	Plug 'Shougo/neomru.vim'                 " most recently used files source
+	Plug 'chemzqm/unite-location'            " quickfix and location list source
 	" }}}
-	" Interface: {{{
+	" neomake {{{
+	Plug 'neomake/neomake'                   " automatic linting
+	set signcolumn=yes
+
+	let g:neomake_python_enabled_makers = ['pycodestyle', 'pydocstyle', 'pyflakes']
+	" }}}
+	" vim-gutentags {{{
+	Plug 'ludovicchabant/vim-gutentags'      " automatic ctags generation
+	if executable('ctags')
+		let g:gutentags_cache_dir = $DATADIR.'/tags'
+		let g:gutentags_ctags_executable = $HOME.'/bin/ctags'  " probably unnecessary
+	else
+		let g:gutentags_enabled = 0
+	endif
+	" }}}
+	" iron.nvim {{{
+	Plug 'BurningEther/iron.nvim'            " nvim repl
+	let g:iron_map_defaults = 0
+	augroup vimrc_iron
+		autocmd!
+		autocmd Filetype python nmap <buffer> <localleader>t <Plug>(iron-send-motion)
+		autocmd Filetype python vmap <buffer> <localleader>t <Plug>(iron-send-motion)
+		autocmd Filetype python nmap <buffer> <localleader>l <Plug>(iron-repeat-cmd)
+	augroup END
+	" }}}
+	" thesaurus_query.vim {{{
+	Plug 'Ron89/thesaurus_query.vim'
+	" }}}
+endif
+" }}}
+call plug#end()
+
+
+" Post plug#load settings
+" Colorscheme {{{
+if !empty(globpath(&rtp, 'colors/gruvbox.vim'))
+	let g:gruvbox_italic = 1
+	let g:gruvbox_number_column = 'bg0'
+	set background=dark
+	colorscheme gruvbox
+endif
+" }}}
+if has('nvim')
+	" denite.nvim {{{
+	" Interface {{{
 	" ----------
 	call denite#custom#option('_', {
 				\ 'prompt': 'λ:',
@@ -203,7 +280,7 @@ if has('nvim')
 				\ 'winheight': 12
 				\ })
 	" }}}
-	" Commands: {{{
+	" Commands {{{
 	" ---------
 	call denite#custom#var(
 				\ 'file_rec', 'command',
@@ -229,7 +306,7 @@ if has('nvim')
 				\ 'converters', ['converter_relative_word'])
 
 	" }}}
-	" Denite-mode mappings: {{{
+	" Denite-mode mappings {{{
 	" ---------------------
 	let insert_mode_mappings = [
 				\  ['jk', '<denite:enter_mode:normal>', 'noremap'],
@@ -260,69 +337,14 @@ if has('nvim')
 		call denite#custom#map('normal', m[0], m[1], m[2])
 	endfor
 	" }}}
-" }}}
-" echodoc: {{{
-" --------
-let g:echodoc#enable_at_startup = 1
-" }}}
-" gitgutter: {{{
-let g:gitgutter_max_signs = 1000
-" }}}
-" gutentags: {{{
-" ----------
-if executable('ctags')
-	let g:gutentags_cache_dir = $DATADIR.'/tags'
-	let g:gutentags_ctags_executable = $HOME.'/bin/ctags'  " probably unnecessary
-else
-	let g:loaded_gutentags=1
-endif
-" }}}
-" nvim-completion-manager: {{{
-imap <expr> <CR>  (pumvisible() ?  "\<c-y>\<Plug>(expand)" : "\<CR>")
-" imap <expr> <Plug>(expand) (cm#completed_is_snippet() ? "\<c-y>\<C-U>" : "")
-imap <expr> <Plug>(expand) (cm#completed_is_snippet() ? "\<Plug>(ultisnips_expand)" : "")
-
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" }}}
-" Vimwiki: {{{
-augroup vimrc_vimwiki
-	autocmd!
-	autocmd FileType vimwiki setlocal expandtab
-	autocmd FileType vimwiki setlocal concealcursor=nc
-augroup END
-nmap gwf <Plug>VimwikiFollowLink
-nmap gwb <Plug>VimwikiGoBackLink
-let g:vimwiki_folding =	'syntax'
-" }}}
-" Ultisnips: {{{
-let g:UltiSnipsExpandTrigger            = "<Plug>(ultisnips_expand)"
-let g:UltiSnipsRemoveSelectModeMappings = 0
-" optional
-inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<cr>
-" }}}
-" Neomake: {{{
-set signcolumn=yes
-let g:neomake_verbose = 1
-let g:airline#extensions#neomake#enabled = 1
-
-let g:neomake_python_enabled_makers = ['pycodestyle', 'pydocstyle', 'pyflakes']
-
-call neomake#configure#automake({
-	\ 'TextChanged': {},
-	\ 'InsertLeave': {},
-	\ 'BufWritePost': {'delay': 0},
-	\ 'BufWinEnter': {},
-	\ }, 100)
-" }}}
-" Iron: {{{
-let g:iron_map_defaults = 0
-augroup vimrc_iron
-	autocmd!
-	autocmd Filetype python nmap <buffer> <localleader>t <Plug>(iron-send-motion)
-	autocmd Filetype python vmap <buffer> <localleader>t <Plug>(iron-send-motion)
-	autocmd Filetype python nmap <buffer> <localleader>l <Plug>(iron-repeat-cmd)
-augroup END
-" }}}
+	" }}}
+	" neomake {{{
+		call neomake#configure#automake({
+					\ 'TextChanged': {},
+					\ 'InsertLeave': {},
+					\ 'BufWritePost': {'delay': 0},
+					\ 'BufWinEnter': {},
+					\ }, 100)
+	" }}}
 endif
 " vim: set ts=2 sw=2 tw=80 noet :

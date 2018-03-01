@@ -28,6 +28,47 @@ setopt pushd_silent auto_pushd pushd_ignore_dups
 # disable ^S/^Q for flow control
 setopt noflowcontrol
 
+#------------------------------------------////
+# Bindings
+#------------------------------------------////
+
+# Allow for vim-mode. -e for emacs.
+bindkey -v
+bindkey -M viins 'jk'    vi-cmd-mode
+
+# But we still want normal cli binds
+bindkey -M viins '^a'    beginning-of-line
+bindkey -M viins '^e'    end-of-line
+bindkey -M vicmd '^a'    beginning-of-line
+bindkey -M vicmd '^e'    end-of-line
+
+# ssh <C-n> searches commands beginning with ssh.
+bindkey -M viins '^n'    history-beginning-search-forward
+bindkey -M viins '^p'    history-beginning-search-backward
+
+# and regular function keys to work.
+bindkey -M viins "^[[1~" vi-beginning-of-line   # Home
+bindkey -M viins "^[[4~" vi-end-of-line         # End
+bindkey -M viins '^[[2~' beep                   # Insert
+bindkey -M viins '^[[3~' delete-char            # Del
+bindkey -M vicmd "^[[1~" vi-beginning-of-line
+bindkey -M vicmd "^[[4~" vi-end-of-line
+bindkey -M vicmd '^[[2~' beep
+
+bindkey -M vicmd '/' fzf-history-widget
+
+# zmv is great for moving a ton of files
+# zmv with no clargs shows a good example usage
+autoload zmv
+
+# Mmm. Vim.
+export EDITOR=$(command -v vim)
+export VISUAL=$(command -v vim)
+
+#------------------------------------------////
+# Paths. 
+#------------------------------------------////
+
 # TODO: make this a function? make sure it exists, too.
 if ! echo "$PATH" | grep -q "$HOME/.local/bin"; then
   export PATH=$HOME/.local/bin:$PATH
@@ -42,6 +83,7 @@ if ! echo "$PATH" | grep -q "$HOME/bin"; then
   export PATH=$HOME/bin:$PATH
 fi
 
+# must be after vi mode declaration!
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 #------------------------------------------////
 # Color man pages:
@@ -54,37 +96,6 @@ export LESS_TERMCAP_se=$'\E[0m'          # end standout-mode
 export LESS_TERMCAP_so=$'\E[01;44;33m'   # begin standout-mode - info box
 export LESS_TERMCAP_ue=$'\E[0m'          # end underline
 export LESS_TERMCAP_us=$'\E[01;32m'      # begin underline
-
-#------------------------------------------////
-# Bindings
-#------------------------------------------////
-
-# Allow for vim-mode. -e for emacs.
-bindkey -v
-bindkey -M viins 'jk'    vi-cmd-mode # escape with jk
-
-# But we still want normal cli binds
-bindkey -M viins '^a'    beginning-of-line
-bindkey -M viins '^e'    end-of-line
-bindkey -M vicmd '^a'    beginning-of-line
-bindkey -M vicmd '^e'    end-of-line
-
-# and regular function keys to work.
-bindkey -M viins "^[[1~" vi-beginning-of-line   # Home
-bindkey -M viins "^[[4~" vi-end-of-line         # End
-bindkey -M viins '^[[2~' beep                   # Insert
-bindkey -M viins '^[[3~' delete-char            # Del
-bindkey -M vicmd "^[[1~" vi-beginning-of-line
-bindkey -M vicmd "^[[4~" vi-end-of-line
-bindkey -M vicmd '^[[2~' beep
-
-# zmv is great for moving a ton of files
-# zmv with no clargs shows a good example usage
-autoload zmv
-
-# Mmm. Vim.
-export EDITOR=$(command -v vim)
-export VISUAL=$(command -v vim)
 
 #------------------------------------------////
 # Aliases

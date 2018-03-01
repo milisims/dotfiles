@@ -1,18 +1,5 @@
-" Settings:{{{
+" Settings:
 " General: {{{
-" Functions: {{{
-nnoremap <silent> <Leader>ml :call <SID>append_modeline()<CR>
-" Append modeline after last line in buffer
-" See: http://vim.wikia.com/wiki/Modeline_magic
-function! s:append_modeline()
-	let l:modeline = printf(' vim: set ts=%d sw=%d tw=%d %set :',
-				\ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
-	let l:modeline = substitute(&commentstring, '%s', l:modeline, '')
-	call append(line('$'), l:modeline)
-endfunction
-
-" }}}
-" --------
 set mouse=niv                " Disable mouse in command-line mode
 set modeline                 " automatically setting options from modelines
 set report=0                 " Don't report on line changes
@@ -22,83 +9,84 @@ set hidden                   " hide buffers when abandoned instead of unload
 set magic                    " Set vims regex to the same as greps
 set path=.,**                " Directories to search when using gf
 set virtualedit=block        " Position cursor anywhere in visual block
+
 set synmaxcol=1000           " Don't syntax highlight long lines
-set formatoptions+=1         " Don't break lines after a one-letter word
-set formatoptions-=t         " Don't auto-wrap text
-set formatoptions-=o         " Don't insert comment leader after o or O
+
+set formatoptions=1crl
+if has('patch-7.3.541')
+	set formatoptions+=j       " Remove comment leader when joining lines
+endif
+
 set ttyfast                  " Makes drawing nicer - nvim on by default
 set updatetime=250           " update faster (eg, gitgutter plugin)
 set winaltkeys=no            " Don't let windows handle the alt key
 set pastetoggle=<F2>
-if has('patch-7.3.541')
-	set formatoptions+=j       " Remove comment leader when joining lines
-endif
 
 if has('vim_starting')
 	set encoding=utf-8
 	scriptencoding utf-8
 endif
 
-" What to save for views:
-set viewoptions-=options
-set viewoptions+=slash,unix
-
-" What to save in sessions:
-set sessionoptions-=blank
-set sessionoptions-=options
-set sessionoptions-=globals
-set sessionoptions-=folds
-set sessionoptions-=help
-set sessionoptions-=buffers
-set sessionoptions+=tabpages
+set viewoptions=folds,cursor,slash,unix
 
 if has('clipboard')
 	set clipboard& clipboard+=unnamedplus
 endif
 " }}}
-" Filetype: {{{
-set nobackup                 " Auto backup
-set nowritebackup            " Backup overwrite
-let &directory=$DATADIR.'/swap//'
-set fileformats=unix,dos,mac " Use Unix as the standard file type
-let g:python_highlight_all = 1
-" }}}
-" Wildmenu: {{{
-" ---------
-if has('wildmenu')
-	set nowildmenu
-	set wildmode=list:longest,full
-	set wildoptions=tagfile
-	set wildignorecase
-	set wildignore+=.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*
-	set wildignore+=*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store
-	set wildignore+=**/node_modules/**,**/bower_modules/**,*/.sass-cache/*
-	set wildignore+=__pycache__,*.egg-info
-endif
-" }}}
-" History and undo saving: {{{
-" ------------------------
-set history=10000
-if has('nvim')
-	"  ShaDa/viminfo:
-	"   ' - Maximum number of previously edited files marks
-	"   < - Maximum number of lines saved for each register
-	"   @ - Maximum number of items in the input-line history to be
-	"   s - Maximum size of an item contents in KiB
-	"   h - Disable the effect of 'hlsearch' when loading the shada
-	set shada='300,<10,@50,s100,h
+" Backup, Swap, Undo: {{{
+if exists('$SUDO_USER')
+	set nobackup
+	set nowritebackup            " Don't create root owned files
 else
-	set viminfo='300,<10,@50,h,n$DATADIR/viminfo  " set in  vimrc
+	set backupdir=$DATADIR/tmp/backup
+	set backupdir+=.
+	set backup
 endif
+
+if exists('$SUDO_USER')
+	set noswapfile               " Don't create root owned files
+else
+	set directory=$DATADIR/tmp/swap//  " // ensures the name is built from complete path
+	set directory+=.
+endif
+
 if has("persistent_undo")  " for both nvim and vim
-	set undodir=$DATADIR/undo
-	set undofile
+	if exists('$SUDO_USER')
+		set noundofile             " Don't create root owned files
+	else
+		set undodir=$DATADIR/tmp/undo
+		set undodir+=.
+		set undofile
+	endif
+endif
+
+set fileformats=unix,dos,mac " Use Unix as the standard file type
+" }}}
+" History: {{{
+set history=10000
+if exists('$SUDO_USER')
+	if has('nvim')
+		set shada=
+	else
+		set viminfo=
+	endif
+else
+	if has('nvim')
+		"  ShaDa/viminfo:
+		"   ' - Maximum number of previously edited files marks
+		"   < - Maximum number of lines saved for each register
+		"   @ - Maximum number of items in the input-line history to be
+		"   s - Maximum size of an item contents in KiB
+		"   h - Disable the effect of 'hlsearch' when loading the shada
+		set shada='300,<10,@50,s100,h
+	else
+		set viminfo='300,<10,@50,h,n$DATADIR/viminfo
+	endif
 endif
 " }}}
 " Tabs and Indents: {{{
-" -----------------
 set textwidth=80    " Text width maximum chars before wrapping
-set noexpandtab     " Don't expand tabs to spaces. aucmds for ft specific
+set noexpandtab     " Don't expand tabs to spaces. Spaces are better, but... eh
 set softtabstop=2   " While performing editing operations
 set shiftwidth=2    " Number of spaces to use in auto(indent)
 set smarttab        " Tab insert blanks according to 'shiftwidth'
@@ -106,14 +94,12 @@ set autoindent      " Use same indenting on new lines
 set shiftround      " Round indent to multiple of 'shiftwidth'
 " }}}
 " Timing: {{{
-" -------
 set timeout ttimeout
 set timeoutlen=750  " Time out on mappings
 set ttimeoutlen=250 " for key codes
 set updatetime=2000 " Idle time to write swap and trigger CursorHold
 " }}}
 " Searching: {{{
-" ----------
 set ignorecase      " Search ignoring case
 set smartcase       " Keep case when searching with *
 set infercase       " Adjust case in insert completion mode
@@ -126,7 +112,6 @@ set matchtime=1     " Tenths of a second to show the matching paren
 set cpoptions-=m    " showmatch will wait 0.5s or until a char is typed
 " }}}
 " Behavior: {{{
-" ---------
 set nowrap                      " No wrap by default
 set linebreak                   " Break long lines at 'breakat'
 set breakat=\ \	;:,!?           " Long lines break chars
@@ -148,16 +133,14 @@ if exists('+inccommand')
 	set inccommand=nosplit
 endif
 " }}}
-" Editor UI Appearance: {{{
-" ---------------------
+" UI: {{{
 set noshowmode          " Don't show mode in cmd window
-set shortmess=aoOTI     " Shorten messages and don't show intro
+set shortmess=aAoOTI     " Shorten messages and don't show intro
 set scrolloff=4         " Keep at least 4 lines above/below
 set sidescrolloff=2     " Keep at least 2 lines left/right
 set number              " Show line numbers
 set relativenumber      " Show relative line numbers from cursor
 set noruler             " Disable default status ruler
-set nolist              " Don't show hidden characters in vim by default
 set lazyredraw          " Don't redraw while executing macros
 
 set showtabline=2       " Always show the tabs line
@@ -177,10 +160,31 @@ set colorcolumn=80      " Highlight the 80th character limit
 set cursorline
 set display=lastline
 
+set list
+set listchars=nbsp:⊗
+set listchars+=tab:▷‒
+set listchars+=extends:»
+set listchars+=precedes:«
+set listchars+=trail:•
+set nojoinspaces
+
+set showbreak=↘
+set fillchars=vert:┃
+
+if has('termguicolors')
+	set termguicolors
+else
+	set t_Co=256
+endif
+
 " Do not display completion messages
-if has('patch-7.4.314')	| set shortmess+=c | endif
+if has('patch-7.4.314')
+	set shortmess+=c
+endif
 " Do not display message when editing files
-if has('patch-7.4.1570') | set shortmess+=F | endif
+if has('patch-7.4.1570')
+	set shortmess+=F
+endif
 
 " For snippet_complete marker
 if has('conceal') && v:version >= 703
@@ -188,39 +192,35 @@ if has('conceal') && v:version >= 703
 endif
 " }}}
 " Folds: {{{
-" ------
 if has('folding')
 	set foldenable
 	set foldmethod=syntax
 	set foldlevelstart=99
-	set foldtext=FoldText()
 endif
 
-" Improved Vim fold-text
-" See: http://www.gregsexton.org/2011/03/improving-the-text-displayed-in-a-fold/
-function! FoldText()
-	" Get first non-blank line
-	let fs = v:foldstart
-	while getline(fs) =~? '^\s*$' | let fs = nextnonblank(fs + 1)
-	endwhile
-	if fs > v:foldend
-		let line = getline(v:foldstart)
-	else
-		let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
-	endif
+set foldtext=FoldText()
+function! FoldText() abort
+    let fs = v:foldstart
+    while getline(fs) !~ '\w'
+        let fs = nextnonblank(fs + 1)
+    endwhile
+    if fs > v:foldend
+        let line = getline(v:foldstart)
+    else
+        let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
+    endif
 
-	let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
-	let foldSize = 1 + v:foldend - v:foldstart
-	let foldSizeStr = ' ' . foldSize . ' lines '
-	let foldLevelStr = repeat('+--', v:foldlevel)
-	let lineCount = line('$')
-	let foldPercentage = printf('[%.1f', (foldSize*1.0)/lineCount*100) . '%] '
-	let expansionString = repeat('.', w - strwidth(foldSizeStr.line.foldLevelStr.foldPercentage))
-	return line . expansionString . foldSizeStr . foldPercentage . foldLevelStr
+    let w = winwidth(0) - &foldcolumn - &number * &numberwidth
+    let foldSize = 1 + v:foldend - v:foldstart
+    let foldSizeStr = " " . foldSize . " lines "
+    let foldLevelStr = repeat("  +  ", v:foldlevel)
+    let lineCount = line("$")
+    let expansionString = repeat(" ", w - strwidth(foldSizeStr.line.foldLevelStr))
+    return line . expansionString . foldSizeStr . foldLevelStr
 endfunction
+
 " }}}
 " Disable default plugins: {{{
-" ------------------------
 let g:loaded_getscript = 1
 let g:loaded_getscriptPlugin = 1
 let g:loaded_gzip = 1
@@ -244,14 +244,13 @@ if has('patch-7.4.786')             " aligns with parenmatch in plugins list
 	let g:loaded_matchparen = 1
 endif
 " }}}
-" }}}
 
-" Autocommands: {{{
+" Autocommands:
 " General: {{{
 augroup vimrc_general
 	autocmd!
-	au BufWinLeave ?* mkview            " Save fold
-	au BufWinEnter ?* silent! loadview   " load fold
+	au BufWinLeave ?* if empty(&buftype) | mkview | endif            " Save fold
+	au BufWinEnter ?* if empty(&buftype) | silent! loadview | endif   " load fold
 
 	autocmd CursorHold * if &modified | silent! wa | endif
 	autocmd WinEnter,FocusGained * checktime
@@ -282,22 +281,8 @@ augroup vimrc_filetype
 	if has('nvim')
 		autocmd FileType help setlocal nu rnu signcolumn=no
 	endif
-
-	autocmd FileType vim setlocal foldmethod=marker
-
-	autocmd FileType gitcommit setlocal spell
-	autocmd FileType gitcommit,qfreplace setlocal nofoldenable
-
-	autocmd FileType python,pyrex setlocal expandtab tabstop=4 shiftwidth=4
-	if executable('yapf')
-		autocmd FileType python setlocal formatprg=yapf
-	endif
+	autocmd FileType qfreplace setlocal nofoldenable
 	autocmd BufNewFile,BufRead *.yapf set filetype=cfg
-
-	autocmd FileType sh setlocal expandtab tabstop=2 shiftwidth=2
-	autocmd FileType markdown setlocal spell expandtab autoindent tw=0
-	autocmd FileType markdown setlocal formatoptions=crqn2 comments=n:>
-	autocmd FileType markdown setlocal wrap breakindent briopt=min:50,shift:2
 augroup END    " vimrc_filetype
 " }}}
 " Numbertoggle: {{{
@@ -327,30 +312,21 @@ augroup vimrc_dictpopup
 	autocmd InsertCharPre *.{md,txt} call <SID>PopUpDict()
 augroup END
 " }}}
-" }}}
 
-" Mappings: {{{
+" Mappings:
 " Simple: {{{
-" Release keymappings
-nnoremap <Space>  <Nop>
-xnoremap <Space>  <Nop>
-nnoremap '        <Nop>
-xnoremap '        <Nop>
-nnoremap \|       <Nop>
-xnoremap \|       <Nop>
-onoremap \|       <Nop>
-nnoremap <Up>    <Nop>
-nnoremap <Down>  <Nop>
-nnoremap <Left>  <Nop>
-nnoremap <Right> <Nop>
+nnoremap K <nop>
+
+nnoremap <silent> <Up>    :cprevious<CR>
+nnoremap <silent> <Down>  :cnext<CR>
+nnoremap <silent> <Left>  :cpfile<CR>
+nnoremap <silent> <Right> :cnfile<CR>
 
 let g:mapleader=' '
 let g:maplocalleader="'"
 inoremap jk <ESC>
 nnoremap Y y$
 nnoremap <CR> za
-nnoremap j gj
-nnoremap k gk
 nnoremap <BS> <c-^>
 nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
@@ -364,6 +340,9 @@ nnoremap gu gU
 nnoremap gl gu
 xnoremap gu gU
 xnoremap gl gu
+
+nnoremap <expr> j (v:count > 8 ? "m'" . v:count : '') . 'gj'
+nnoremap <expr> k (v:count > 8 ? "m'" . v:count : '') . 'gk'
 
 " Make cmd work as alt
 if has("mac")
@@ -383,7 +362,8 @@ cnoreabbrev Bd bd
 cnoreabbrev bD bd
 cnoreabbrev vh <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'vert help' : 'vh')<CR>
 
-cnoremap <C-a> <Home>
+" loupe essentially does 'nnoremap / /\v', cleverly. This lets <C-a> work as I want it to
+cnoremap <expr> <C-a> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<Home><Right><Right>' : '<Home>'
 cnoremap <C-e> <End>
 nnoremap Q q
 
@@ -398,7 +378,8 @@ nnoremap g} }
 nnoremap g= gg=G``
 nnoremap gQ gggqgG''
 nnoremap g<CR> i<CR><Esc>
-
+" }}}
+" Leader: {{{
 nnoremap <leader><CR> :nohlsearch<CR>
 nnoremap <leader>sv :w<CR>
 nnoremap <leader>cd :lcd %:p:h<CR>:pwd<CR>
@@ -408,6 +389,9 @@ nnoremap <leader>evs :e $CFGDIR/shared.vim<CR>
 nnoremap <leader>evp :e $CFGDIR/plugins.vim<CR>
 nnoremap <leader>rv :so $MYVIMRC<CR>
 
+nnoremap <expr> <leader>v '`['.strpart(getregtype(), 0, 1).'`]'
+nnoremap <leader>w :write<CR>
+nnoremap <silent> <leader>syn :syntax sync fromstart<CR>
 " }}}
 " Filetype: {{{
 augroup vimrc_filetype_mappings
@@ -427,7 +411,6 @@ augroup END  " vimrc_filetype_mappings"
 " Make this window big. z= makes all windows equal.
 nnoremap <silent><C-w>b :vert resize<CR>:resize<CR>:normal! ze<CR>
 " Select last edited text. improved over `[v`], eg works with visual block
-nnoremap <expr> <leader>v '`['.strpart(getregtype(), 0, 1).'`]'
 
 " copy/paste line number -/+[count] below the current line
 nnoremap - :<C-u>execute '-'.v:count1.'copy.'<CR>
@@ -439,11 +422,11 @@ xnoremap gs y:%s/<C-r>"//g<Left><Left>
 " TODO: mark a region, select a region of text, hit keybinding, replace only that region.
 
 " Drag current line/s vertically and auto-indent
-vnoremap <M-j> :<C-u>'<,'>move '>+1<CR>gv=gv
-vnoremap <M-k> :<C-u>'<,'>move '<-2<CR>gv=gv
-nnoremap  <M-j> :<C-u>move .+1<CR>==
+xnoremap <M-j> :move '>+1<CR>gv=gv
+xnoremap <M-k> :move '<-2<CR>gv=gv
+nnoremap  <M-j> :move .+1<CR>==
+nnoremap  <M-k> :move .-2<CR>==
 inoremap  <M-j> <C-c>:move .+1<CR>==gi
-nnoremap  <M-k> :<C-u>move .-2<CR>==
 inoremap  <M-k> <C-c>:move .-2<CR>==gi
 
 " }}}
@@ -458,6 +441,5 @@ function! s:append_modeline()
 	call append(line('$'), l:modeline)
 endfunction
 
-" }}}
 " }}}
 " vim: set ts=2 sw=2 tw=99 noet :
