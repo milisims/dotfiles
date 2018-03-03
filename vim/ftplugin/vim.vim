@@ -1,2 +1,2 @@
-setlocal foldemthod=marker
+setlocal foldmethod=marker
 setlocal formatoptions=1jcr

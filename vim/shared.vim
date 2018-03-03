@@ -220,7 +220,12 @@ function! FoldText() abort
 endfunction
 
 " }}}
-" Disable default plugins: {{{
+" Plugin setup: {{{
+if has('packages')
+	set packpath+=$CFGDIR
+endif
+
+" disable default plugins {{{
 let g:loaded_getscript = 1
 let g:loaded_getscriptPlugin = 1
 let g:loaded_gzip = 1
@@ -240,9 +245,7 @@ let g:loaded_vimball = 1
 let g:loaded_vimballPlugin = 1
 let g:loaded_zip = 1
 let g:loaded_zipPlugin = 1
-if has('patch-7.4.786')             " aligns with parenmatch in plugins list
-	let g:loaded_matchparen = 1
-endif
+" }}}
 " }}}
 
 " Autocommands:
@@ -327,6 +330,7 @@ let g:maplocalleader="'"
 inoremap jk <ESC>
 nnoremap Y y$
 nnoremap <CR> za
+xnoremap <CR> za
 nnoremap <BS> <c-^>
 nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
@@ -381,7 +385,6 @@ nnoremap g<CR> i<CR><Esc>
 " }}}
 " Leader: {{{
 nnoremap <leader><CR> :nohlsearch<CR>
-nnoremap <leader>sv :w<CR>
 nnoremap <leader>cd :lcd %:p:h<CR>:pwd<CR>
 
 nnoremap <leader>evr :e $MYVIMRC<CR>
