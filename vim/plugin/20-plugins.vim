@@ -30,13 +30,12 @@ command -nargs=1 Defer call s:defer('VimDeferCall', 'call ' . <f-args>)
 " packadd vim-defer
 
 " gruvbox {{{
-packadd! gruvbox
+packadd gruvbox
 " }}}
 " vim-repeat {{{
 packadd vim-repeat
 " }}}
 " vim-sneak {{{
-packadd vim-sneak
 nmap f <Plug>Sneak_f
 nmap F <Plug>Sneak_F
 xmap f <Plug>Sneak_f
@@ -60,6 +59,7 @@ nmap \ <Plug>Sneak_s
 nmap <leader>\ <Plug>Sneak_S
 nmap <leader>s <Plug>Sneak_s
 nmap <leader>S <Plug>Sneak_S
+packadd vim-sneak
 " }}}
 " vim-cursorword {{{
 packadd vim-cursorword
@@ -78,6 +78,7 @@ let g:echodoc#enable_at_startup = 1
 " fzf.vim {{{
 if executable('fzf')
 	set rtp+=~/.fzf
+	source ~/.fzf/plugin/fzf.vim 
 	packadd fzf.vim
 
 	nnoremap <silent> <leader>f   :Files<CR>
@@ -108,12 +109,15 @@ if executable('fzf')
 endif
 " }}}
 " vim-easy-align {{{
-packadd! vim-easy-align
+packadd vim-easy-align
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 " }}}
 " loupe {{{
 packadd loupe
+" }}}
+" targets {{{
+packadd targets.vim
 " }}}
 
 " ft specific
@@ -124,8 +128,8 @@ packadd vim-python-pep8-indent
 packadd python_match.vim
 " }}}
 " vim-pandoc {{{
-packadd vim-pandoc
-packadd vim-pandoc-syntax
+" packadd vim-pandoc
+" packadd vim-pandoc-syntax
 let g:pandoc#folding#fdc = 0
 " }}}
 
@@ -171,10 +175,10 @@ if has('nvim')
 	" deoplete {{{
 	" NOTE: packadd! works here because we're calling an autoloaded function
 	" later. If we need to UpdateRemotePlugins, packadd! won't work.
-	packadd! deoplete.nvim
-	packadd! neco-syntax
-	packadd! neco-vim
-	packadd! deoplete-jedi
+	Dpackadd deoplete.nvim
+	Dpackadd neco-syntax
+	Dpackadd neco-vim
+	Dpackadd deoplete-jedi
 	let g:deoplete#enable_at_startup = 0
 	let g:deoplete#sources#jedi#show_docstring = 1
 	let g:deoplete#enable_smart_case = 1
@@ -202,9 +206,9 @@ if has('nvim')
 	let g:UltiSnipsRemoveSelectModeMappings = 0
 	" }}}
 	" denite.nvim {{{
-	packadd! denite.nvim
-	packadd! neomru.vim
-	packadd! unite-location
+	Dpackadd denite.nvim
+	Dpackadd neomru.vim
+	Dpackadd unite-location
 	function! s:deniteinit() abort
 		" mappings {{{
 		nnoremap <C-p> :Denite -mode=normal grep<CR>
@@ -322,7 +326,7 @@ if has('nvim')
 	Defer s:deniteinit()
 	" }}}
 	" neomake {{{
-	packadd neomake
+	Dpackadd neomake
 	set signcolumn=yes
 
 	let g:neomake_python_enabled_makers = ['pycodestyle', 'pydocstyle', 'pyflakes']
@@ -358,12 +362,14 @@ if has('nvim')
 endif
 
 " Colorscheme {{{
-if !empty(globpath(&rtp, 'colors/gruvbox.vim'))
-	let g:gruvbox_italic = 1
-	let g:gruvbox_number_column = 'bg0'
-	set background=dark
-	colorscheme gruvbox
-endif
+function! s:setup_colorscheme() abort
+	if !empty(globpath(&rtp, 'colors/gruvbox.vim'))
+		let g:gruvbox_italic = 1
+		set background=dark
+		colorscheme gruvbox
+	endif
+endfunction
+call s:setup_colorscheme()
 " }}}
 
 delcommand Dpackadd

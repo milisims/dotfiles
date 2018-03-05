@@ -138,3 +138,7 @@
 	path = vim/pack/bundle/opt/vim-yass
 	url = git@github.com:matthsims/vim-yass.git
 	ignore = dirty
+[submodule "vim/pack/bundle/opt/targets.vim"]
+	path = vim/pack/bundle/opt/targets.vim
+	url = https://github.com/wellle/targets.vim.git
+	ignore = dirty
