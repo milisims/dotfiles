@@ -5,6 +5,9 @@ scriptencoding utf-8
 function! s:idledefer() abort
 	autocmd! IdleCmd
 	doautocmd User VimDeferPack
+	if has('nvim')
+		silent UpdateRemotePlugins
+	endif
 	doautocmd User VimDeferCall
 	autocmd! User VimDeferPack
 	autocmd! User VimDeferCall
@@ -12,7 +15,7 @@ endfunction
 
 augroup IdleCmd
 	if has('vim_starting')
-		autocmd CursorHold,CursorHoldI * call s:idledefer()
+		autocmd CursorHold,InsertEnter,CmdWinEnter,TextChanged * call s:idledefer()
 	endif
 augroup END
 
@@ -24,56 +27,58 @@ command -nargs=1 Dpackadd call s:defer('VimDeferPack', 'packadd ' . <f-args>)
 command -nargs=1 Defer call s:defer('VimDeferCall', 'call ' . <f-args>)
 " }}}
 
+" packadd vim-defer
+
 " gruvbox {{{
 packadd! gruvbox
 " }}}
 " vim-repeat {{{
-packadd! vim-repeat
+packadd vim-repeat
 " }}}
 " vim-sneak {{{
-packadd! vim-sneak
-nmap f <plug>Sneak_f
-nmap F <plug>Sneak_F
-xmap f <plug>Sneak_f
-xmap F <plug>Sneak_F
-omap f <plug>Sneak_f
-omap F <plug>Sneak_F
+packadd vim-sneak
+nmap f <Plug>Sneak_f
+nmap F <Plug>Sneak_F
+xmap f <Plug>Sneak_f
+xmap F <Plug>Sneak_F
+omap f <Plug>Sneak_f
+omap F <Plug>Sneak_F
 
-nmap t <plug>Sneak_t
-nmap T <plug>Sneak_T
-xmap t <plug>Sneak_t
-xmap T <plug>Sneak_T
-omap t <plug>Sneak_t
-omap T <plug>Sneak_T
+nmap t <Plug>Sneak_t
+nmap T <Plug>Sneak_T
+xmap t <Plug>Sneak_t
+xmap T <Plug>Sneak_T
+omap t <Plug>Sneak_t
+omap T <Plug>Sneak_T
 
 nmap ; <Plug>Sneak_;
 xmap ; <Plug>Sneak_;
 nmap , <Plug>Sneak_,
 xmap , <Plug>Sneak_,
 
-nmap \ <plug>Sneak_s
-nmap <leader>\ <plug>Sneak_S
-nmap <leader>s <plug>Sneak_s
-nmap <leader>S <plug>Sneak_S
+nmap \ <Plug>Sneak_s
+nmap <leader>\ <Plug>Sneak_S
+nmap <leader>s <Plug>Sneak_s
+nmap <leader>S <Plug>Sneak_S
 " }}}
 " vim-cursorword {{{
-packadd! vim-cursorword
+packadd vim-cursorword
 " }}}
 " vim-highlightedyank {{{
-packadd! vim-highlightedyank
+packadd vim-highlightedyank
 if !exists('##TextYankPost')
 	nmap y <Plug>(highlightedyank)
 	xmap y <Plug>(highlightedyank)
 endif
 " }}}
 " echodoc.vim {{{
-packadd! echodoc.vim
+packadd echodoc.vim
 let g:echodoc#enable_at_startup = 1
 " }}}
 " fzf.vim {{{
 if executable('fzf')
 	set rtp+=~/.fzf
-	packadd! fzf.vim
+	packadd fzf.vim
 
 	nnoremap <silent> <leader>f   :Files<CR>
 	nnoremap <silent> <leader>gf  :GFiles<CR>
@@ -107,11 +112,25 @@ packadd! vim-easy-align
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 " }}}
+" loupe {{{
+packadd loupe
+" }}}
+
+" ft specific
+" vim-python-pep8-indent {{{
+packadd vim-python-pep8-indent
+" }}}
+" python_match.vim {{{
+packadd python_match.vim
+" }}}
+" vim-pandoc {{{
+packadd vim-pandoc
+packadd vim-pandoc-syntax
+let g:pandoc#folding#fdc = 0
+" }}}
+
 
 " Deferred:
-" loupe {{{
-Dpackadd loupe
-" }}}
 " vim-surround {{{
 Dpackadd vim-surround
 " }}}
@@ -148,40 +167,28 @@ Defer gitgutter#all(1)
 let g:gitgutter_max_signs = 1000
 " }}}
 
-" ft specific
-" vim-python-pep8-indent {{{
-packadd! vim-python-pep8-indent
-" }}}
-" python_match.vim {{{
-packadd! python_match.vim
-" }}}
-" vim-pandoc {{{
-packadd! vim-pandoc
-packadd! vim-pandoc-syntax
-let g:pandoc#folding#fdc = 0
-" }}}
-
 if has('nvim')
 	" deoplete {{{
-	Dpackadd deoplete.nvim
-	Dpackadd neco-syntax
-	Dpackadd neco-vim
-	Dpackadd deoplete-jedi
-	let g:deoplete#enable_at_startup = 1
+	" NOTE: packadd! works here because we're calling an autoloaded function
+	" later. If we need to UpdateRemotePlugins, packadd! won't work.
+	packadd! deoplete.nvim
+	packadd! neco-syntax
+	packadd! neco-vim
+	packadd! deoplete-jedi
+	let g:deoplete#enable_at_startup = 0
 	let g:deoplete#sources#jedi#show_docstring = 1
+	call deoplete#enable()
 	" }}}
 	" ultisnips {{{
 	Dpackadd vim-snippets
 	Dpackadd ultisnips
 	let g:UltiSnipsExpandTrigger            = "<Plug>(ultisnips_expand)"
 	let g:UltiSnipsRemoveSelectModeMappings = 0
-	" optional
-	inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<cr>
 	" }}}
 	" denite.nvim {{{
-	Dpackadd denite.nvim
-	Dpackadd neomru.vim
-	Dpackadd unite-location
+	packadd! denite.nvim
+	packadd! neomru.vim
+	packadd! unite-location
 	function! s:deniteinit() abort
 		" mappings {{{
 		nnoremap <C-p> :Denite -mode=normal grep<CR>
@@ -299,7 +306,7 @@ if has('nvim')
 	Defer s:deniteinit()
 	" }}}
 	" neomake {{{
-	Dpackadd neomake
+	packadd neomake
 	set signcolumn=yes
 
 	let g:neomake_python_enabled_makers = ['pycodestyle', 'pydocstyle', 'pyflakes']
@@ -311,8 +318,8 @@ if has('nvim')
 				\ }, 100)
 	" }}}
 	" vim-gutentags {{{
-	Dpackadd vim-gutentags
 	if executable('ctags')
+		Dpackadd vim-gutentags
 		let g:gutentags_cache_dir = $DATADIR.'/tags'
 		let g:gutentags_ctags_executable = $HOME.'/bin/ctags'  " probably unnecessary
 	else

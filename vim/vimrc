@@ -1,13 +1,11 @@
 set history=10000
-set t_Co=16
+
+filetype plugin indent on
+syntax on
 
 let $CFGDIR=empty($XDG_CONFIG_HOME) ? $HOME.'/.config/vim' : $XDG_CONFIG_HOME.'/vim'
 set runtimepath+=$CFGDIR
 
 let $DATADIR=empty($XDG_DATA_HOME) ? $HOME.'/.local/share/vim' : $XDG_DATA_HOME.'/vim'
 let &viewdir=$DATADIR.'/view'
-
-runtime shared.vim
-runtime plugins.vim
-runtime local.vim
 " vim: set ts=2 sw=2 tw=80 noet :
