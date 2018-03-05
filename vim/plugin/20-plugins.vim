@@ -191,12 +191,15 @@ if has('nvim')
 		let col = col('.') - 1
 		return !col || getline('.')[col - 1]  =~ '\s'
 	endfunction
-	inoremap <expr><C-h>
+	inoremap <expr> <C-h>
 				\ deoplete#smart_close_popup()."\<C-h>"
-	inoremap <expr><BS>
+	inoremap <expr> <BS>
 				\ deoplete#smart_close_popup()."\<C-h>"
-	inoremap <expr><C-g>     deoplete#undo_completion()
-	inoremap <expr><C-l>     deoplete#refresh()
+	inoremap <expr> <C-g>     deoplete#undo_completion()
+	inoremap <expr> <C-l>     deoplete#refresh()
+
+  inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+  inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
 	" }}}
 	" ultisnips {{{
@@ -369,7 +372,8 @@ function! s:setup_colorscheme() abort
 		colorscheme gruvbox
 	endif
 endfunction
-call s:setup_colorscheme()
+Defer s:setup_colorscheme()
+colorscheme base16-gruvbox-dark-medium
 " }}}
 
 delcommand Dpackadd
