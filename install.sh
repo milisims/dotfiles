@@ -61,5 +61,5 @@ done
 echo "Done"
 
 # vim plugins
-git submodule update --init --recursive
+git submodule update --init --recursive > /dev/null 2>&1
 nvim +'doautocmd User VimDeferPack' +UpdateRemotePlugins +qa
