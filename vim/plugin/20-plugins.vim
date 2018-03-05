@@ -15,7 +15,7 @@ endfunction
 
 augroup IdleCmd
 	if has('vim_starting')
-		autocmd CursorHold,InsertEnter,CmdWinEnter,TextChanged * call s:idledefer()
+		autocmd CursorHold,InsertEnter,TextChanged * call s:idledefer()
 	endif
 augroup END
 
