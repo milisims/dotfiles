@@ -3,6 +3,7 @@ set history=10000
 filetype plugin indent on
 syntax on
 
+" similar dir structure to nvim
 let $CFGDIR=empty($XDG_CONFIG_HOME) ? $HOME.'/.config/vim' : $XDG_CONFIG_HOME.'/vim'
 set runtimepath+=$CFGDIR
 
