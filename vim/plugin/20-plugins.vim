@@ -35,8 +35,6 @@ call s:defer('DeferVimFinal', 'set updatetime=' . &updatetime)
 set updatetime=20
 " }}}
 
-" packadd vim-defer
-
 " gruvbox {{{
 packadd gruvbox
 " }}}
@@ -122,6 +120,7 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 " }}}
 " loupe {{{
+let g:LoupeCenterResults = 0
 packadd loupe
 " }}}
 " targets {{{
