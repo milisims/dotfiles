@@ -18,7 +18,7 @@ if has('patch-7.3.541')
 endif
 
 set ttyfast                  " Makes drawing nicer - nvim on by default
-set updatetime=250           " update faster (eg, gitgutter plugin)
+set updatetime=500           " update faster (eg, gitgutter plugin)
 set winaltkeys=no            " Don't let windows handle the alt key
 set pastetoggle=<F2>
 
@@ -97,7 +97,6 @@ set shiftround      " Round indent to multiple of 'shiftwidth'
 set timeout ttimeout
 set timeoutlen=750  " Time out on mappings
 set ttimeoutlen=250 " for key codes
-set updatetime=2000 " Idle time to write swap and trigger CursorHold
 " }}}
 " Searching: {{{
 set ignorecase      " Search ignoring case
@@ -394,7 +393,7 @@ nnoremap <leader>rv :so $MYVIMRC<CR>
 
 nnoremap <expr> <leader>v '`['.strpart(getregtype(), 0, 1).'`]'
 nnoremap <leader>w :write<CR>
-nnoremap <silent> <leader>syn :syntax sync fromstart<CR>
+nnoremap <silent> <leader>col :syntax sync fromstart<CR>
 " }}}
 " Filetype: {{{
 augroup vimrc_filetype_mappings

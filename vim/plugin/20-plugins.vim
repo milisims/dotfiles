@@ -2,15 +2,14 @@ scriptencoding utf-8
 
 " Deferring: {{{
 " TODO: List of 'files' to call in order
+let s:defer_list = ['DeferVimPack']
+
 function! s:idledefer() abort
 	autocmd! IdleCmd
-	doautocmd User VimDeferPack
-	if has('nvim')
-		silent UpdateRemotePlugins
-	endif
-	doautocmd User VimDeferCall
-	autocmd! User VimDeferPack
-	autocmd! User VimDeferCall
+	for l:deferfile in s:defer_list
+		execute 'doautocmd User ' . l:deferfile
+		execute 'autocmd! User ' . l:deferfile
+	endfor
 endfunction
 
 augroup IdleCmd
@@ -20,11 +19,20 @@ augroup IdleCmd
 augroup END
 
 function! s:defer(file, evalable) abort
+	if index(s:defer_list, a:file) < 0
+		call add(s:defer_list, a:file)
+	endif
 	execute 'autocmd User ' . a:file . ' '  . a:evalable
 endfunction
 
-command -nargs=1 Dpackadd call s:defer('VimDeferPack', 'packadd ' . <f-args>)
-command -nargs=1 Defer call s:defer('VimDeferCall', 'call ' . <f-args>)
+if has('nvim')
+	call s:defer('DeferVimUpdateRemote', 'silent UpdateRemotePlugins')
+endif
+
+command -nargs=1 Dpackadd call s:defer('DeferVimPack', 'packadd ' . <f-args>)
+command -nargs=1 Defer call s:defer('DeferVimCall', 'call ' . <f-args>)
+call s:defer('DeferVimFinal', 'set updatetime=' . &updatetime)
+set updatetime=20
 " }}}
 
 " packadd vim-defer
