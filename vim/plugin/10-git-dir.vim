@@ -1,5 +1,4 @@
 set noautochdir
-let s:gitfail='^fatal: .* .git'
 function! s:goto_gitdir() abort
 	if exists('b:git_auchdir')
 		execute 'cd ' . b:git_auchdir
@@ -12,14 +11,13 @@ function! s:goto_gitdir() abort
 	endif
 
 	let l:gitroot = system('cd ' . expand('%:p:h') . ' && git rev-parse --git-dir')
-	let l:gitroot = substitute(l:gitroot, '\%x00', '', '')
-	let l:failmatch = matchstr(l:gitroot, s:gitfail)
-	if !empty(l:failmatch)
+	if v:shell_error > 0
 		let b:git_auchdir = getcwd()
 		execute 'cd ' . getcwd()
 		return
 	endif
 
+	let l:gitroot = substitute(l:gitroot, '\%x00', '', '')
 	let l:gitroot = substitute(l:gitroot, '\C\.git$', '', '')
 	if !empty(l:gitroot)
 		let b:git_auchdir = l:gitroot
