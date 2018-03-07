@@ -372,15 +372,9 @@ if has('nvim')
 endif
 
 " Colorscheme {{{
-function! s:setup_colorscheme() abort
-	if !empty(globpath(&rtp, 'colors/gruvbox.vim'))
-		let g:gruvbox_italic = 1
-		set background=dark
-		colorscheme gruvbox
-	endif
-endfunction
-Defer s:setup_colorscheme()
-colorscheme base16-gruvbox-dark-medium
+let g:gruvbox_italic = 1
+set background=dark
+colorscheme gruvbox
 " }}}
 
 delcommand Dpackadd
