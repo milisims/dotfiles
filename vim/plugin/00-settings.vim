@@ -275,6 +275,10 @@ augroup vimrc_general
 	autocmd InsertLeave * if &paste | setlocal nopaste | echo 'nopaste' | endif
 	autocmd InsertLeave * if &l:diff | diffupdate | endif
 
+	" TODO: This, smarter. save values
+	autocmd WinEnter * setlocal cursorline
+	autocmd WinLeave * setlocal nocursorline
+
 augroup END    " vimrc_general
 " }}}
 " Filetype: {{{
