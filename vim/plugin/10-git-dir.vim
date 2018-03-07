@@ -27,6 +27,8 @@ endfunction
 
 augroup vimrc_gitchdir
 	autocmd!
-	autocmd DirChanged * let b:git_auchdir = getcwd()
+	if exists('##DirChanged')
+		autocmd DirChanged * let b:git_auchdir = getcwd()
+	endif
 	autocmd BufEnter,BufWinEnter * call s:goto_gitdir()
 augroup END
