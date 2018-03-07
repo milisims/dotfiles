@@ -62,4 +62,8 @@ echo "Done"
 
 # vim plugins
 git submodule update --init --recursive > /dev/null 2>&1
-nvim +'doautocmd User VimDeferPack' +UpdateRemotePlugins +qa
+nvim +'doautocmd User DeferVimPack' +UpdateRemotePlugins +qa
+
+# 'TEMPORARY' PATCH
+cd ~/.dotfiles/vim/pack/bundle/opt/vim-airline
+git apply ~/.dotfiles/vim/patches/airline_defer.patch

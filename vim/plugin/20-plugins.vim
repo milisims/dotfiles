@@ -84,7 +84,7 @@ let g:echodoc#enable_at_startup = 1
 " fzf.vim {{{
 if executable('fzf')
 	set rtp+=~/.fzf
-	source ~/.fzf/plugin/fzf.vim 
+	source ~/.fzf/plugin/fzf.vim
 	packadd fzf.vim
 
 	nnoremap <silent> <leader>f   :Files<CR>
@@ -125,6 +125,14 @@ packadd loupe
 " }}}
 " targets {{{
 packadd targets.vim
+" }}}
+" vim-airline {{{
+packadd vim-airline
+Defer Airline_start()
+" TODO: own statusline. airline is SO slow to load.
+let g:airline#extensions#neomake#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme = 'gruvbox'
 " }}}
 
 " ft specific
@@ -205,8 +213,8 @@ if has('nvim')
 	inoremap <expr> <C-g>     deoplete#undo_completion()
 	inoremap <expr> <C-l>     deoplete#refresh()
 
-  inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
-  inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
+	inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+	inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
 	" }}}
 	" ultisnips {{{

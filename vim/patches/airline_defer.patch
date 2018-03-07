@@ -1,0 +1,25 @@
+diff --git a/plugin/airline.vim b/plugin/airline.vim
+index 1635253..bf8757f 100644
+--- a/plugin/airline.vim
++++ b/plugin/airline.vim
+@@ -150,10 +150,17 @@ function! s:airline_refresh()
+   call airline#update_statusline()
+ endfunction
+ 
++function! Airline_start() abort
++  call g:airline#init#bootstrap()
++  call s:airline_toggle()
++  call s:on_window_changed()
++endfunction
++
++if get(g:, 'airline#enable_at_startup', 0)
++  call g:airline_start()
++endif
++
+ command! -bar -nargs=? -complete=customlist,<sid>get_airline_themes AirlineTheme call <sid>airline_theme(<f-args>)
+ command! -bar AirlineToggleWhitespace call airline#extensions#whitespace#toggle()
+ command! -bar AirlineToggle call s:airline_toggle()
+ command! -bar AirlineRefresh call s:airline_refresh()
+-
+-call airline#init#bootstrap()
+-call s:airline_toggle()

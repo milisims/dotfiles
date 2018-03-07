@@ -142,3 +142,7 @@
 	path = vim/pack/bundle/opt/targets.vim
 	url = https://github.com/wellle/targets.vim.git
 	ignore = dirty
+[submodule "vim/pack/bundle/opt/vim-airline"]
+	path = vim/pack/bundle/opt/vim-airline
+	url = https://github.com/vim-airline/vim-airline.git
+	ignore = dirty
