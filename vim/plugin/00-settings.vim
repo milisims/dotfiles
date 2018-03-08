@@ -393,7 +393,7 @@ nnoremap <leader>cd :lcd %:p:h<CR>:pwd<CR>
 nnoremap <leader>evr :e $MYVIMRC<CR>
 nnoremap <leader>rv :so $MYVIMRC<CR>
 
-nnoremap <leader>tws /\v +<CR>
+nnoremap <leader>tws /\v +$<CR>
 
 nnoremap <expr> <leader>v '`['.strpart(getregtype(), 0, 1).'`]'
 nnoremap <leader>w :write<CR>
