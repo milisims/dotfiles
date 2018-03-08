@@ -55,18 +55,23 @@ bindkey -M vicmd "^[[1~" vi-beginning-of-line
 bindkey -M vicmd "^[[4~" vi-end-of-line
 bindkey -M vicmd '^[[2~' beep
 
-bindkey -M vicmd '/' fzf-history-widget
+fzf-history-widget-to-ins() {
+  zle fzf-history-widget
+  zle vi-end-of-line
+  zle vi-insert
+}
+zle -N fzf-history-widget-to-ins
 
-# zmv is great for moving a ton of files
-# zmv with no clargs shows a good example usage
-autoload zmv
+bindkey -M vicmd '/' fzf-history-widget-to-ins
+
+autoload zmv  # zmv with no clargs shows example usage
 
 # Mmm. Vim.
 export EDITOR=$(command -v vim)
 export VISUAL=$(command -v vim)
 
 #------------------------------------------////
-# Paths. 
+# Paths.
 #------------------------------------------////
 
 # TODO: make this a function? make sure it exists, too.
