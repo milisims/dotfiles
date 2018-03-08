@@ -199,23 +199,23 @@ endif
 
 set foldtext=FoldText()
 function! FoldText() abort
-    let fs = v:foldstart
-    while getline(fs) !~ '\w'
-        let fs = nextnonblank(fs + 1)
-    endwhile
-    if fs > v:foldend
-        let line = getline(v:foldstart)
-    else
-        let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
-    endif
+	let fs = v:foldstart
+	while getline(fs) !~ '\w'
+		let fs = nextnonblank(fs + 1)
+	endwhile
+	if fs > v:foldend
+		let line = getline(v:foldstart)
+	else
+		let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
+	endif
 
-    let w = winwidth(0) - &foldcolumn - &number * &numberwidth
-    let foldSize = 1 + v:foldend - v:foldstart
-    let foldSizeStr = " " . foldSize . " lines "
-    let foldLevelStr = repeat("  +  ", v:foldlevel)
-    let lineCount = line("$")
-    let expansionString = repeat(" ", w - strwidth(foldSizeStr.line.foldLevelStr))
-    return line . expansionString . foldSizeStr . foldLevelStr
+	let w = winwidth(0) - &foldcolumn - &number * &numberwidth
+	let foldSize = 1 + v:foldend - v:foldstart
+	let foldSizeStr = " " . foldSize . " lines "
+	let foldLevelStr = repeat("  +  ", v:foldlevel)
+	let lineCount = line("$")
+	let expansionString = repeat(" ", w - strwidth(foldSizeStr.line.foldLevelStr))
+	return line . expansionString . foldSizeStr . foldLevelStr
 endfunction
 
 " }}}
@@ -391,9 +391,9 @@ nnoremap <leader><CR> :nohlsearch<CR>
 nnoremap <leader>cd :lcd %:p:h<CR>:pwd<CR>
 
 nnoremap <leader>evr :e $MYVIMRC<CR>
-nnoremap <leader>evs :e $CFGDIR/shared.vim<CR>
-nnoremap <leader>evp :e $CFGDIR/plugins.vim<CR>
 nnoremap <leader>rv :so $MYVIMRC<CR>
+
+nnoremap <leader>tws /\v +<CR>
 
 nnoremap <expr> <leader>v '`['.strpart(getregtype(), 0, 1).'`]'
 nnoremap <leader>w :write<CR>
