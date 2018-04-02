@@ -87,12 +87,13 @@ if executable('fzf')
 	source ~/.fzf/plugin/fzf.vim
 	packadd fzf.vim
 
-	nnoremap <silent> <leader>f   :Files<CR>
-	nnoremap <silent> <leader>gf  :GFiles<CR>
+	let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+	nnoremap <silent> <leader>af  :Files<CR>
+	nnoremap <silent> <leader>f   :GFiles<CR>
 	nnoremap <silent> <leader>gst :GFiles?<CR>
 	nnoremap <silent> <leader>b   :Buffers<CR>
 	nnoremap <silent> <leader>l   :Lines<CR>
-	nnoremap <silent> <leader>bl  :BLines<CR>
+	nnoremap <silent> <leader>L   :BLines<CR>
 	nnoremap <silent> <leader>O   :Tags<CR>
 	nnoremap <silent> <leader>mr  :History<CR>
 	nnoremap <silent> <leader>/   :execute 'Ag ' . input('Ag/')<CR>
@@ -119,21 +120,10 @@ packadd vim-easy-align
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 " }}}
-" loupe {{{
-let g:LoupeCenterResults = 0
-packadd loupe
-" }}}
 " targets {{{
 packadd targets.vim
 " }}}
-" vim-airline {{{
-packadd vim-airline
-Defer Airline_start()
-" TODO: own statusline. airline is SO slow to load.
-let g:airline#extensions#neomake#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme = 'gruvbox'
-" }}}
+packadd vim-buftabline
 
 " ft specific
 " vim-python-pep8-indent {{{
@@ -188,8 +178,6 @@ let g:gitgutter_max_signs = 1000
 
 if has('nvim')
 	" deoplete {{{
-	" NOTE: packadd! works here because we're calling an autoloaded function
-	" later. If we need to UpdateRemotePlugins, packadd! won't work.
 	Dpackadd deoplete.nvim
 	Dpackadd neco-syntax
 	Dpackadd neco-vim
@@ -208,10 +196,17 @@ if has('nvim')
 	endfunction
 	inoremap <expr> <C-h>
 				\ deoplete#smart_close_popup()."\<C-h>"
-	inoremap <expr> <BS>
-				\ deoplete#smart_close_popup()."\<C-h>"
 	inoremap <expr> <C-g>     deoplete#undo_completion()
 	inoremap <expr> <C-l>     deoplete#refresh()
+
+	inoremap <silent> <CR> <C-r>=<SID>cr_function()<CR>
+	function! s:cr_function() abort
+		call UltiSnips#ExpandSnippet()
+		if g:ulti_expand_res
+			return ''
+		endif
+		return deoplete#close_popup() . "\<CR>"
+	endfunction
 
 	inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
 	inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
@@ -223,126 +218,126 @@ if has('nvim')
 	let g:UltiSnipsExpandTrigger            = "<Plug>(ultisnips_expand)"
 	let g:UltiSnipsRemoveSelectModeMappings = 0
 	" }}}
-	" denite.nvim {{{
-	Dpackadd denite.nvim
-	Dpackadd neomru.vim
-	Dpackadd unite-location
-	function! s:deniteinit() abort
-		" mappings {{{
-		nnoremap <C-p> :Denite -mode=normal grep<CR>
-		nnoremap <C-n> :Denite -mode=normal quickfix location_list<CR>
+	" " denite.nvim {{{
+	" Dpackadd denite.nvim
+	" Dpackadd neomru.vim
+	" Dpackadd unite-location
+	" function! s:deniteinit() abort
+	" 	" mappings {{{
+	" 	nnoremap <C-p> :Denite -mode=normal grep<CR>
+	" 	nnoremap <C-n> :Denite -mode=normal quickfix location_list<CR>
 
-		nnoremap <silent> <Leader>dr :<C-u>Denite -resume<CR>
-		nnoremap <silent> <Leader>df :<C-u>Denite file_mru file_rec<CR>
-		nnoremap <silent> <Leader>db :<C-u>Denite buffer -default-action=switch<CR>
-		nnoremap <silent> <Leader>dl :<C-u>Denite location_list -mode=normal<CR>
-		nnoremap <silent> <Leader>dq :<C-u>Denite quickfix -mode=normal<CR>
-		nnoremap <silent> <Leader>dj :<C-u>Denite jump change<CR>
-		nnoremap <silent> <Leader>dg :<C-u>Denite -mode=normal grep<CR>
-		nnoremap <silent> <Leader>do :<C-u>Denite outline<CR>
-		nnoremap <silent> <Leader>d/ :<C-u>Denite line<CR>
-		nnoremap <silent> <Leader>dc :<C-u>Denite -mode=normal references<CR>
-		nnoremap <silent> <Leader>d* :<C-u>DeniteCursorWord -mode=normal line<CR>
-		nnoremap <silent> <Leader>gf :DeniteCursorWord file_rec<CR>
-		nnoremap <silent> <Leader>gg :DeniteCursorWord grep<CR>
-		" nnoremap <silent> <Leader>dt :<C-u>Denite
-		vnoremap <silent> <Leader>gg
-					\ :<C-u>call <SID>get_selection('/')<CR>
-					\ :execute 'Denite grep:::'.@/<CR><CR>
+	" 	nnoremap <silent> <Leader>dr :<C-u>Denite -resume<CR>
+	" 	nnoremap <silent> <Leader>df :<C-u>Denite file_mru file_rec<CR>
+	" 	nnoremap <silent> <Leader>db :<C-u>Denite buffer -default-action=switch<CR>
+	" 	nnoremap <silent> <Leader>dl :<C-u>Denite location_list -mode=normal<CR>
+	" 	nnoremap <silent> <Leader>dq :<C-u>Denite quickfix -mode=normal<CR>
+	" 	nnoremap <silent> <Leader>dj :<C-u>Denite jump change<CR>
+	" 	nnoremap <silent> <Leader>dg :<C-u>Denite -mode=normal grep<CR>
+	" 	nnoremap <silent> <Leader>do :<C-u>Denite outline<CR>
+	" 	nnoremap <silent> <Leader>d/ :<C-u>Denite line<CR>
+	" 	nnoremap <silent> <Leader>dc :<C-u>Denite -mode=normal references<CR>
+	" 	nnoremap <silent> <Leader>d* :<C-u>DeniteCursorWord -mode=normal line<CR>
+	" 	nnoremap <silent> <Leader>du :DeniteCursorWord file_rec<CR>
+	" 	nnoremap <silent> <Leader>gg :DeniteCursorWord grep<CR>
+	" 	" nnoremap <silent> <Leader>dt :<C-u>Denite
+	" 	vnoremap <silent> <Leader>gg
+	" 				\ :<C-u>call <SID>get_selection('/')<CR>
+	" 				\ :execute 'Denite grep:::'.@/<CR><CR>
 
-		function! s:get_selection(cmdtype)
-			let temp = @s
-			normal! gv"sy
-			let @/ = substitute(escape(@s, '\'.a:cmdtype), '\n', '\\n', 'g')
-			let @s = temp
-		endfunction
-		" }}}
-		" Interface {{{
-		" ----------
-		call denite#custom#option('_', {
-					\ 'prompt': 'λ:',
-					\ 'empty': 0,
-					\ 'auto_highlight': v:true,
-					\ 'short_source_names': v:true
-					\ })
+	" 	function! s:get_selection(cmdtype)
+	" 		let temp = @s
+	" 		normal! gv"sy
+	" 		let @/ = substitute(escape(@s, '\'.a:cmdtype), '\n', '\\n', 'g')
+	" 		let @s = temp
+	" 	endfunction
+	" 	" }}}
+	" 	" Interface {{{
+	" 	" ----------
+	" 	call denite#custom#option('_', {
+	" 				\ 'prompt': 'λ:',
+	" 				\ 'empty': 0,
+	" 				\ 'auto_highlight': v:true,
+	" 				\ 'short_source_names': v:true
+	" 				\ })
 
-		call denite#custom#option('_', {
-					\ 'highlight_mode_insert': 'CursorLine',
-					\ 'highlight_matched_range': 'None',
-					\ 'highlight_matched_char': 'None'
-					\ })
+	" 	call denite#custom#option('_', {
+	" 				\ 'highlight_mode_insert': 'CursorLine',
+	" 				\ 'highlight_matched_range': 'None',
+	" 				\ 'highlight_matched_char': 'None'
+	" 				\ })
 
-		call denite#custom#option('list', {
-					\ 'mode': 'normal',
-					\ 'winheight': 12
-					\ })
+	" 	call denite#custom#option('list', {
+	" 				\ 'mode': 'normal',
+	" 				\ 'winheight': 12
+	" 				\ })
 
-		call denite#custom#option('mpc', {
-					\ 'quit': 0,
-					\ 'mode': 'normal',
-					\ 'winheight': 12
-					\ })
-		" }}}
-		" Commands {{{
-		" ---------
-		call denite#custom#var(
-					\ 'file_rec', 'command',
-					\ ['ag', '--nocolor', '--nogroup', '-g', ''])
+	" 	call denite#custom#option('mpc', {
+	" 				\ 'quit': 0,
+	" 				\ 'mode': 'normal',
+	" 				\ 'winheight': 12
+	" 				\ })
+	" 	" }}}
+	" 	" Commands {{{
+	" 	" ---------
+	" 	call denite#custom#var(
+	" 				\ 'file_rec', 'command',
+	" 				\ ['ag', '--nocolor', '--nogroup', '-g', ''])
 
-		call denite#custom#var('grep', 'command', ['ag'])
-		call denite#custom#var('grep', 'default_opts',
-					\ ['-i', '--vimgrep'])
-		call denite#custom#var('grep', 'recursive_opts', [])
-		call denite#custom#var('grep', 'pattern_opt', [])
-		call denite#custom#var('grep', 'separator', ['--'])
-		call denite#custom#var('grep', 'final_opts', [])
+	" 	call denite#custom#var('grep', 'command', ['ag'])
+	" 	call denite#custom#var('grep', 'default_opts',
+	" 				\ ['-i', '--vimgrep'])
+	" 	call denite#custom#var('grep', 'recursive_opts', [])
+	" 	call denite#custom#var('grep', 'pattern_opt', [])
+	" 	call denite#custom#var('grep', 'separator', ['--'])
+	" 	call denite#custom#var('grep', 'final_opts', [])
 
-		" Change ignore_globs
-		call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
-					\ [ '.git/', '.ropeproject/', '__pycache__/',
-					\   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
+	" 	" Change ignore_globs
+	" 	call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+	" 				\ [ '.git/', '.ropeproject/', '__pycache__/',
+	" 				\   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
 
-		" CONVERTERS
-		" Default is none
-		call denite#custom#source(
-					\ 'buffer,file_mru,file_old',
-					\ 'converters', ['converter_relative_word'])
+	" 	" CONVERTERS
+	" 	" Default is none
+	" 	call denite#custom#source(
+	" 				\ 'buffer,file_mru,file_old',
+	" 				\ 'converters', ['converter_relative_word'])
 
-		" }}}
-		" Denite-mode mappings {{{
-		" ---------------------
-		let insert_mode_mappings = [
-					\  ['jk', '<denite:enter_mode:normal>', 'noremap'],
-					\  ['<Tab>', '<denite:enter_mode:normal>', 'noremap'],
-					\  ['<C-j>', '<denite:move_to_next_line>', 'noremap'],
-					\  ['<C-k>', '<denite:move_to_previous_line>', 'noremap'],
-					\  ['<C-n>', '<denite:assign_next_matched_text>', 'noremap'],
-					\  ['<C-p>', '<denite:assign_previous_matched_text>', 'noremap'],
-					\  ['<C-Y>', '<denite:redraw>', 'noremap'],
-					\ ]
+	" 	" }}}
+	" 	" Denite-mode mappings {{{
+	" 	" ---------------------
+	" 	let insert_mode_mappings = [
+	" 				\  ['jk', '<denite:enter_mode:normal>', 'noremap'],
+	" 				\  ['<Tab>', '<denite:enter_mode:normal>', 'noremap'],
+	" 				\  ['<C-j>', '<denite:move_to_next_line>', 'noremap'],
+	" 				\  ['<C-k>', '<denite:move_to_previous_line>', 'noremap'],
+	" 				\  ['<C-n>', '<denite:assign_next_matched_text>', 'noremap'],
+	" 				\  ['<C-p>', '<denite:assign_previous_matched_text>', 'noremap'],
+	" 				\  ['<C-Y>', '<denite:redraw>', 'noremap'],
+	" 				\ ]
 
-		let normal_mode_mappings = [
-					\  ["'", '<denite:toggle_select_down>', 'noremap'],
-					\  ['<C-q>', '<denite:do_action:quickfix>', 'noremap'],
-					\  ['<C-n>', '<denite:jump_to_next_source>', 'noremap'],
-					\  ['<C-p>', '<denite:jump_to_previous_source>', 'noremap'],
-					\  ['gg', '<denite:move_to_first_line>', 'noremap'],
-					\  ['t', '<denite:do_action:tabopen>', 'noremap'],
-					\  ['v', '<denite:do_action:vsplit>', 'noremap'],
-					\  ['s', '<denite:do_action:split>', 'noremap'],
-					\  ['r', '<denite:redraw>', 'noremap'],
-					\ ]
+	" 	let normal_mode_mappings = [
+	" 				\  ["'", '<denite:toggle_select_down>', 'noremap'],
+	" 				\  ['<C-q>', '<denite:do_action:quickfix>', 'noremap'],
+	" 				\  ['<C-n>', '<denite:jump_to_next_source>', 'noremap'],
+	" 				\  ['<C-p>', '<denite:jump_to_previous_source>', 'noremap'],
+	" 				\  ['gg', '<denite:move_to_first_line>', 'noremap'],
+	" 				\  ['t', '<denite:do_action:tabopen>', 'noremap'],
+	" 				\  ['v', '<denite:do_action:vsplit>', 'noremap'],
+	" 				\  ['s', '<denite:do_action:split>', 'noremap'],
+	" 				\  ['r', '<denite:redraw>', 'noremap'],
+	" 				\ ]
 
-		for m in insert_mode_mappings
-			call denite#custom#map('insert', m[0], m[1], m[2])
-		endfor
-		for m in normal_mode_mappings
-			call denite#custom#map('normal', m[0], m[1], m[2])
-		endfor
-		" }}}
-	endfunction
-	Defer s:deniteinit()
-	" }}}
+	" 	for m in insert_mode_mappings
+	" 		call denite#custom#map('insert', m[0], m[1], m[2])
+	" 	endfor
+	" 	for m in normal_mode_mappings
+	" 		call denite#custom#map('normal', m[0], m[1], m[2])
+	" 	endfor
+	" 	" }}}
+	" endfunction
+	" Defer s:deniteinit()
+	" " }}}
 	" neomake {{{
 	Dpackadd neomake
 	set signcolumn=yes
@@ -367,12 +362,14 @@ if has('nvim')
 	" iron.nvim {{{
 	Dpackadd iron.nvim
 	let g:iron_map_defaults = 0
+
 	augroup vimrc_iron
 		autocmd!
 		autocmd Filetype python nmap <buffer> <localleader>t <Plug>(iron-send-motion)
 		autocmd Filetype python vmap <buffer> <localleader>t <Plug>(iron-send-motion)
 		autocmd Filetype python nmap <buffer> <localleader>l <Plug>(iron-repeat-cmd)
 	augroup END
+
 	" }}}
 	" thesaurus_query.vim {{{
 	Dpackadd thesaurus_query.vim

@@ -26,10 +26,6 @@
 	path = vim/pack/bundle/opt/iron.nvim
 	url = https://github.com/BurningEther/iron.nvim
 	ignore = dirty
-[submodule "vim/pack/bundle/opt/loupe"]
-	path = vim/pack/bundle/opt/loupe
-	url = https://github.com/wincent/loupe
-	ignore = dirty
 [submodule "vim/pack/bundle/opt/neco-syntax"]
 	path = vim/pack/bundle/opt/neco-syntax
 	url = https://github.com/Shougo/neco-syntax
@@ -146,3 +142,6 @@
 	path = vim/pack/bundle/opt/vim-airline
 	url = https://github.com/vim-airline/vim-airline.git
 	ignore = dirty
+[submodule "vim/pack/bundle/opt/vim-buftabline"]
+	path = vim/pack/bundle/opt/vim-buftabline
+	url = https://github.com/ap/vim-buftabline.git

@@ -321,7 +321,12 @@ augroup END
 
 " Mappings:
 " Simple: {{{
-nnoremap K <nop>
+nnoremap K       <nop>
+xnoremap K       <nop>
+nnoremap <Space> <nop>
+xnoremap <Space> <nop>
+nnoremap '       <nop>
+xnoremap '       <nop>
 
 nnoremap <silent> <Up>    :cprevious<CR>
 nnoremap <silent> <Down>  :cnext<CR>
@@ -370,7 +375,6 @@ cnoreabbrev bD bd
 cnoreabbrev vh <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'vert help' : 'vh')<CR>
 
 " loupe essentially does 'nnoremap / /\v', cleverly. This lets <C-a> work as I want it to
-cnoremap <expr> <C-a> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<Home><Right><Right>' : '<Home>'
 cnoremap <C-e> <End>
 nnoremap Q q
 
@@ -382,15 +386,22 @@ nnoremap cp yap<S-}>p
 
 nnoremap g{ {
 nnoremap g} }
-nnoremap g= gg=G``
-nnoremap gQ gggqgG''
+nnoremap g= gg=G``zz
+nnoremap gQ gggqG``
 nnoremap g<CR> i<CR><Esc>
 " }}}
 " Leader: {{{
 nnoremap <leader><CR> :nohlsearch<CR>
 nnoremap <leader>cd :lcd %:p:h<CR>:pwd<CR>
 
+nnoremap <leader>p "0p
+nnoremap <leader>P "0P
+xnoremap <leader>p "0p
+xnoremap <leader>P "0P
+
 nnoremap <leader>evr :e $MYVIMRC<CR>
+nnoremap <leader>evs :e $CFGDIR/plugin/00-settings.vim<CR>
+nnoremap <leader>evp :e $CFGDIR/plugin/20-plugins.vim<CR>
 nnoremap <leader>rv :so $MYVIMRC<CR>
 
 nnoremap <leader>tws /\v +$<CR>
@@ -414,13 +425,22 @@ augroup END  " vimrc_filetype_mappings"
 " }}}
 " LessSimple: {{{
 
-" Make this window big. z= makes all windows equal.
+" Make this window big. <C-w>= makes all windows equal.
 nnoremap <silent><C-w>b :vert resize<CR>:resize<CR>:normal! ze<CR>
 " Select last edited text. improved over `[v`], eg works with visual block
 
 " copy/paste line number -/+[count] below the current line
 nnoremap - :<C-u>execute '-'.v:count1.'copy.'<CR>
 nnoremap + :<C-u>execute '+'.v:count1.'copy.'<CR>
+
+nnoremap d- m':<C-u>execute '-'.v:count1.'delete'<CR>`'
+nnoremap d+ m':<C-u>execute '+'.v:count1.'delete'<CR>`'
+nnoremap d= m':<C-u>execute '+'.v:count1.'delete'<CR>`'
+
+" NOTE: does not work with registers.
+nnoremap y- :<C-u>execute '-'.v:count1.'yank '.v:register<CR>
+nnoremap y+ :<C-u>execute '+'.v:count1.'yank '.v:register<CR>
+nnoremap y= :<C-u>execute '+'.v:count1.'yank '.v:register<CR>
 
 " Quick substitute within selected area
 xnoremap s :s//g<Left><Left>
@@ -430,10 +450,10 @@ xnoremap gs y:%s/<C-r>"//g<Left><Left>
 " Drag current line/s vertically and auto-indent
 xnoremap <M-j> :move '>+1<CR>gv=gv
 xnoremap <M-k> :move '<-2<CR>gv=gv
-nnoremap  <M-j> :move .+1<CR>==
-nnoremap  <M-k> :move .-2<CR>==
-inoremap  <M-j> <C-c>:move .+1<CR>==gi
-inoremap  <M-k> <C-c>:move .-2<CR>==gi
+nnoremap <M-j> :move .+1<CR>==
+nnoremap <M-k> :move .-2<CR>==
+inoremap <M-j> <C-c>:move .+1<CR>==gi
+inoremap <M-k> <C-c>:move .-2<CR>==gi
 
 " }}}
 " Functions: {{{
