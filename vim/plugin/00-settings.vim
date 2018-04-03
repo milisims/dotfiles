@@ -223,28 +223,6 @@ endfunction
 if has('packages')
 	set packpath+=$CFGDIR
 endif
-
-" disable default plugins {{{
-let g:loaded_getscript = 1
-let g:loaded_getscriptPlugin = 1
-let g:loaded_gzip = 1
-let g:loaded_logiPat = 1
-let g:loaded_matchit = 1
-let g:loaded_netrw = 1
-let g:loaded_netrwPlugin = 1
-let g:loaded_netrwFileHandlers = 1
-let g:loaded_netrwSettings = 1
-let g:loaded_rrhelper = 1
-let g:loaded_ruby_provider = 1
-let g:loaded_tar = 1
-let g:loaded_tarPlugin = 1
-let g:loaded_tutor_mode_plugin = 1
-let g:loaded_2html_plugin = 1
-let g:loaded_vimball = 1
-let g:loaded_vimballPlugin = 1
-let g:loaded_zip = 1
-let g:loaded_zipPlugin = 1
-" }}}
 " }}}
 
 " Autocommands:
@@ -298,25 +276,6 @@ augroup vimrc_numbertoggle
 	autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu | set rnu   | endif
 	autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu | set nornu | endif
 augroup END    " vimrc_numbertoggle
-" }}}
-" DictionaryPopup: {{{
-let s:count=0
-function! s:PopUpDict() abort
-	let AsciiCode=char2nr(v:char)
-	if (AsciiCode <=# 122 && AsciiCode >=# 97) || (AsciiCode <=# 90 && AsciiCode >=# 65)
-		let s:count+=1
-		if s:count >=# 3
-			call feedkeys("\<c-x>\<c-k>")
-		endif
-	else
-		let s:count=0
-	endif
-endfunction
-
-augroup vimrc_dictpopup
-	autocmd!
-	autocmd InsertCharPre *.{md,txt} call <SID>PopUpDict()
-augroup END
 " }}}
 
 " Mappings:
