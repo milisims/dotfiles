@@ -1,7 +1,7 @@
 scriptencoding utf-8
 
 if !has('packages')
-	finish
+  finish
 endif
 
 " Deferring: {{{
@@ -9,28 +9,28 @@ endif
 let s:defer_list = ['DeferVimPack']
 
 function! s:idledefer() abort
-	autocmd! IdleCmd
-	for l:deferfile in s:defer_list
-		execute 'doautocmd User ' . l:deferfile
-		execute 'autocmd! User ' . l:deferfile
-	endfor
+  autocmd! IdleCmd
+  for l:deferfile in s:defer_list
+    execute 'doautocmd User ' . l:deferfile
+    execute 'autocmd! User ' . l:deferfile
+  endfor
 endfunction
 
 augroup IdleCmd
-	if has('vim_starting')
-		autocmd CursorHold,InsertEnter,TextChanged * call s:idledefer()
-	endif
+  if has('vim_starting')
+    autocmd CursorHold,InsertEnter,TextChanged * call s:idledefer()
+  endif
 augroup END
 
 function! s:defer(file, evalable) abort
-	if index(s:defer_list, a:file) < 0
-		call add(s:defer_list, a:file)
-	endif
-	execute 'autocmd User ' . a:file . ' '  . a:evalable
+  if index(s:defer_list, a:file) < 0
+    call add(s:defer_list, a:file)
+  endif
+  execute 'autocmd User ' . a:file . ' '  . a:evalable
 endfunction
 
 if has('nvim')
-	call s:defer('DeferVimUpdateRemote', 'silent UpdateRemotePlugins')
+  call s:defer('DeferVimUpdateRemote', 'silent UpdateRemotePlugins')
 endif
 
 command -nargs=1 Dpackadd call s:defer('DeferVimPack', 'packadd ' . <f-args>)
@@ -74,8 +74,8 @@ packadd vim-cursorword
 " vim-highlightedyank {{{
 packadd vim-highlightedyank
 if !exists('##TextYankPost')
-	nmap y <Plug>(highlightedyank)
-	xmap y <Plug>(highlightedyank)
+  nmap y <Plug>(highlightedyank)
+  xmap y <Plug>(highlightedyank)
 endif
 " }}}
 " echodoc.vim {{{
@@ -84,35 +84,36 @@ let g:echodoc#enable_at_startup = 1
 " }}}
 " fzf.vim {{{
 if executable('fzf')
-	set rtp+=~/.fzf
-	source ~/.fzf/plugin/fzf.vim
-	packadd fzf.vim
+  set rtp+=~/.fzf
+  source ~/.fzf/plugin/fzf.vim
+  packadd fzf.vim
 
-	let $FZF_DEFAULT_COMMAND = 'ag -g ""'
-	nnoremap <silent> <leader>af  :Files<CR>
-	nnoremap <silent> <leader>f   :GFiles<CR>
-	nnoremap <silent> <leader>gst :GFiles?<CR>
-	nnoremap <silent> <leader>b   :Buffers<CR>
-	nnoremap <silent> <leader>l   :Lines<CR>
-	nnoremap <silent> <leader>L   :BLines<CR>
-	nnoremap <expr> <silent> <leader>O   ':Tags<CR>' . expand('<cword>')
-	nnoremap <silent> <leader>mr  :History<CR>
-	nnoremap <silent> <leader>/   :execute 'Ag ' . input('Ag/')<CR>
-	nnoremap <silent> <leader>A   :Ag<CR>
-	nnoremap <silent> <leader>ht  :Helptags<CR>
+  let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+  nnoremap <silent> <leader>af  :Files<CR>
+  nnoremap <silent> <leader>f   :GFiles<CR>
+  nnoremap <silent> <leader>gst :GFiles?<CR>
+  nnoremap <silent> <leader>b   :Buffers<CR>
+  nnoremap <silent> <leader>l   :Lines<CR>
+  nnoremap <silent> <leader>L   :BLines<CR>
+  nnoremap <expr> <silent> <leader>O   ':Tags<CR>' . expand('<cword>')
+  nnoremap <silent> <leader>mr  :History<CR>
+  nnoremap <silent> <leader>/   :execute 'Ag ' . input('Ag/')<CR>
+  nnoremap <silent> <leader>A   :Ag<CR>
+  nnoremap <silent> <leader>ht  :Helptags<CR>
 
-	nnoremap <expr> <silent> K ':Ag ' . expand('<cword>') . '<CR>'
-	vnoremap <silent> K y:Ag <C-r>"<CR>
-	nnoremap <silent> <leader>gl :Commits<CR>
-	nnoremap <silent> <leader>gbl :BCommits<CR>
+  nnoremap <expr> <silent> K ':Ag ' . expand('<cword>') . '<CR>'
+  nnoremap <expr> <silent> <leader>K ':Ag<CR>' . expand('<cword>')
+  vnoremap <silent> K y:Ag <C-r>"<CR>
+  nnoremap <silent> <leader>gl :Commits<CR>
+  nnoremap <silent> <leader>gbl :BCommits<CR>
 
-	imap <c-x><c-k> <Plug>(fzf-complete-word)
-	imap <c-x><c-f> <Plug>(fzf-complete-path)
-	imap <c-x><c-j> <Plug>(fzf-complete-file-ag)
-	imap <c-x><c-l> <Plug>(fzf-complete-line)
+  imap <c-x><c-k> <Plug>(fzf-complete-word)
+  imap <c-x><c-f> <Plug>(fzf-complete-path)
+  imap <c-x><c-j> <Plug>(fzf-complete-file-ag)
+  imap <c-x><c-l> <Plug>(fzf-complete-line)
 
-	imap <C-x><C-f> <Plug>(fzf-complete-file-ag)
-	imap <C-x><C-l> <Plug>(fzf-complete-line)
+  imap <C-x><C-f> <Plug>(fzf-complete-file-ag)
+  imap <C-x><C-l> <Plug>(fzf-complete-line)
 
 endif
 " }}}
@@ -178,65 +179,65 @@ let g:gitgutter_max_signs = 1000
 " }}}
 
 if has('nvim')
-	" ultisnips {{{
-	Dpackadd vim-snippets
-	Dpackadd ultisnips
-	let g:UltiSnipsExpandTrigger = '<Tab>'
-	let g:UltiSnipsJumpForwardTrigger = '<Tab>'
-	let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
-	let g:UltiSnipsRemoveSelectModeMappings = 0
-	" }}}
-	" nvim-completion-manager {{{
-	" Better if loaded after ultisnips (ncm checks for it)
-	Dpackadd nvim-completion-manager
-	Dpackadd neco-vim
+  " ultisnips {{{
+  Dpackadd vim-snippets
+  Dpackadd ultisnips
+  let g:UltiSnipsExpandTrigger = '<Tab>'
+  let g:UltiSnipsJumpForwardTrigger = '<Tab>'
+  let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
+  let g:UltiSnipsRemoveSelectModeMappings = 0
+  " }}}
+  " nvim-completion-manager {{{
+  " Better if loaded after ultisnips (ncm checks for it)
+  Dpackadd nvim-completion-manager
+  Dpackadd neco-vim
 
-	inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
-	inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
+  inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+  inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
-	" }}}
-	" ale {{{
-	Dpackadd ale
-	set signcolumn=yes
-	let g:ale_sign_error = '✖'  " U-2716
-	let g:ale_sign_warning = '⚠'  " U-26A0
-	let g:ale_sign_style_error = '➤'  " U-27A4
-	hi! link ALEErrorSign WarningMsg
-	hi! link ALEWarningSign Constant
+  " }}}
+  " ale {{{
+  Dpackadd ale
+  set signcolumn=yes
+  let g:ale_sign_error = '✖'  " U-2716
+  let g:ale_sign_warning = '⚠'  " U-26A0
+  let g:ale_sign_style_error = '➤'  " U-27A4
+  hi! link ALEErrorSign WarningMsg
+  hi! link ALEWarningSign Constant
 
-	augroup vimrc_ale
-		autocmd!
-		autocmd Filetype python let b:ale_linters = ['pycodestyle', 'pydocstyle', 'pyflakes']
-	augroup END
+  augroup vimrc_ale
+    autocmd!
+    autocmd Filetype python let b:ale_linters = ['pycodestyle', 'pydocstyle', 'pyflakes']
+  augroup END
 
-	" }}}
-	" vim-gutentags {{{
-	if executable('ctags')
-		Dpackadd vim-gutentags
-		Defer gutentags#setup_gutentags()
-		let g:gutentags_cache_dir = $DATADIR.'/tags'
-		let g:gutentags_ctags_executable = $HOME.'/bin/ctags'  " probably unnecessary
-	else
-		let g:gutentags_enabled = 0
-	endif
-	" }}}
-	" iron.nvim {{{
-	Dpackadd iron.nvim
-	let g:iron_map_defaults = 0
+  " }}}
+  " vim-gutentags {{{
+  if executable('ctags')
+    Dpackadd vim-gutentags
+    Defer gutentags#setup_gutentags()
+    let g:gutentags_cache_dir = $DATADIR.'/tags'
+    let g:gutentags_ctags_executable = $HOME.'/bin/ctags'  " probably unnecessary
+  else
+    let g:gutentags_enabled = 0
+  endif
+  " }}}
+  " iron.nvim {{{
+  Dpackadd iron.nvim
+  let g:iron_map_defaults = 0
 
-	augroup vimrc_iron
-		autocmd!
-		autocmd Filetype python nmap <buffer> <localleader>t <Plug>(iron-send-motion)
-		autocmd Filetype python vmap <buffer> <localleader>t <Plug>(iron-send-motion)
-		autocmd Filetype python nmap <buffer> <localleader>l <Plug>(iron-repeat-cmd)
-	augroup END
+  augroup vimrc_iron
+    autocmd!
+    autocmd Filetype python nmap <buffer> <localleader>t <Plug>(iron-send-motion)
+    autocmd Filetype python vmap <buffer> <localleader>t <Plug>(iron-send-motion)
+    autocmd Filetype python nmap <buffer> <localleader>l <Plug>(iron-repeat-cmd)
+  augroup END
 
-	" }}}
-	" thesaurus_query.vim {{{
-	Dpackadd thesaurus_query.vim
-	let g:tq_map_keys = 0
-	let g:tq_use_vim_autocomplete = 0
-	" }}}
+  " }}}
+  " thesaurus_query.vim {{{
+  Dpackadd thesaurus_query.vim
+  let g:tq_map_keys = 0
+  let g:tq_use_vim_autocomplete = 0
+  " }}}
 endif
 
 delcommand Dpackadd
