@@ -2,5 +2,7 @@ setlocal expandtab
 setlocal tabstop=4
 setlocal shiftwidth=4
 if executable('yapf')
-	setlocal formatprg=yapf
+  setlocal textwidth=0  " prevent auto formatting, yapfify will fail.
+  setlocal formatprg=yapf
+  setlocal formatexpr=my#yapf#yapfify(v:lnum,v:lnum+v:count-1)
 endif

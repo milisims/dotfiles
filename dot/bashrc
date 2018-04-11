@@ -36,26 +36,44 @@ KBLU='\[\e[44m\]'   # Blue
 KPUR='\[\e[45m\]'   # Purple
 KCYN='\[\e[46m\]'   # Cyan
 KWHT='\[\e[47m\]'   # White
-  NC='\[\e[0m\]'    # Text Reset
+NC='\[\e[0m\]'    # Text Reset
 
 # Prompt
 if [ x$TERM == xdumb ]; then
-    PS1="\u@\h:\w \$ "
+  PS1="\u@\h:\w \$ "
 else
-    PS1="\n${CCYN}\u${NC}@${CGRN}\h${NC}:${BYLW}\w ${NC}\n\$ "
-    # PS1="\u@\h:\w \$ "
+  PS1="\n${CCYN}\u${NC}@${CGRN}\h${NC}:${BYLW}\w ${NC}\n\$ "
 fi
+
+case "$TERM" in
+  *-256color)
+    alias ssh='TERM=${TERM%-256color} ssh'
+    ;;
+  *)
+    POTENTIAL_TERM=${TERM}-256color
+    POTENTIAL_TERMINFO=${TERM:0:1}/$POTENTIAL_TERM
+
+    # better to check $(toe -a | awk '{print $1}') maybe?
+    BOX_TERMINFO_DIR=/usr/share/terminfo
+    [[ -f $BOX_TERMINFO_DIR/$POTENTIAL_TERMINFO ]] && \
+      export TERM=$POTENTIAL_TERM
+
+    HOME_TERMINFO_DIR=$HOME/.terminfo
+    [[ -f $HOME_TERMINFO_DIR/$POTENTIAL_TERMINFO ]] && \
+      export TERM=$POTENTIAL_TERM
+    ;;
+esac
 
 export EDITOR=$(which vim)
 
 if [ $(uname -s) == "Darwin" ]; then
-    export LSCOLORS=exfxcxdxbxegedabagacad
+  export LSCOLORS=exfxcxdxbxegedabagacad
 else
-    export LSCOLORS=Gxfxcxdxbxegedabagacad # Maybe?
+  export LSCOLORS=Gxfxcxdxbxegedabagacad # Maybe?
 fi
 
 [[ -f /usr/share/bash-completion/bash_completion ]] && \
-    source /usr/share/bash-completion/bash_completion
+  source /usr/share/bash-completion/bash_completion
 
 #------------------------------------------////
 # bash options

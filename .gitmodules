@@ -1,15 +1,3 @@
-[submodule "vim/pack/bundle/opt/denite.nvim"]
-	path = vim/pack/bundle/opt/denite.nvim
-	url = https://github.com/Shougo/denite.nvim
-	ignore = dirty
-[submodule "vim/pack/bundle/opt/deoplete-jedi"]
-	path = vim/pack/bundle/opt/deoplete-jedi
-	url = https://github.com/zchee/deoplete-jedi
-	ignore = dirty
-[submodule "vim/pack/bundle/opt/deoplete.nvim"]
-	path = vim/pack/bundle/opt/deoplete.nvim
-	url = https://github.com/Shougo/deoplete.nvim
-	ignore = dirty
 [submodule "vim/pack/bundle/opt/echodoc.vim"]
 	path = vim/pack/bundle/opt/echodoc.vim
 	url = https://github.com/Shougo/echodoc.vim
@@ -18,29 +6,13 @@
 	path = vim/pack/bundle/opt/fzf.vim
 	url = https://github.com/junegunn/fzf.vim
 	ignore = dirty
-[submodule "vim/pack/bundle/opt/gruvbox"]
-	path = vim/pack/bundle/opt/gruvbox
-	url = https://github.com/morhetz/gruvbox
-	ignore = dirty
 [submodule "vim/pack/bundle/opt/iron.nvim"]
 	path = vim/pack/bundle/opt/iron.nvim
 	url = https://github.com/BurningEther/iron.nvim
 	ignore = dirty
-[submodule "vim/pack/bundle/opt/neco-syntax"]
-	path = vim/pack/bundle/opt/neco-syntax
-	url = https://github.com/Shougo/neco-syntax
-	ignore = dirty
 [submodule "vim/pack/bundle/opt/neco-vim"]
 	path = vim/pack/bundle/opt/neco-vim
 	url = https://github.com/Shougo/neco-vim
-	ignore = dirty
-[submodule "vim/pack/bundle/opt/neomake"]
-	path = vim/pack/bundle/opt/neomake
-	url = https://github.com/neomake/neomake
-	ignore = dirty
-[submodule "vim/pack/bundle/opt/neomru.vim"]
-	path = vim/pack/bundle/opt/neomru.vim
-	url = https://github.com/Shougo/neomru.vim
 	ignore = dirty
 [submodule "vim/pack/bundle/opt/python_match.vim"]
 	path = vim/pack/bundle/opt/python_match.vim
@@ -57,10 +29,6 @@
 [submodule "vim/pack/bundle/opt/ultisnips"]
 	path = vim/pack/bundle/opt/ultisnips
 	url = https://github.com/SirVer/ultisnips
-	ignore = dirty
-[submodule "vim/pack/bundle/opt/unite-location"]
-	path = vim/pack/bundle/opt/unite-location
-	url = https://github.com/chemzqm/unite-location
 	ignore = dirty
 [submodule "vim/pack/bundle/opt/vim-commentary"]
 	path = vim/pack/bundle/opt/vim-commentary
@@ -138,10 +106,12 @@
 	path = vim/pack/bundle/opt/targets.vim
 	url = https://github.com/wellle/targets.vim.git
 	ignore = dirty
-[submodule "vim/pack/bundle/opt/vim-airline"]
-	path = vim/pack/bundle/opt/vim-airline
-	url = https://github.com/vim-airline/vim-airline.git
-	ignore = dirty
 [submodule "vim/pack/bundle/opt/vim-buftabline"]
 	path = vim/pack/bundle/opt/vim-buftabline
 	url = https://github.com/ap/vim-buftabline.git
+[submodule "vim/pack/bundle/opt/ale"]
+	path = vim/pack/bundle/opt/ale
+	url = https://github.com/w0rp/ale.git
+[submodule "vim/pack/bundle/opt/nvim-completion-manager"]
+	path = vim/pack/bundle/opt/nvim-completion-manager
+	url = //github.com/roxma/nvim-completion-manager.git
