@@ -114,4 +114,4 @@
 	url = https://github.com/w0rp/ale.git
 [submodule "vim/pack/bundle/opt/nvim-completion-manager"]
 	path = vim/pack/bundle/opt/nvim-completion-manager
-	url = //github.com/roxma/nvim-completion-manager.git
+	url = https://github.com/roxma/nvim-completion-manager.git
