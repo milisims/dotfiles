@@ -201,23 +201,23 @@ endif
 
 set foldtext=FoldText()
 function! FoldText() abort
-  let fs = v:foldstart
-  while getline(fs) !~ '\w'
-    let fs = nextnonblank(fs + 1)
+  let l:fs = v:foldstart
+  while getline(l:fs) !~# '\w'
+    let l:fs = nextnonblank(l:fs + 1)
   endwhile
-  if fs > v:foldend
-    let line = getline(v:foldstart)
+  if l:fs > v:foldend
+    let l:line = getline(v:foldstart)
   else
-    let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
+    let l:line = substitute(getline(l:fs), '\t', repeat(' ', &tabstop), 'g')
   endif
 
-  let w = winwidth(0) - &foldcolumn - &number * &numberwidth
-  let foldSize = 1 + v:foldend - v:foldstart
-  let foldSizeStr = " " . foldSize . " lines "
-  let foldLevelStr = repeat("  +  ", v:foldlevel)
-  let lineCount = line("$")
-  let expansionString = repeat(" ", w - strwidth(foldSizeStr.line.foldLevelStr))
-  return line . expansionString . foldSizeStr . foldLevelStr
+  let l:w = winwidth(0) - &foldcolumn - &number * &numberwidth
+  let l:foldSize = 1 + v:foldend - v:foldstart
+  let l:foldSizeStr = ' ' . l:foldSize . ' lines '
+  let l:foldLevelStr = repeat('  +  ', v:foldlevel)
+  let l:lineCount = line('$')
+  let l:expansionString = repeat(' ', l:w - strwidth(l:foldSizeStr.l:line.l:foldLevelStr))
+  return l:line . l:expansionString . l:foldSizeStr . l:foldLevelStr
 endfunction
 
 " }}}
