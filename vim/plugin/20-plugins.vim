@@ -95,17 +95,18 @@ if executable('fzf')
   nnoremap <silent> <leader>b   :Buffers<CR>
   nnoremap <silent> <leader>l   :Lines<CR>
   nnoremap <silent> <leader>L   :BLines<CR>
-  nnoremap <expr> <silent> <leader>O   ':Tags<CR>' . expand('<cword>')
+  nnoremap <expr> <silent> <leader>O   ':Tags<CR>\'' . expand('<cword>')
   nnoremap <silent> <leader>mr  :History<CR>
   nnoremap <silent> <leader>/   :execute 'Ag ' . input('Ag/')<CR>
   nnoremap <silent> <leader>A   :Ag<CR>
   nnoremap <silent> <leader>ht  :Helptags<CR>
 
-  nnoremap <expr> <silent> K ':Ag ' . expand('<cword>') . '<CR>'
-  nnoremap <expr> <silent> <leader>K ':Ag<CR>' . expand('<cword>')
-  vnoremap <silent> K y:Ag <C-r>"<CR>
-  nnoremap <silent> <leader>gl :Commits<CR>
-  nnoremap <silent> <leader>gbl :BCommits<CR>
+  " TODO: :h K and :h 'keywordprg'
+  nnoremap <expr> <silent> K ':Ag<CR>' . get(b:, 'fzf_defprefix', '') . "'" . expand('<cword>') . ' '
+  nnoremap <expr> <silent> <F5> ':Ag<CR>' . "'" . expand('<cword>') . '('
+  " vnoremap <expr> <silent> K ':yank | Ag<CR><C-r>"'
+  nnoremap <silent> <leader>gal :Commits<CR>
+  nnoremap <silent> <leader>gl :BCommits<CR>
 
   imap <c-x><c-k> <Plug>(fzf-complete-word)
   imap <c-x><c-f> <Plug>(fzf-complete-path)
@@ -115,6 +116,11 @@ if executable('fzf')
   imap <C-x><C-f> <Plug>(fzf-complete-file-ag)
   imap <C-x><C-l> <Plug>(fzf-complete-line)
 
+  augroup vimrc_fzf
+    autocmd!
+    autocmd FileType python let b:fzf_defprefix = "'def | 'class "
+  augroup END
+
 endif
 " }}}
 " vim-easy-align {{{
@@ -123,6 +129,7 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 " }}}
 " targets {{{
+let g:targets_aiAI = 'aIAi'
 packadd targets.vim
 " }}}
 packadd vim-buftabline
@@ -227,9 +234,12 @@ if has('nvim')
 
   augroup vimrc_iron
     autocmd!
-    autocmd Filetype python nmap <buffer> <localleader>t <Plug>(iron-send-motion)
-    autocmd Filetype python vmap <buffer> <localleader>t <Plug>(iron-send-motion)
-    autocmd Filetype python nmap <buffer> <localleader>l <Plug>(iron-repeat-cmd)
+    autocmd Filetype python nmap <buffer> <leader>e     <Plug>(iron-send-motion)
+    autocmd Filetype python xmap <buffer> <leader>e     <Plug>(iron-send-motion)
+    autocmd Filetype python nmap <buffer> <leader>el   V<Plug>(iron-send-motion)
+    autocmd Filetype python nmap <buffer> <leader>eh    <Nop>
+    autocmd Filetype python nmap <buffer> <leader>e<cr> <Plug>(iron-cr)
+    autocmd Filetype python nmap <buffer> <leader>er    <Plug>(iron-repeat-cmd)
   augroup END
 
   " }}}
