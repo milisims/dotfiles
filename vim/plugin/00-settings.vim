@@ -297,13 +297,14 @@ nnoremap <silent> <Right> :cnfile<CR>
 let g:mapleader=' '
 let g:maplocalleader="'"
 inoremap jk <ESC>
+snoremap jk <ESC>
 nnoremap Y y$
 nnoremap <CR> za
 xnoremap <CR> za
 nnoremap <BS> <c-^>
+nnoremap <C-h> <C-W>h
 nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
-nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
 nnoremap 0 ^
 nnoremap ^ 0
@@ -317,13 +318,28 @@ xnoremap gl gu
 nnoremap <expr> j (v:count > 8 ? "m'" . v:count : '') . 'gj'
 nnoremap <expr> k (v:count > 8 ? "m'" . v:count : '') . 'gk'
 
+if has('nvim')
+  tnoremap <C-h> <C-\><C-n><C-w>h
+  tnoremap <C-j> <C-\><C-n><C-w>j
+  tnoremap <C-k> <C-\><C-n><C-w>k
+  tnoremap <C-l> <C-\><C-n><C-w>l
+  tnoremap <Esc> <C-\><C-n>
+
+  augroup vimrc_term
+    autocmd!
+    autocmd WinEnter term://* startinsert
+  augroup END
+endif
+
 " Make cmd work as alt
-if has("mac")
+if has('mac')
   nnoremap <D-j> <M-j>
   nnoremap <D-k> <M-k>
   vnoremap <D-j> <M-j>
   vnoremap <D-k> <M-k>
 endif
+
+set cedit=<ESC>
 
 nnoremap ! :!
 cnoreabbrev qw wq
@@ -350,7 +366,7 @@ nnoremap g= gg=G``zz
 nnoremap gQ gggqG``
 nnoremap g<CR> i<CR><Esc>
 
-inoremap <C-u> <Esc>hgUbea
+inoremap <C-u> <Esc>hgUiwea
 " }}}
 " Leader: {{{
 nnoremap <leader><CR> :nohlsearch<CR>
