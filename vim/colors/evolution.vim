@@ -76,7 +76,6 @@ if &background ==# 'light'
   let s:forn  = [130, '#af3a03']
   let s:gray1 = [244, '#928374']
   let s:gray2 = [243, '#7c6f64']
-  set background=light
 else
   let s:fred  = [167, '#fb4934']
   let s:fgrn  = [142, '#b8bb26']
@@ -87,7 +86,6 @@ else
   let s:forn  = [208, '#fe8019']
   let s:gray1 = [245, '#928374']
   let s:gray2 = [246, '#a89984']
-  set background=dark
 endif
 
 if &background ==# 'light'
@@ -114,7 +112,11 @@ else
   let s:fg_4 = s:light4
 endif
 
-map <F5> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+if exists('g:evo_defhighlightmap')
+  map <F9> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name")
+        \ . '> trans<' . synIDattr(synID(line("."),col("."),0),"name")
+        \ . '> lo<' . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+endif
 
 " }}}
 " primary highlights {{{
@@ -122,80 +124,85 @@ map <F5> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<
 if ($TERM =~# '256' || &t_Co >= 256) || has('gui_running')
 
   Highlight Normal           ctermbg=s:bg_0[0] ctermfg=s:fg_1[0]  guibg=s:bg_0[1] guifg=s:fg_1[1]  cterm=NONE      gui=NONE
+  if s:bg_0[0] == s:dark0[0]
+    set background=dark
+  else
+    set background=light
+  endif
 
-  Highlight LineNr           ctermbg=NONE      ctermfg=s:bg_3[0]  guibg=NONE      guifg=s:bg_3[1]  cterm=NONE      gui=NONE
-  Highlight signColumn       ctermbg=NONE      ctermfg=s:fg_1[0]  guibg=NONE      guifg=s:fg_1[1]  cterm=NONE      gui=NONE
-  Highlight FoldColumn       ctermbg=s:bg_1[0] ctermfg=s:fg_2[0]  guibg=s:bg_1[1] guifg=s:fg_2[1]  cterm=NONE      gui=NONE
-  Highlight Folded           ctermbg=s:bg_1[0] ctermfg=s:fg_3[0]  guibg=s:bg_1[1] guifg=s:fg_3[1]  cterm=NONE      gui=NONE
-  Highlight MatchParen       ctermbg=s:bg_3[0] ctermfg=s:yel[0]   guibg=s:bg_1[1] guifg=s:yel[1]   cterm=underline gui=underline
+  Highlight LineNr           ctermbg=NONE       ctermfg=s:bg_3[0]  guibg=NONE       guifg=s:bg_3[1]       cterm=NONE      gui=NONE
+  Highlight signColumn       ctermbg=NONE       ctermfg=s:fg_1[0]  guibg=NONE       guifg=s:fg_1[1]       cterm=NONE      gui=NONE
+  Highlight FoldColumn       ctermbg=s:bg_1[0]  ctermfg=s:fg_2[0]  guibg=s:bg_1[1]  guifg=s:fg_2[1]       cterm=NONE      gui=NONE
+  Highlight Folded           ctermbg=s:bg_1[0]  ctermfg=s:fg_3[0]  guibg=s:bg_1[1]  guifg=s:fg_3[1]       cterm=NONE      gui=NONE
+  Highlight MatchParen       ctermbg=s:bg_3[0]  ctermfg=s:yel[0]   guibg=s:bg_1[1]  guifg=s:yel[1]        cterm=underline gui=underline
 
-  Highlight Comment          ctermbg=NONE      ctermfg=s:gray1[0]  guibg=NONE      guifg=s:gray1[1]  cterm=italic    gui=italic
-  Highlight Constant         ctermbg=NONE      ctermfg=s:fvio[0]  guibg=NONE      guifg=s:fvio[1]  cterm=NONE      gui=NONE
-  Highlight Identifier       ctermbg=NONE      ctermfg=s:fblu[0]  guibg=NONE      guifg=s:fblu[1]  cterm=NONE      gui=NONE
-  Highlight Statement        ctermbg=NONE      ctermfg=s:fred[0]  guibg=NONE      guifg=s:fred[1]  cterm=NONE      gui=NONE
-  Highlight PreProc          ctermbg=NONE      ctermfg=s:faqua[0] guibg=NONE      guifg=s:faqua[1] cterm=NONE      gui=NONE
-  Highlight Type             ctermbg=NONE      ctermfg=s:yel[0]   guibg=NONE      guifg=s:yel[1]   cterm=NONE      gui=NONE
-  Highlight Special          ctermbg=NONE      ctermfg=s:orn[0]   guibg=NONE      guifg=s:orn[1]   cterm=NONE      gui=NONE
-  Highlight Underlined       ctermbg=NONE      ctermfg=s:fblu[0]  guibg=NONE      guifg=s:fblu[1]  cterm=underline gui=underline
-  Highlight Ignore           ctermbg=NONE      ctermfg=NONE       guibg=NONE      guifg=NONE       cterm=NONE      gui=NONE
+  Highlight Comment          ctermbg=NONE       ctermfg=s:gray1[0] guibg=NONE       guifg=s:gray1[1]      cterm=italic    gui=italic
+  Highlight Constant         ctermbg=NONE       ctermfg=s:fvio[0]  guibg=NONE       guifg=s:fvio[1]       cterm=NONE      gui=NONE
+  Highlight Identifier       ctermbg=NONE       ctermfg=s:fblu[0]  guibg=NONE       guifg=s:fblu[1]       cterm=NONE      gui=NONE
+  Highlight Statement        ctermbg=NONE       ctermfg=s:fred[0]  guibg=NONE       guifg=s:fred[1]       cterm=NONE      gui=NONE
+  Highlight PreProc          ctermbg=NONE       ctermfg=s:faqua[0] guibg=NONE       guifg=s:faqua[1]      cterm=NONE      gui=NONE
+  Highlight Type             ctermbg=NONE       ctermfg=s:yel[0]   guibg=NONE       guifg=s:yel[1]        cterm=NONE      gui=NONE
+  Highlight Special          ctermbg=NONE       ctermfg=s:orn[0]   guibg=NONE       guifg=s:orn[1]        cterm=NONE      gui=NONE
+  Highlight Underlined       ctermbg=NONE       ctermfg=s:fblu[0]  guibg=NONE       guifg=s:fblu[1]       cterm=underline gui=underline
+  Highlight Ignore           ctermbg=NONE       ctermfg=NONE       guibg=NONE       guifg=NONE            cterm=NONE      gui=NONE
 
-  Highlight Function         ctermbg=NONE      ctermfg=s:faqua[0] guibg=NONE      guifg=s:faqua[1] cterm=NONE      gui=NONE
-  Highlight String           ctermbg=NONE      ctermfg=s:yel[0]  guibg=NONE      guifg=s:yel[1]  cterm=NONE      gui=NONE
+  Highlight Function         ctermbg=NONE       ctermfg=s:faqua[0] guibg=NONE       guifg=s:faqua[1]      cterm=NONE      gui=NONE
+  Highlight String           ctermbg=NONE       ctermfg=s:yel[0]   guibg=NONE       guifg=s:yel[1]        cterm=NONE      gui=NONE
 
-  Highlight Conceal          ctermbg=NONE      ctermfg=s:fg_1[0]  guibg=NONE      guifg=s:fg_1[1]  cterm=NONE      gui=NONE
-  Highlight Error            ctermbg=s:fred[0] ctermfg=s:bg_0[0]  guibg=s:fred[1] guifg=s:bg_0[1]  cterm=bold      gui=bold
-  Highlight Todo             ctermbg=s:bg_0[0] ctermfg=NONE       guibg=s:bg_0[1] guifg=NONE       cterm=bold      gui=bold
+  Highlight Conceal          ctermbg=NONE       ctermfg=s:fg_1[0]  guibg=NONE       guifg=s:fg_1[1]       cterm=NONE      gui=NONE
+  Highlight Error            ctermbg=s:fred[0]  ctermfg=s:bg_0[0]  guibg=s:fred[1]  guifg=s:bg_0[1]       cterm=bold      gui=bold
+  Highlight Todo             ctermbg=s:bg_0[0]  ctermfg=NONE       guibg=s:bg_0[1]  guifg=NONE            cterm=bold      gui=bold
 
-  Highlight NonText          ctermbg=NONE      ctermfg=s:gray2[0]  guibg=NONE      guifg=s:gray2[1]  cterm=NONE      gui=NONE
+  Highlight NonText          ctermbg=NONE       ctermfg=s:gray2[0] guibg=NONE       guifg=s:gray2[1]      cterm=NONE      gui=NONE
 
-  Highlight Pmenu            ctermbg=s:bg_3[0] ctermfg=s:fg_1[0]  guibg=s:bg_3[1] guifg=s:fg_1[1]  cterm=NONE      gui=NONE
-  Highlight PmenuSbar        ctermbg=s:gray1[0] ctermfg=NONE       guibg=s:gray1[1] guifg=NONE       cterm=NONE      gui=NONE
-  Highlight PmenuSel         ctermbg=s:aqua[0] ctermfg=s:bg_1[0]  guibg=s:aqua[1] guifg=s:bg_1[1]  cterm=NONE      gui=NONE
-  Highlight PmenuThumb       ctermbg=s:aqua[0] ctermfg=s:aqua[0]  guibg=s:aqua[1] guifg=s:aqua[1]  cterm=NONE      gui=NONE
+  Highlight Pmenu            ctermbg=s:bg_3[0]  ctermfg=s:fg_1[0]  guibg=s:bg_3[1]  guifg=s:fg_1[1]       cterm=NONE      gui=NONE
+  Highlight PmenuSbar        ctermbg=s:gray1[0] ctermfg=NONE       guibg=s:gray1[1] guifg=NONE            cterm=NONE      gui=NONE
+  Highlight PmenuSel         ctermbg=s:aqua[0]  ctermfg=s:bg_1[0]  guibg=s:aqua[1]  guifg=s:bg_1[1]       cterm=NONE      gui=NONE
+  Highlight PmenuThumb       ctermbg=s:aqua[0]  ctermfg=s:aqua[0]  guibg=s:aqua[1]  guifg=s:aqua[1]       cterm=NONE      gui=NONE
 
-  Highlight ErrorMsg         ctermbg=s:red[0]  ctermfg=s:bg_1[0]  guibg=s:red[1]  guifg=s:bg_1[1]  cterm=NONE      gui=NONE
-  Highlight ModeMsg          ctermbg=s:grn[0]  ctermfg=s:bg_1[0]  guibg=s:grn[1]  guifg=s:bg_1[1]  cterm=NONE      gui=NONE
-  Highlight MoreMsg          ctermbg=NONE      ctermfg=s:aqua[0]  guibg=NONE      guifg=s:aqua[1]  cterm=NONE      gui=NONE
-  Highlight Question         ctermbg=NONE      ctermfg=s:grn[0]   guibg=NONE      guifg=s:grn[1]   cterm=NONE      gui=NONE
-  Highlight WarningMsg       ctermbg=NONE      ctermfg=s:red[0]   guibg=NONE      guifg=s:red[1]   cterm=NONE      gui=NONE
+  Highlight ErrorMsg         ctermbg=s:red[0]   ctermfg=s:bg_1[0]  guibg=s:red[1]   guifg=s:bg_1[1]       cterm=NONE      gui=NONE
+  Highlight ModeMsg          ctermbg=s:grn[0]   ctermfg=s:bg_1[0]  guibg=s:grn[1]   guifg=s:bg_1[1]       cterm=NONE      gui=NONE
+  Highlight MoreMsg          ctermbg=NONE       ctermfg=s:aqua[0]  guibg=NONE       guifg=s:aqua[1]       cterm=NONE      gui=NONE
+  Highlight Question         ctermbg=NONE       ctermfg=s:grn[0]   guibg=NONE       guifg=s:grn[1]        cterm=NONE      gui=NONE
+  Highlight WarningMsg       ctermbg=NONE       ctermfg=s:red[0]   guibg=NONE       guifg=s:red[1]        cterm=NONE      gui=NONE
 
-  Highlight TabLine          ctermbg=s:bg_2[0] ctermfg=s:fg_1[0]  guibg=s:bg_2[1] guifg=s:fg_1[1]  cterm=NONE      gui=NONE
-  Highlight TabLineFill      ctermbg=s:bg_2[0] ctermfg=s:bg_2[0]  guibg=s:bg_2[1] guifg=s:bg_2[1]  cterm=NONE      gui=NONE
-  Highlight TabLineSel       ctermbg=s:bg_3[0] ctermfg=s:orn[0]   guibg=s:bg_3[1] guifg=s:orn[1]   cterm=NONE      gui=NONE
+  Highlight TabLine          ctermbg=s:bg_2[0]  ctermfg=s:fg_1[0]  guibg=s:bg_2[1]  guifg=s:fg_1[1]       cterm=NONE      gui=NONE
+  Highlight TabLineFill      ctermbg=s:bg_2[0]  ctermfg=s:bg_2[0]  guibg=s:bg_2[1]  guifg=s:bg_2[1]       cterm=NONE      gui=NONE
+  Highlight TabLineSel       ctermbg=s:bg_3[0]  ctermfg=s:orn[0]   guibg=s:bg_3[1]  guifg=s:orn[1]        cterm=NONE      gui=NONE
 
-  Highlight Cursor           ctermbg=s:fg_1[0] ctermfg=NONE       guibg=s:fg_1[1] guifg=NONE       cterm=NONE      gui=NONE
-  Highlight CursorColumn     ctermbg=s:bg_1[0] ctermfg=NONE       guibg=s:bg_1[1] guifg=NONE       cterm=NONE      gui=NONE
-  Highlight CursorLineNr     ctermbg=s:bg_0[0] ctermfg=s:aqua[0]  guibg=s:bg_0[1] guifg=s:aqua[1]  cterm=NONE      gui=NONE
-  Highlight CursorLine       ctermbg=s:bg_1[0] ctermfg=NONE       guibg=s:bg_1[1] guifg=NONE       cterm=NONE      gui=NONE
-  Highlight ColorColumn      ctermbg=s:bg_1[0] ctermfg=NONE       guibg=s:bg_1[1] guifg=NONE       cterm=NONE      gui=NONE
+  Highlight Cursor           ctermbg=s:fg_1[0]  ctermfg=NONE       guibg=s:fg_1[1]  guifg=NONE            cterm=NONE      gui=NONE
+  Highlight CursorColumn     ctermbg=s:bg_1[0]  ctermfg=NONE       guibg=s:bg_1[1]  guifg=NONE            cterm=NONE      gui=NONE
+  Highlight CursorLineNr     ctermbg=s:bg_0[0]  ctermfg=s:aqua[0]  guibg=s:bg_0[1]  guifg=s:aqua[1]       cterm=NONE      gui=NONE
+  Highlight CursorLine       ctermbg=s:bg_1[0]  ctermfg=NONE       guibg=s:bg_1[1]  guifg=NONE            cterm=NONE      gui=NONE
+  Highlight ColorColumn      ctermbg=s:bg_1[0]  ctermfg=NONE       guibg=s:bg_1[1]  guifg=NONE            cterm=NONE      gui=NONE
 
-  Highlight helpLeadBlank    ctermbg=NONE      ctermfg=NONE       guibg=NONE      guifg=NONE       cterm=NONE      gui=NONE
-  Highlight helpNormal       ctermbg=NONE      ctermfg=NONE       guibg=NONE      guifg=NONE       cterm=NONE      gui=NONE
+  Highlight helpLeadBlank    ctermbg=NONE       ctermfg=NONE       guibg=NONE       guifg=NONE            cterm=NONE      gui=NONE
+  Highlight helpNormal       ctermbg=NONE       ctermfg=NONE       guibg=NONE       guifg=NONE            cterm=NONE      gui=NONE
 
-  Highlight StatusLine       ctermbg=s:bg_1[0] ctermfg=s:fg_1[0]  guibg=s:bg_1[1] guifg=s:fg_1[1]  cterm=NONE      gui=NONE
-  Highlight StatusLineNC     ctermbg=s:bg_2[0] ctermfg=s:fg_4[0]  guibg=s:bg_2[1] guifg=s:fg_4[1]  cterm=NONE      gui=NONE
+  Highlight StatusLine       ctermbg=s:bg_1[0]  ctermfg=s:fg_1[0]  guibg=s:bg_1[1]  guifg=s:fg_1[1]       cterm=NONE      gui=NONE
+  Highlight StatusLineNC     ctermbg=s:bg_2[0]  ctermfg=s:fg_4[0]  guibg=s:bg_2[1]  guifg=s:fg_4[1]       cterm=NONE      gui=NONE
 
-  Highlight StatusLineTerm   ctermbg=s:orn[0]  ctermfg=s:bg_1[0]  guibg=s:orn[1]  guifg=s:bg_1[1]  cterm=NONE      gui=NONE
-  Highlight StatusLineTermNC ctermbg=s:bg_2[0] ctermfg=s:yel[0]   guibg=s:bg_2[1] guifg=s:yel[1]   cterm=NONE      gui=NONE
+  Highlight StatusLineTerm   ctermbg=s:orn[0]   ctermfg=s:bg_1[0]  guibg=s:orn[1]   guifg=s:bg_1[1]       cterm=NONE      gui=NONE
+  Highlight StatusLineTermNC ctermbg=s:bg_2[0]  ctermfg=s:yel[0]   guibg=s:bg_2[1]  guifg=s:yel[1]        cterm=NONE      gui=NONE
 
-  Highlight Visual           ctermbg=s:bg_1[0] ctermfg=s:fblu[0]  guibg=s:bg_1[1] guifg=s:fblu[1]  cterm=reverse   gui=reverse
-  Highlight VisualNOS        ctermbg=NONE      ctermfg=NONE       guibg=NONE      guifg=NONE       cterm=underline gui=underline
+  Highlight Visual           ctermbg=s:bg_1[0]  ctermfg=s:fblu[0]  guibg=s:bg_1[1]  guifg=s:fblu[1]       cterm=reverse   gui=reverse
+  Highlight VisualNOS        ctermbg=NONE       ctermfg=NONE       guibg=NONE       guifg=NONE            cterm=underline gui=underline
 
-  Highlight VertSplit        ctermbg=s:bg_0[0] ctermfg=s:bg_2[0]  guibg=s:bg_0[1] guifg=s:bg_2[1]  cterm=NONE      gui=NONE
-  Highlight WildMenu         ctermbg=s:blu[0]  ctermfg=s:bg_1[0]  guibg=s:blu[1]  guifg=s:bg_1[1]  cterm=NONE      gui=NONE
+  Highlight VertSplit        ctermbg=s:bg_0[0]  ctermfg=s:bg_2[0]  guibg=s:bg_0[1]  guifg=s:bg_2[1]       cterm=NONE      gui=NONE
+  Highlight WildMenu         ctermbg=s:blu[0]   ctermfg=s:bg_1[0]  guibg=s:blu[1]   guifg=s:bg_1[1]       cterm=NONE      gui=NONE
 
-  Highlight SpecialKey       ctermbg=NONE      ctermfg=s:gray2[0]  guibg=NONE      guifg=s:gray2[1]  cterm=NONE      gui=NONE
-  Highlight Title            ctermbg=NONE      ctermfg=s:fg_0[0] guibg=NONE      guifg=s:fg_0:white[1] cterm=NONE      gui=NONE
+  Highlight SpecialKey       ctermbg=NONE       ctermfg=s:gray2[0] guibg=NONE       guifg=s:gray2[1]      cterm=NONE      gui=NONE
+  Highlight Title            ctermbg=NONE       ctermfg=s:fg_0[0]  guibg=NONE       guifg=s:fg_0:white[1] cterm=NONE      gui=NONE
 
-  Highlight DiffAdd          ctermbg=s:bg_1[0] ctermfg=s:grn[0]   guibg=s:bg_1[1] guifg=s:grn[1]   cterm=reverse   gui=reverse
-  Highlight DiffChange       ctermbg=s:bg_1[0] ctermfg=s:vio[0]   guibg=s:bg_1[1] guifg=s:vio[1]   cterm=reverse   gui=reverse
-  Highlight DiffDelete       ctermbg=s:bg_1[0] ctermfg=s:red[0]   guibg=s:bg_1[1] guifg=s:red[1]   cterm=reverse   gui=reverse
-  Highlight DiffText         ctermbg=s:bg_1[0] ctermfg=s:orn[0]   guibg=s:bg_1[1] guifg=s:orn[1]   cterm=reverse   gui=reverse
+  Highlight DiffAdd          ctermbg=s:bg_1[0]  ctermfg=s:grn[0]   guibg=s:bg_1[1]  guifg=s:grn[1]        cterm=reverse   gui=reverse
+  Highlight DiffChange       ctermbg=s:bg_1[0]  ctermfg=s:vio[0]   guibg=s:bg_1[1]  guifg=s:vio[1]        cterm=reverse   gui=reverse
+  Highlight DiffDelete       ctermbg=s:bg_1[0]  ctermfg=s:red[0]   guibg=s:bg_1[1]  guifg=s:red[1]        cterm=reverse   gui=reverse
+  Highlight DiffText         ctermbg=s:bg_1[0]  ctermfg=s:orn[0]   guibg=s:bg_1[1]  guifg=s:orn[1]        cterm=reverse   gui=reverse
 
-  Highlight IncSearch        ctermbg=s:orn[0]  ctermfg=s:bg_1[0]  guibg=s:orn[1]  guifg=s:bg_1[1]  cterm=NONE      gui=NONE
-  Highlight Search           ctermbg=s:yel[0]  ctermfg=s:bg_1[0]  guibg=s:yel[1]  guifg=s:bg_1[1]  cterm=NONE      gui=NONE
+  Highlight IncSearch        ctermbg=s:orn[0]   ctermfg=s:bg_1[0]  guibg=s:orn[1]   guifg=s:bg_1[1]       cterm=NONE      gui=NONE
+  Highlight Search           ctermbg=s:yel[0]   ctermfg=s:bg_1[0]  guibg=s:yel[1]   guifg=s:bg_1[1]       cterm=NONE      gui=NONE
 
-  Highlight Directory        ctermbg=NONE      ctermfg=s:aqua[0]  guibg=NONE      guifg=s:aqua[1]  cterm=NONE      gui=NONE
+  Highlight Directory        ctermbg=NONE       ctermfg=s:aqua[0]  guibg=NONE       guifg=s:aqua[1]       cterm=NONE      gui=NONE
 
   Highlight debugPC          ctermbg=s:blu[0]  guibg=s:blu[1]
   Highlight debugBreakpoint  ctermbg=s:red[0]  guibg=s:red[1]
