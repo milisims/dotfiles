@@ -319,16 +319,18 @@ nnoremap <expr> j (v:count > 8 ? "m'" . v:count : '') . 'gj'
 nnoremap <expr> k (v:count > 8 ? "m'" . v:count : '') . 'gk'
 
 if has('nvim')
-  tnoremap <C-h> <C-\><C-n><C-w>h
-  tnoremap <C-j> <C-\><C-n><C-w>j
-  tnoremap <C-k> <C-\><C-n><C-w>k
-  tnoremap <C-l> <C-\><C-n><C-w>l
-  tnoremap <Esc> <C-\><C-n>
-
   augroup vimrc_term
     autocmd!
     autocmd WinEnter term://* startinsert
+
+    " Currently like this so I can unmap for specific plugins/terminal progs.
+    autocmd BufNew term://* tnoremap <buffer> <C-h> <C-\><C-n><C-w>h
+    autocmd BufNew term://* tnoremap <buffer> <C-j> <C-\><C-n><C-w>j
+    autocmd BufNew term://* tnoremap <buffer> <C-k> <C-\><C-n><C-w>k
+    autocmd BufNew term://* tnoremap <buffer> <C-l> <C-\><C-n><C-w>l
+    autocmd BufNew term://* tnoremap <buffer> <Esc> <C-\><C-n>
   augroup END
+
 endif
 
 " Make cmd work as alt
@@ -338,8 +340,6 @@ if has('mac')
   vnoremap <D-j> <M-j>
   vnoremap <D-k> <M-k>
 endif
-
-set cedit=<ESC>
 
 nnoremap ! :!
 cnoreabbrev qw wq

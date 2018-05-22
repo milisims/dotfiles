@@ -84,7 +84,7 @@ let g:echodoc#enable_at_startup = 1
 " }}}
 " fzf.vim {{{
 if executable('fzf')
-  set rtp+=~/.fzf
+  set runtimepath+=~/.fzf
   source ~/.fzf/plugin/fzf.vim
   packadd fzf.vim
 
@@ -103,7 +103,7 @@ if executable('fzf')
 
   " TODO: :h K and :h 'keywordprg'
   nnoremap <expr> <silent> K ':Ag<CR>' . get(b:, 'fzf_defprefix', '') . "'" . expand('<cword>') . ' '
-  nnoremap <expr> <silent> <F5> ':Ag<CR>' . "'" . expand('<cword>') . '('
+  nnoremap <expr> <silent> <F5> ':Ag<CR>' . "'" . expand('<cword>') . get(b:, 'fzf_fsuffix', '')
   " vnoremap <expr> <silent> K ':yank | Ag<CR><C-r>"'
   nnoremap <silent> <leader>gal :Commits<CR>
   nnoremap <silent> <leader>gl :BCommits<CR>
@@ -119,6 +119,14 @@ if executable('fzf')
   augroup vimrc_fzf
     autocmd!
     autocmd FileType python let b:fzf_defprefix = "'def | 'class "
+    autocmd FileType python let b:fzf_fsuffix = '('
+
+    " see augroup vimrc_term
+    autocmd BufNew term://*#FZF tunmap <buffer> <Esc>
+    autocmd BufNew term://*#FZF tunmap <buffer> <C-h>
+    autocmd BufNew term://*#FZF tunmap <buffer> <C-j>
+    autocmd BufNew term://*#FZF tunmap <buffer> <C-k>
+    autocmd BufNew term://*#FZF tunmap <buffer> <C-l>
   augroup END
 
 endif
