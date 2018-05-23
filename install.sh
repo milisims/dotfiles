@@ -5,21 +5,31 @@ cd $install_dir
 cfgdir="$HOME/.config"
 
 function rm_broken_links {
-    find $1/* -prune -type l ! -exec test -e {} \; -exec rm {} +
+  find $1/* -prune -type l ! -exec test -e {} \; -exec rm {} +
 }
 
 # ZSH Settings
 echo -n "Linking dotfiles and setting up zsh... "
 rm_broken_links $HOME
-for dotfile in $(ls dot); do
-    rm $HOME/.$dotfile 2> /dev/null
-    ln -s $install_dir/dot/$dotfile $HOME/.$dotfile
+for dotfile in alias bashrc gitconfig gvimrc pylintrc pythonrc scripts zshrc; do
+  rm $HOME/.$dotfile 2> /dev/null
+  ln -s $install_dir/dot/$dotfile $HOME/.$dotfile
 done
-echo "Done"
+
+
+[ -z "$XDG_CONFIG_HOME" ] && XDG_CONFIG_HOME="${HOME}/.config"
+[ -f "${XDG_CONFIG_HOME}/nvim/init.vim" ] && rm "${XDG_CONFIG_HOME}/nvim/init.vim"
+[ -f "${HOME}/.vimrc" ] && rm "${HOME}/.vimrc"
+
+mkdir -p ${cfgdir}/nvim
+sed "s|MYCFGDIR|${install_dir}/vim|" templates/vimrc > ${HOME}/.vimrc
+sed "s|MYCFGDIR|${install_dir}/vim|" templates/init.vim > ${XDG_CONFIG_HOME}/nvim/init.vim
 
 mkdir -p $cfgdir/zsh
 rm_broken_links $cfgdir/zsh
 ln -sf $install_dir/zsh/* $cfgdir/zsh
+
+echo "Done"
 
 # zsh-syntax-highlighting install
 echo -n 'Installing zsh-syntax-highlighting... '
