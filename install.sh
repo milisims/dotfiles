@@ -11,6 +11,7 @@ function rm_broken_links {
 # ZSH Settings
 echo -n "Linking dotfiles and setting up zsh... "
 rm_broken_links $HOME
+rm_broken_links $cfgdir
 for dotfile in alias bashrc gitconfig gvimrc pylintrc pythonrc scripts zshrc; do
   rm $HOME/.$dotfile 2> /dev/null
   ln -s $install_dir/dot/$dotfile $HOME/.$dotfile
@@ -73,7 +74,3 @@ echo "Done"
 # vim plugins
 git submodule update --init --recursive > /dev/null 2>&1
 nvim +'doautocmd User DeferVimPack' +UpdateRemotePlugins +qa
-
-# 'TEMPORARY' PATCH
-cd ~/.dotfiles/vim/pack/bundle/opt/vim-airline
-git apply ~/.dotfiles/vim/patches/airline_defer.patch
