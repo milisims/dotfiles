@@ -1,7 +1,6 @@
-let $CFGDIR='MYCFGDIR'
-set runtimepath^=$CFGDIR
+let s:defaultdir=has('win32') ? $HOME.'\AppData\Local\nvim' : $HOME.'/.config/nvim'
+let $CFGDIR=empty($XDG_CONFIG_HOME) ? s:defaultdir : $XDG_CONFIG_HOME.'/nvim'
 
-" share datadir with vim
 let s:defaultdir=has('win32') ? $HOME.'\AppData\Local\nvim-data' : $HOME.'/.local/share/vim'
 let $DATADIR=empty($XDG_DATA_HOME) ? s:defaultdir : $XDG_DATA_HOME.'/vim'
 

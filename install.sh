@@ -2,7 +2,7 @@
 
 install_dir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $install_dir
-cfgdir="$HOME/.config"
+[ -z "$XDG_CONFIG_HOME" ] && XDG_CONFIG_HOME="${HOME}/.config"
 
 function rm_broken_links {
   find $1/* -prune -type l ! -exec test -e {} \; -exec rm {} +
@@ -11,30 +11,22 @@ function rm_broken_links {
 # ZSH Settings
 echo -n "Linking dotfiles and setting up zsh... "
 rm_broken_links $HOME
-rm_broken_links $cfgdir
+rm_broken_links $XDG_CONFIG_HOME
 for dotfile in alias bashrc gitconfig gvimrc pylintrc pythonrc scripts zshrc; do
   rm $HOME/.$dotfile 2> /dev/null
   ln -s $install_dir/dot/$dotfile $HOME/.$dotfile
 done
 
 
-[ -z "$XDG_CONFIG_HOME" ] && XDG_CONFIG_HOME="${HOME}/.config"
-[ -f "${XDG_CONFIG_HOME}/nvim/init.vim" ] && rm "${XDG_CONFIG_HOME}/nvim/init.vim"
-[ -f "${HOME}/.vimrc" ] && rm "${HOME}/.vimrc"
-
-mkdir -p ${cfgdir}/nvim
-sed "s|MYCFGDIR|${install_dir}/vim|" templates/vimrc > ${HOME}/.vimrc
-sed "s|MYCFGDIR|${install_dir}/vim|" templates/init.vim > ${XDG_CONFIG_HOME}/nvim/init.vim
-
-mkdir -p $cfgdir/zsh
-rm_broken_links $cfgdir/zsh
-ln -sf $install_dir/zsh/* $cfgdir/zsh
+mkdir -p $XDG_CONFIG_HOME/zsh
+rm_broken_links $XDG_CONFIG_HOME/zsh
+ln -sf $install_dir/zsh/* $XDG_CONFIG_HOME/zsh
 
 echo "Done"
 
 # zsh-syntax-highlighting install
 echo -n 'Installing zsh-syntax-highlighting... '
-zsh_git_dir="$cfgdir/zsh/zsh-syntax-highlighting"
+zsh_git_dir="$XDG_CONFIG_HOME/zsh/zsh-syntax-highlighting"
 zsh_git_repo='https://github.com/zsh-users/zsh-syntax-highlighting.git'
 
 [ -d $zsh_git_dir ] && rm -rf $zsh_git_dir
@@ -60,12 +52,11 @@ echo
 # VIM Settings
 echo -n "Installing vim and neovim settings... "
 
-rm_broken_links $cfgdir
-[ -L $cfgdir/vim ] && rm $cfgdir/vim
-[ -L $cfgdir/nvim ] && rm $cfgdir/nvim
-ln -sf $install_dir/vim $cfgdir
-ln -sf $install_dir/vim $cfgdir/nvim
-# ln -sf $install_dir/vim/vimrc $HOME/.vimrc
+rm_broken_links $XDG_CONFIG_HOME
+[ -L $HOME/.vim ] && rm $HOME/.vim
+ln -sf $install_dir/vim $HOME/.vim
+[ -L $XDG_CONFIG_HOME/nvim ] && rm $XDG_CONFIG_HOME/nvim
+ln -sf $install_dir/vim $XDG_CONFIG_HOME/nvim
 for d in backup swap undo view; do
   mkdir -p $HOME/.local/share/vim/tmp/$d
 done
