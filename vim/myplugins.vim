@@ -226,7 +226,7 @@ if has('nvim')
 
   " }}}
   " vim-gutentags {{{
-  if executable('ctags')
+  if executable($HOME.'/bin/ctags')
     Dpackadd vim-gutentags
     Defer gutentags#setup_gutentags()
     let g:gutentags_cache_dir = $DATADIR.'/tags'
