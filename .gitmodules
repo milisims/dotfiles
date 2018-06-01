@@ -86,10 +86,6 @@
 	path = vim/pack/bundle/opt/vim-sneak
 	url = https://github.com/justinmk/vim-sneak
 	ignore = dirty
-[submodule "vim/pack/bundle/opt/vim-snippets"]
-	path = vim/pack/bundle/opt/vim-snippets
-	url = https://github.com/matthsims/vim-snippets
-	ignore = dirty
 [submodule "vim/pack/bundle/opt/vim-surround"]
 	path = vim/pack/bundle/opt/vim-surround
 	url = https://github.com/tpope/vim-surround
@@ -115,3 +111,6 @@
 [submodule "vim/pack/bundle/opt/nvim-completion-manager"]
 	path = vim/pack/bundle/opt/nvim-completion-manager
 	url = https://github.com/roxma/nvim-completion-manager.git
+[submodule "vim/pack/bundle/opt/vim-pythonsense"]
+	path = vim/pack/bundle/opt/vim-pythonsense
+	url = https://github.com/jeetsukumaran/vim-pythonsense.git

@@ -377,12 +377,14 @@ xnoremap <leader>p "0p
 xnoremap <leader>P "0P
 
 nnoremap <leader>evr :e $MYVIMRC<CR>
-nnoremap <leader>evs :e $CFGDIR/plugin/00-settings.vim<CR>
-nnoremap <leader>evp :e $CFGDIR/plugin/20-plugins.vim<CR>
+nnoremap <leader>evs :e $CFGDIR/mysettings.vim<CR>
+nnoremap <leader>evp :e $CFGDIR/myplugins.vim<CR>
 nnoremap <leader>rv :so $MYVIMRC<CR>
 
 nnoremap <leader>tws /\v +$<CR>
 
+" Select last edited text. improved over `[v`], eg works with visual block
+" doesn't work currently?
 nnoremap <expr> <leader>v '`['.strpart(getregtype(), 0, 1).'`]'
 nnoremap <leader>w :write<CR>
 nnoremap <silent> <leader>col :syntax sync fromstart<CR>
@@ -404,7 +406,6 @@ augroup END  " vimrc_filetype_mappings"
 
 " Make this window big. <C-w>= makes all windows equal.
 nnoremap <silent><C-w>b :vert resize<CR>:resize<CR>:normal! ze<CR>
-" Select last edited text. improved over `[v`], eg works with visual block
 
 " copy/paste line number -/+[count] below the current line
 nnoremap - :<C-u>execute '-'.v:count1.'copy.'<CR>

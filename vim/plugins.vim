@@ -95,7 +95,7 @@ if executable('fzf')
   nnoremap <silent> <leader>b   :Buffers<CR>
   nnoremap <silent> <leader>l   :Lines<CR>
   nnoremap <silent> <leader>L   :BLines<CR>
-  nnoremap <expr> <silent> <leader>O   ':Tags<CR>\'' . expand('<cword>')
+  nnoremap <expr> <silent> <leader>O    ':Tags<CR>' . "'" . expand('<cword>') . ' '
   nnoremap <silent> <leader>mr  :History<CR>
   nnoremap <silent> <leader>/   :execute 'Ag ' . input('Ag/')<CR>
   nnoremap <silent> <leader>A   :Ag<CR>
@@ -103,8 +103,8 @@ if executable('fzf')
 
   " TODO: :h K and :h 'keywordprg'
   nnoremap <expr> <silent> K ':Ag<CR>' . get(b:, 'fzf_defprefix', '') . "'" . expand('<cword>') . ' '
+  nnoremap <expr> <silent> K ':Ag<CR>' . get(b:, 'fzf_defprefix', '') . "'" . expand('<cword>') . ' '
   nnoremap <expr> <silent> <F5> ':Ag<CR>' . "'" . expand('<cword>') . get(b:, 'fzf_fsuffix', '')
-  " vnoremap <expr> <silent> K ':yank | Ag<CR><C-r>"'
   nnoremap <silent> <leader>gal :Commits<CR>
   nnoremap <silent> <leader>gl :BCommits<CR>
 
@@ -143,6 +143,7 @@ let g:targets_aiAI = 'aIAi'
 packadd! targets.vim
 " }}}
 packadd! vim-buftabline
+packadd! vim-pythonsense
 
 " ft specific
 " vim-python-pep8-indent {{{
@@ -194,8 +195,8 @@ let g:gitgutter_max_signs = 1000
 
 if has('nvim')
   " ultisnips {{{
-  Dpackadd vim-snippets
   Dpackadd ultisnips
+  let g:UltiSnipsSnippetDirectories = [$CFGDIR . '/snips', 'UltiSnips']
   let g:UltiSnipsExpandTrigger = '<Tab>'
   let g:UltiSnipsJumpForwardTrigger = '<Tab>'
   let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
