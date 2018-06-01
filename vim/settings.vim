@@ -269,6 +269,8 @@ augroup vimrc_filetype
   endif
   autocmd FileType qfreplace setlocal nofoldenable
   autocmd BufNewFile,BufRead *.yapf set filetype=cfg
+  autocmd Filetype sh let g:is_bash=1
+  autocmd Filetype sh let g:sh_fold_enabled=5
 augroup END    " vimrc_filetype
 " }}}
 " Numbertoggle: {{{
@@ -377,8 +379,8 @@ xnoremap <leader>p "0p
 xnoremap <leader>P "0P
 
 nnoremap <leader>evr :e $MYVIMRC<CR>
-nnoremap <leader>evs :e $CFGDIR/mysettings.vim<CR>
-nnoremap <leader>evp :e $CFGDIR/myplugins.vim<CR>
+nnoremap <leader>evs :e $CFGDIR/settings.vim<CR>
+nnoremap <leader>evp :e $CFGDIR/plugins.vim<CR>
 nnoremap <leader>rv :so $MYVIMRC<CR>
 
 nnoremap <leader>tws /\v +$<CR>
