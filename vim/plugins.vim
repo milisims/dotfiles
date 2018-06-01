@@ -142,6 +142,11 @@ nmap ga <Plug>(EasyAlign)
 let g:targets_aiAI = 'aIAi'
 packadd! targets.vim
 " }}}
+" vim-filebeagle {{{
+packadd! vim-filebeagle
+let g:filebeagle_suppress_keymaps = 1
+nmap <silent> <leader>- <Plug>FileBeagleOpenCurrentBufferDir
+" }}}
 packadd! vim-buftabline
 packadd! vim-pythonsense
 
