@@ -114,3 +114,6 @@
 [submodule "vim/pack/bundle/opt/vim-pythonsense"]
 	path = vim/pack/bundle/opt/vim-pythonsense
 	url = https://github.com/jeetsukumaran/vim-pythonsense.git
+[submodule "vim/pack/bundle/opt/vim-filebeagle"]
+	path = vim/pack/bundle/opt/vim-filebeagle
+	url = https://github.com/jeetsukumaran/vim-filebeagle.git
