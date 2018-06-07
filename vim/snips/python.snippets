@@ -435,7 +435,7 @@ endsnippet
 
 snippet deff "minimal function" b
 def ${1:function}(`!p snip.rv = vim.eval('indent(".") ? "self" : ""')`$2):
-	$0
+	${0:${VISUAL:pass}}
 endsnippet
 
 snippet def "function with docstrings" b
