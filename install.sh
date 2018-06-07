@@ -125,7 +125,7 @@ function main() {
   echo "Linking dotfiles and setting up zsh... "
   rm_broken_links $HOME
   rm_broken_links $XDG_CONFIG_HOME
-  for dotfile in alias bashrc gitconfig gvimrc pylintrc pythonrc scripts zshrc; do
+  for dotfile in alias bashrc gitconfig gvimrc pylintrc pythonrc scripts zshrc tmux.conf; do
     rm $HOME/.$dotfile 2> /dev/null
     ln -s $install_dir/dot/$dotfile $HOME/.$dotfile
   done
