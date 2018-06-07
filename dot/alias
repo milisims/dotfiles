@@ -6,6 +6,8 @@ alias lx='ls -lX'
 alias lt='ls -lt'
 alias lm='ls -l | more'
 
+alias cl=' clear; l'
+
 alias grep='grep --color=auto'
 
 alias fg=' fg'
@@ -49,6 +51,7 @@ onmodify() {
 }
 
 alias gst='git status'
+alias cst='clear; git status'
 alias gsh='git stash'
 alias gshl='git stash show -p'
 alias gpl='git pull'
@@ -70,3 +73,5 @@ alias gcotb='git checkout --track -b'
 alias glo='git log -n 5'
 alias glog='git log'
 alias glogp='git log --pretty=format:"%h %s" --graph'
+
+# vim: ft=sh

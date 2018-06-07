@@ -85,7 +85,7 @@ let g:echodoc#enable_at_startup = 1
 " fzf.vim {{{
 if executable('fzf')
   set runtimepath+=~/.fzf
-  source ~/.fzf/plugin/fzf.vim
+  source ~/local/src/fzf/plugin/fzf.vim
   packadd! fzf.vim
 
   let $FZF_DEFAULT_COMMAND = 'ag -g ""'
@@ -115,6 +115,17 @@ if executable('fzf')
 
   imap <C-x><C-f> <Plug>(fzf-complete-file-ag)
   imap <C-x><C-l> <Plug>(fzf-complete-line)
+
+    function! s:build_quickfix_list(lines)
+      call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+      copen
+      cc
+    endfunction
+
+    let g:fzf_action = {
+      \ 'ctrl-q': function('s:build_quickfix_list'),
+      \ 'ctrl-s': 'split',
+      \ 'ctrl-v': 'vsplit' }
 
   augroup vimrc_term_fzf
     autocmd!
@@ -232,11 +243,11 @@ if has('nvim')
 
   " }}}
   " vim-gutentags {{{
-  if executable($HOME.'/bin/ctags')
+  if executable($HOME.'/local/bin/ctags')
     Dpackadd vim-gutentags
     Defer gutentags#setup_gutentags()
     let g:gutentags_cache_dir = $DATADIR.'/tags'
-    let g:gutentags_ctags_executable = $HOME.'/bin/ctags'  " probably unnecessary
+    let g:gutentags_ctags_executable = $HOME.'/local/bin/ctags'
   else
     let g:gutentags_enabled = 0
   endif

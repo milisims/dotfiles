@@ -55,15 +55,6 @@ bindkey -M vicmd "^[[1~" vi-beginning-of-line
 bindkey -M vicmd "^[[4~" vi-end-of-line
 bindkey -M vicmd '^[[2~' beep
 
-fzf-history-widget-to-ins() {
-  zle fzf-history-widget
-  zle vi-end-of-line
-  zle vi-insert
-}
-zle -N fzf-history-widget-to-ins
-
-bindkey -M vicmd '/' fzf-history-widget-to-ins
-
 autoload zmv  # zmv with no clargs shows example usage
 
 # Mmm. Vim.
@@ -71,27 +62,43 @@ export EDITOR=$(command -v vim)
 export VISUAL=$(command -v vim)
 
 #------------------------------------------////
-# Paths.
+# Paths
 #------------------------------------------////
 
-# TODO: make this a function? make sure it exists, too.
-if ! echo "$PATH" | grep -q "$HOME/.local/bin"; then
-  export PATH=$HOME/.local/bin:$PATH
-fi
-if ! echo "$PATH" | grep -q "$HOME/.scripts/bin"; then
-  export PATH=$HOME/.scripts/bin:$PATH
-fi
-if ! echo "$PATH" | grep -q "$HOME/miniconda3/bin"; then
-  export PATH=$HOME/miniconda3/bin:$PATH
-fi
-if ! echo "$PATH" | grep -q "$HOME/bin"; then
-  export PATH=$HOME/bin:$PATH
-fi
+function addpath() {
+  local newpath=$1
+  if [[ ! "$PATH" == *${newpath}* ]] && [[ -d $newpath ]]; then
+    echo $(readlink -f $newpath):$PATH
+  else
+    echo $PATH
+  fi
+}
+
+export PATH=$(addpath "$HOME/.local/bin")
+export PATH=$(addpath "$HOME/miniconda3/bin")
+export PATH=$(addpath "$HOME/local/bin")
+export PATH=$(addpath "$HOME/.scripts/bin")
+
+#------------------------------------------////
+# fzf
+#------------------------------------------////
 
 # must be after vi mode declaration!
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [[ -d "$HOME/local/src/fzf" ]]; then
+  fzf-history-widget-to-ins() {
+    zle fzf-history-widget
+    zle vi-end-of-line
+    zle vi-insert
+  }
+  zle -N fzf-history-widget-to-ins
+  bindkey -M vicmd '/' fzf-history-widget-to-ins
+
+  [[ $- == *i* ]] && source "$HOME/local/src/fzf/shell/completion.zsh" 2> /dev/null
+  source "$HOME/local/src/fzf/shell/key-bindings.zsh"
+fi
+
 #------------------------------------------////
-# Color man pages:
+# Color man pages
 #------------------------------------------////
 
 export LESS_TERMCAP_mb=$'\E[01;31m'      # begin blinkin
