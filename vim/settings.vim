@@ -226,6 +226,9 @@ if has('packages')
   set packpath+=$CFGDIR
 endif
 " }}}
+" Filetype: {{{
+let g:python_highlight_all = 1
+" }}}
 
 " Autocommands:
 " General: {{{
