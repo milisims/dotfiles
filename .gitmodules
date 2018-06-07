@@ -117,3 +117,6 @@
 [submodule "vim/pack/bundle/opt/vim-filebeagle"]
 	path = vim/pack/bundle/opt/vim-filebeagle
 	url = https://github.com/jeetsukumaran/vim-filebeagle.git
+[submodule "vim/pack/bundle/start/vim-tmux-navigator"]
+	path = vim/pack/bundle/start/vim-tmux-navigator
+	url = https://github.com/christoomey/vim-tmux-navigator.git
