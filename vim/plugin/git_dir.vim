@@ -20,6 +20,10 @@ function! s:get_gitdir() abort
 endfunction
 
 function! s:goto_gitdir() abort
+  if !&modifiable
+    return
+  endif
+
   let b:git_autochdir = get(b:, 'git_autochdir', s:get_gitdir())
   execute 'lcd ' . b:git_autochdir
 endfunction
