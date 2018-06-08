@@ -6,21 +6,19 @@ cd $install_dir
 
 function install_zsh_syntax_highlighting() {
   echo 'Installing zsh-syntax-highlighting... '
-  zsh_git_dir="$XDG_CONFIG_HOME/zsh/zsh-syntax-highlighting"
-  zsh_git_repo='https://github.com/zsh-users/zsh-syntax-highlighting.git'
+  local zsh_git_dir="$XDG_CONFIG_HOME/zsh/zsh-syntax-highlighting"
+  local zsh_git_repo='https://github.com/zsh-users/zsh-syntax-highlighting.git'
 
   [ -d $zsh_git_dir ] && rm -rf $zsh_git_dir
   git clone --depth 1 $zsh_git_repo $zsh_git_dir > /dev/null 2>&1
-  MSG="Done"
-  [ "$?" -ne 0 ] && MSG="FAILED "  # to install zsh-syntax-highlighting
-  echo $MSG
+  echo "########"
   echo
 }
 
 function install_fzf() {
   echo 'Installing fzf... '
-  fzf_git_dir="$HOME/local/src/fzf"
-  fzf_git_repo='https://github.com/junegunn/fzf.git'
+  local fzf_git_dir="$HOME/local/src/fzf"
+  local fzf_git_repo='https://github.com/junegunn/fzf.git'
 
   if [ -d $fzf_git_dir ]; then
     cd $fzf_git_dir
@@ -39,37 +37,48 @@ function install_fzf() {
 # TODO: execute and log to file, remove if exit 0, quit and report if nonzero
 function install_tmux() {
   echo 'Installing tmux... '
-  tmux_src_dir="$HOME/local/src"
-  tmux_libs_dir="$HOME/local/src/tmux-libs"
+  local tmux_src_dir="$HOME/local/src"
+  local tmux_libs_dir="$HOME/local/src/tmux-libs"
   mkdir -p $tmux_libs_dir
 
   if [[ ! -f $HOME/local/lib/libevent.a ]]; then
-    wget -O $tmux_libs_dir/libevent-2.1.8-stable.tar.gz https://github.com/libevent/libevent/releases/download/release-2.1.8-stable/libevent-2.1.8-stable.tar.gz
     cd $tmux_libs_dir
-    tar xvzf libevent-2.1.8-stable.tar.gz
+    local libevent_file='libevent-2.1.8-stable.tar.gz'
+    local libevent_url='https://github.com/libevent/libevent/releases/download/release-2.1.8-stable/libevent-2.1.8-stable.tar.gz'
+
+    if [[ ! -f $libevent_file ]]; then
+      wget -O $libevent_file $libevent_url
+    fi
+    tar xvzf $libevent_file
     cd libevent-2.1.8-stable
     ./configure --prefix=$HOME/local --disable-shared
     make
     make install
-    rm $tmux_libs_dir/libevent-2.1.8-stable.tar.gz
     cd $install_dir
   fi
 
   if [[ ! -f $HOME/local/lib/libncurses.a ]]; then
     cd $tmux_libs_dir
-    wget -O $tmux_libs_dir/ncurses-6.1.tar.gz ftp://ftp.gnu.org/gnu/ncurses/ncurses-6.1.tar.gz
-    tar xvzf ncurses-6.1.tar.gz
+    local ncurses_file='ncurses-6.1.tar.gz'
+    local ncurses_url='ftp://ftp.gnu.org/gnu/ncurses/ncurses-6.1.tar.gz'
+    if [[ ! -f "$ncurses_file" ]]; then
+      wget -O $ncurses_file $ncurses_url
+    fi
+    tar xvzf $ncurses_file
     cd ncurses-6.1
     ./configure --prefix=$HOME/local CPPFLAGS="-P"
     make
     make install
-    rm $tmux_libs_dir/ncurses-6.1.tar.gz
     cd $install_dir
   fi
 
   cd $tmux_src_dir
-  wget -O $tmux_src_dir/tmux-2.7.tar.gz https://github.com/tmux/tmux/releases/download/2.7/tmux-2.7.tar.gz
-  tar xvzf tmux-2.7.tar.gz
+  local tmux_file='tmux-2.7.tar.gz'
+  local tmux_url='https://github.com/tmux/tmux/releases/download/2.7/tmux-2.7.tar.gz'
+  if [[ ! -f "$tmux_file" ]]; then
+    wget -O $tmux_file $tmux_url
+  fi
+  tar xvzf $tmux_file
   cd tmux-2.7
   ./configure CFLAGS="-I$HOME/local/include -I$HOME/local/include/ncurses" LDFLAGS="-L$HOME/local/lib -L$HOME/local/include/ncurses -L$HOME/local/include"
   CPPFLAGS="-I$HOME/local/include -I$HOME/local/include/ncurses" LDFLAGS="-static -L$HOME/local/include -L$HOME/local/include/ncurses -L$HOME/local/lib" make
@@ -85,8 +94,8 @@ function install_tmux() {
 
 function install_ctags() {
   echo 'Installing ctags... '
-  ctags_git_dir="$HOME/local/src/ctags"
-  ctags_git_repo='https://github.com/universal-ctags/ctags.git'
+  local ctags_git_dir="$HOME/local/src/ctags"
+  local ctags_git_repo='https://github.com/universal-ctags/ctags.git'
 
 
   if [ -d $ctags_git_dir ]; then
