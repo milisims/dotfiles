@@ -29,7 +29,7 @@ function install_fzf() {
   fi
   $fzf_git_dir/install --bin
   mkdir -p $HOME/local/bin/
-  ln -s $fzf_git_dir/bin/* $HOME/local/bin/
+  ln -sf $fzf_git_dir/bin/* $HOME/local/bin/
   echo "########"
   echo
 }
@@ -83,7 +83,6 @@ function install_tmux() {
   ./configure CFLAGS="-I$HOME/local/include -I$HOME/local/include/ncurses" LDFLAGS="-L$HOME/local/lib -L$HOME/local/include/ncurses -L$HOME/local/include"
   CPPFLAGS="-I$HOME/local/include -I$HOME/local/include/ncurses" LDFLAGS="-static -L$HOME/local/include -L$HOME/local/include/ncurses -L$HOME/local/lib" make
   make
-  # make install
   mkdir -p $HOME/local/bin/
   cp tmux $HOME/local/bin
   cd $install_dir
