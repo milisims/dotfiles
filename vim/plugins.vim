@@ -39,9 +39,6 @@ call s:defer('DeferVimFinal', 'set updatetime=' . &updatetime)
 set updatetime=20
 " }}}
 
-" vim-repeat {{{
-packadd! vim-repeat
-" }}}
 " vim-sneak {{{
 nmap f <Plug>Sneak_f
 nmap F <Plug>Sneak_F
@@ -67,9 +64,6 @@ nmap <leader>\ <Plug>Sneak_S
 nmap <leader>s <Plug>Sneak_s
 nmap <leader>S <Plug>Sneak_S
 packadd! vim-sneak
-" }}}
-" vim-cursorword {{{
-packadd! vim-cursorword
 " }}}
 " vim-highlightedyank {{{
 packadd! vim-highlightedyank
@@ -158,16 +152,15 @@ packadd! vim-filebeagle
 let g:filebeagle_suppress_keymaps = 1
 nmap <silent> <leader>- <Plug>FileBeagleOpenCurrentBufferDir
 " }}}
+packadd! vim-fugitive
 packadd! vim-buftabline
-packadd! vim-pythonsense
+packadd! vim-cursorword
+packadd! vim-repeat
 
 " ft specific
-" vim-python-pep8-indent {{{
 packadd! vim-python-pep8-indent
-" }}}
-" python_match.vim {{{
 packadd! python_match.vim
-" }}}
+packadd! vim-pythonsense
 " vim-pandoc {{{
 " packadd vim-pandoc
 " packadd vim-pandoc-syntax
@@ -184,9 +177,6 @@ Dpackadd vim-unimpaired
 " }}}
 " vim-eunuch {{{
 Dpackadd vim-eunuch
-" }}}
-" vim-fugitive {{{
-Dpackadd vim-fugitive
 " }}}
 " vim-commentary {{{
 Dpackadd vim-commentary
