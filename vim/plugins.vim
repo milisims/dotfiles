@@ -39,6 +39,7 @@ call s:defer('DeferVimFinal', 'set updatetime=' . &updatetime)
 set updatetime=20
 " }}}
 
+" start:
 " vim-sneak {{{
 nmap f <Plug>Sneak_f
 nmap F <Plug>Sneak_F
@@ -63,19 +64,34 @@ nmap \ <Plug>Sneak_s
 nmap <leader>\ <Plug>Sneak_S
 nmap <leader>s <Plug>Sneak_s
 nmap <leader>S <Plug>Sneak_S
-packadd! vim-sneak
 " }}}
 " vim-highlightedyank {{{
-packadd! vim-highlightedyank
 if !exists('##TextYankPost')
   nmap y <Plug>(highlightedyank)
   xmap y <Plug>(highlightedyank)
 endif
 " }}}
-" echodoc.vim {{{
-packadd! echodoc.vim
-let g:echodoc#enable_at_startup = 1
+" vim-easy-align {{{
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 " }}}
+" targets {{{
+let g:targets_aiAI = 'aIAi'
+" }}}
+" vim-filebeagle {{{
+let g:filebeagle_suppress_keymaps = 1
+nmap <silent> <leader>- <Plug>FileBeagleOpenCurrentBufferDir
+" }}}
+" vim-commentary {{{
+xmap gc  <Plug>Commentary
+nmap gc  <Plug>Commentary
+omap gc  <Plug>Commentary
+nmap gcc <Plug>CommentaryLine
+nmap cgc <Plug>ChangeCommentary
+nmap gcu <Plug>Commentary<Plug>Commentary
+" }}}
+" end start
+
 " fzf.vim {{{
 if executable('fzf')
   set runtimepath+=~/.fzf
@@ -138,24 +154,6 @@ if executable('fzf')
 
 endif
 " }}}
-" vim-easy-align {{{
-packadd! vim-easy-align
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
-" }}}
-" targets {{{
-let g:targets_aiAI = 'aIAi'
-packadd! targets.vim
-" }}}
-" vim-filebeagle {{{
-packadd! vim-filebeagle
-let g:filebeagle_suppress_keymaps = 1
-nmap <silent> <leader>- <Plug>FileBeagleOpenCurrentBufferDir
-" }}}
-packadd! vim-fugitive
-packadd! vim-buftabline
-packadd! vim-cursorword
-packadd! vim-repeat
 
 " ft specific
 packadd! vim-python-pep8-indent
@@ -169,27 +167,6 @@ let g:pandoc#folding#fdc = 0
 
 
 " Deferred:
-" vim-surround {{{
-Dpackadd vim-surround
-" }}}
-" vim-unimpaired {{{
-Dpackadd vim-unimpaired
-" }}}
-" vim-eunuch {{{
-Dpackadd vim-eunuch
-" }}}
-" vim-commentary {{{
-Dpackadd vim-commentary
-xmap gc  <Plug>Commentary
-nmap gc  <Plug>Commentary
-omap gc  <Plug>Commentary
-nmap gcc <Plug>CommentaryLine
-nmap cgc <Plug>ChangeCommentary
-nmap gcu <Plug>Commentary<Plug>Commentary
-" }}}
-" vim-exchange {{{
-Dpackadd vim-exchange
-" }}}
 " syntax-vim-ex {{{
 Dpackadd syntax-vim-ex
 " }}}

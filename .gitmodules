@@ -1,7 +1,3 @@
-[submodule "vim/pack/bundle/opt/echodoc.vim"]
-	path = vim/pack/bundle/opt/echodoc.vim
-	url = https://github.com/Shougo/echodoc.vim
-	ignore = dirty
 [submodule "vim/pack/bundle/opt/fzf.vim"]
 	path = vim/pack/bundle/opt/fzf.vim
 	url = https://github.com/junegunn/fzf.vim
@@ -31,27 +27,27 @@
 	url = https://github.com/SirVer/ultisnips
 	ignore = dirty
 [submodule "vim/pack/bundle/opt/vim-commentary"]
-	path = vim/pack/bundle/opt/vim-commentary
+	path = vim/pack/bundle/start/vim-commentary
 	url = https://github.com/tpope/vim-commentary
 	ignore = dirty
 [submodule "vim/pack/bundle/opt/vim-cursorword"]
-	path = vim/pack/bundle/opt/vim-cursorword
+	path = vim/pack/bundle/start/vim-cursorword
 	url = https://github.com/itchyny/vim-cursorword
 	ignore = dirty
 [submodule "vim/pack/bundle/opt/vim-easy-align"]
-	path = vim/pack/bundle/opt/vim-easy-align
+	path = vim/pack/bundle/start/vim-easy-align
 	url = https://github.com/junegunn/vim-easy-align
 	ignore = dirty
 [submodule "vim/pack/bundle/opt/vim-eunuch"]
-	path = vim/pack/bundle/opt/vim-eunuch
+	path = vim/pack/bundle/start/vim-eunuch
 	url = git@github.com:matthsims/vim-eunuch.git
 	ignore = dirty
 [submodule "vim/pack/bundle/opt/vim-exchange"]
-	path = vim/pack/bundle/opt/vim-exchange
+	path = vim/pack/bundle/start/vim-exchange
 	url = https://github.com/tommcdo/vim-exchange
 	ignore = dirty
 [submodule "vim/pack/bundle/opt/vim-fugitive"]
-	path = vim/pack/bundle/opt/vim-fugitive
+	path = vim/pack/bundle/start/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive
 	ignore = dirty
 [submodule "vim/pack/bundle/opt/vim-gitgutter"]
@@ -63,7 +59,7 @@
 	url = https://github.com/ludovicchabant/vim-gutentags
 	ignore = dirty
 [submodule "vim/pack/bundle/opt/vim-highlightedyank"]
-	path = vim/pack/bundle/opt/vim-highlightedyank
+	path = vim/pack/bundle/start/vim-highlightedyank
 	url = https://github.com/machakann/vim-highlightedyank
 	ignore = dirty
 [submodule "vim/pack/bundle/opt/vim-pandoc"]
@@ -79,19 +75,19 @@
 	url = https://github.com/Vimjas/vim-python-pep8-indent
 	ignore = dirty
 [submodule "vim/pack/bundle/opt/vim-repeat"]
-	path = vim/pack/bundle/opt/vim-repeat
+	path = vim/pack/bundle/start/vim-repeat
 	url = https://github.com/tpope/vim-repeat
 	ignore = dirty
 [submodule "vim/pack/bundle/opt/vim-sneak"]
-	path = vim/pack/bundle/opt/vim-sneak
+	path = vim/pack/bundle/start/vim-sneak
 	url = https://github.com/justinmk/vim-sneak
 	ignore = dirty
 [submodule "vim/pack/bundle/opt/vim-surround"]
-	path = vim/pack/bundle/opt/vim-surround
+	path = vim/pack/bundle/start/vim-surround
 	url = https://github.com/tpope/vim-surround
 	ignore = dirty
 [submodule "vim/pack/bundle/opt/vim-unimpaired"]
-	path = vim/pack/bundle/opt/vim-unimpaired
+	path = vim/pack/bundle/start/vim-unimpaired
 	url = https://github.com/tpope/vim-unimpaired
 	ignore = dirty
 [submodule "vim/pack/bundle/opt/vim-yass"]
@@ -99,11 +95,11 @@
 	url = git@github.com:matthsims/vim-yass.git
 	ignore = dirty
 [submodule "vim/pack/bundle/opt/targets.vim"]
-	path = vim/pack/bundle/opt/targets.vim
+	path = vim/pack/bundle/start/targets.vim
 	url = https://github.com/wellle/targets.vim.git
 	ignore = dirty
 [submodule "vim/pack/bundle/opt/vim-buftabline"]
-	path = vim/pack/bundle/opt/vim-buftabline
+	path = vim/pack/bundle/start/vim-buftabline
 	url = https://github.com/ap/vim-buftabline.git
 [submodule "vim/pack/bundle/opt/ale"]
 	path = vim/pack/bundle/opt/ale
@@ -115,7 +111,7 @@
 	path = vim/pack/bundle/opt/vim-pythonsense
 	url = https://github.com/jeetsukumaran/vim-pythonsense.git
 [submodule "vim/pack/bundle/opt/vim-filebeagle"]
-	path = vim/pack/bundle/opt/vim-filebeagle
+	path = vim/pack/bundle/start/vim-filebeagle
 	url = https://github.com/jeetsukumaran/vim-filebeagle.git
 [submodule "vim/pack/bundle/start/vim-tmux-navigator"]
 	path = vim/pack/bundle/start/vim-tmux-navigator
