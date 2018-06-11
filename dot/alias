@@ -50,6 +50,9 @@ onmodify() {
     done
 }
 
+alias tns='tmux new -s'
+alias tat='tmux attach -t'
+
 alias gst='git status'
 alias cst='clear; git status'
 alias gsh='git stash'
