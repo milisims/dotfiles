@@ -50,6 +50,7 @@ onmodify() {
     done
 }
 
+alias tls='tmux ls'
 alias tns='tmux new -s'
 alias tat='tmux attach -t'
 
