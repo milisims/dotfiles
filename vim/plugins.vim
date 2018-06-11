@@ -90,6 +90,10 @@ nmap gcc <Plug>CommentaryLine
 nmap cgc <Plug>ChangeCommentary
 nmap gcu <Plug>Commentary<Plug>Commentary
 " }}}
+" undotree {{{
+let g:undotree_WindowLayout=3
+nnoremap <leader>ut :UndotreeToggle<CR>
+" }}}
 " end start
 
 " fzf.vim {{{
