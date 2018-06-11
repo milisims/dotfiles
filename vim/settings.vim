@@ -175,6 +175,7 @@ if has('termguicolors')
 else
   set t_Co=256
 endif
+set background=dark
 colorscheme evolution
 
 " Do not display completion messages
