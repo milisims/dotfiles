@@ -237,7 +237,6 @@ augroup vimrc_general
   au BufWinLeave ?* if empty(&buftype) | mkview | endif            " Save fold
   au BufWinEnter ?* if empty(&buftype) | silent! loadview | endif   " load fold
 
-  autocmd CursorHold * if &modified | silent! wa | endif
   autocmd WinEnter,FocusGained * checktime
 
   " Update filetype on save if empty
@@ -388,6 +387,8 @@ nnoremap <leader>rv :so $MYVIMRC<CR>
 
 nnoremap <leader>tws /\v +$<CR>
 
+nnoremap <leader>do :DiffOrig<CR>
+
 " Select last edited text. improved over `[v`], eg works with visual block
 " doesn't work currently?
 nnoremap <expr> <leader>v '`['.strpart(getregtype(), 0, 1).'`]'
@@ -449,4 +450,21 @@ function! s:append_modeline()
   call append(line('$'), l:modeline)
 endfunction
 
+function! s:difforig() abort
+  let l:filetype = &filetype
+  vert new
+  set buftype=nofile
+  set modifiable
+  read ++edit # | 0d_
+  let &filetype = l:filetype
+  set nomodifiable
+  nnoremap <buffer> q :diffoff!<CR>:bd<CR>
+  diffthis
+  set noscrollbind
+  wincmd p
+  diffthis
+  set foldlevel=1
+endfunction
+
+command! DiffOrig call s:difforig()
 " }}}
