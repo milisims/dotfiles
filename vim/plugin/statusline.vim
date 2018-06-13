@@ -1,7 +1,18 @@
+scriptencoding utf-8
 set laststatus=2
 
+function! s:gitinfo() abort
+  let l:statuslinetext = ' '
+  if exists('g:loaded_fugitive') && &modifiable
+    let l:statuslinetext .= fugitive#head()
+    let l:statuslinetext .= ' '
+  endif
+  return l:statuslinetext
+endfunction
+
 function! s:fileinfo() abort
-  let l:statuslinetext = ' %f'
+  " TODO: modified changes color. choose %#HLname# based on &modified
+  let l:statuslinetext = ' %f' 
   let l:statuslinetext .= ' %m'
   let l:statuslinetext .= '%='
   let l:statuslinetext .= '%y '
@@ -9,39 +20,39 @@ function! s:fileinfo() abort
 endfunction
 
 function! s:typeinfo() abort
-  let l:statuslinetext =' %{&fileencoding?&fileencoding:&encoding}'
+  let l:statuslinetext = ' %{&fileencoding?&fileencoding:&encoding}'
   let l:statuslinetext .= '[%{&fileformat}] '
   return l:statuslinetext
 endfunction
 
 function! s:bufinfo() abort
-  let l:statuslinetext = '  %p%% ☰  '  " U+2630
-  let l:statuslinetext .= '%l/%L ln : %c '
+  let l:statuslinetext = ' %p%% ☰ '  " U+2630
+  let l:statuslinetext .= '%l/%L : %c '
   return l:statuslinetext
 endfunction
 
 function! Statusline_active() abort
-  " TODO: special file information (help, etc)
-  " TODO: show the ascii/unicode of current character in stl.
-  " set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
-
-  let l:statuslinetext  = ' %11.11('.my#statusline#modecolor().my#statusline#mode().'%)'
+  let l:statuslinetext  = ' %3.3('.my#statusline#modecolor().my#statusline#mode().'%)'
+  let l:statuslinetext .= '%#CursorLineNr#'
+  let l:statuslinetext .= s:gitinfo()
   let l:statuslinetext .= '%*'
   let l:statuslinetext .= s:fileinfo()
   let l:statuslinetext .= '%1*'
   let l:statuslinetext .= s:typeinfo()
   let l:statuslinetext .= my#statusline#modecolor()
-  let l:statuslinetext .= s:bufinfo()
+  if exists('b:stl_file_info')
+    let l:statuslinetext .= s:bufinfo()
+  endif
   let l:statuslinetext .= '%2*'
   " let l:statuslinetext .= my#statusline#errors()  " TODO
   return l:statuslinetext
 endfunction
 
 function! Statusline_inactive() abort
-  let l:statuslinetext  = '%12.12( %)'
+  let l:statuslinetext  = '%2* %*%3.3( %)'
+  let l:statuslinetext .= s:gitinfo()
   let l:statuslinetext .= s:fileinfo()
   let l:statuslinetext .= s:typeinfo()
-  let l:statuslinetext .= s:bufinfo()
   return l:statuslinetext
 endfunction
 
