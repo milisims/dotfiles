@@ -195,7 +195,6 @@ endif
 " Folds: {{{
 if has('folding')
   set foldenable
-  set foldmethod=syntax
   set foldlevelstart=99
 endif
 
@@ -306,10 +305,12 @@ nnoremap Y y$
 nnoremap <CR> za
 xnoremap <CR> za
 nnoremap <BS> <c-^>
-nnoremap <C-h> <C-W>h
-nnoremap <C-j> <C-W>j
-nnoremap <C-k> <C-W>k
-nnoremap <C-l> <C-W>l
+if !exists('g:loaded_tmux_navigator')
+  nnoremap <C-h> <C-W>h
+  nnoremap <C-j> <C-W>j
+  nnoremap <C-k> <C-W>k
+  nnoremap <C-l> <C-W>l
+endif
 nnoremap 0 ^
 nnoremap ^ 0
 nnoremap <silent> m i_<esc>r
