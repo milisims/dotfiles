@@ -86,7 +86,6 @@ endif
 " }}}
 " Tabs and Indents: {{{
 set textwidth=80    " Text width maximum chars before wrapping
-set noexpandtab     " Don't expand tabs to spaces. Spaces are better, but... eh
 set softtabstop=2   " While performing editing operations
 set shiftwidth=2    " Number of spaces to use in auto(indent)
 set smarttab        " Tab insert blanks according to 'shiftwidth'
@@ -103,11 +102,10 @@ set ignorecase      " Search ignoring case
 set smartcase       " Keep case when searching with *
 set infercase       " Adjust case in insert completion mode
 set incsearch       " Incremental search
-set hlsearch        " Highlight search results
 set wrapscan        " Searches wrap around the end of the file
 set showmatch       " Jump to matching bracket
 set matchpairs+=<:> " Add HTML brackets to pair matching
-set matchtime=1     " Tenths of a second to show the matching paren
+set matchtime=2     " Tenths of a second to show the matching paren
 set cpoptions-=m    " showmatch will wait 0.5s or until a char is typed
 " }}}
 " Behavior: {{{
@@ -195,6 +193,7 @@ endif
 " Folds: {{{
 if has('folding')
   set foldenable
+  set foldmethod=syntax
   set foldlevelstart=99
 endif
 
@@ -319,9 +318,10 @@ nnoremap gu gU
 nnoremap gl gu
 xnoremap gu gU
 xnoremap gl gu
+nnoremap Q q
 
-nnoremap <expr> j (v:count > 8 ? "m'" . v:count : '') . 'gj'
-nnoremap <expr> k (v:count > 8 ? "m'" . v:count : '') . 'gk'
+nnoremap <expr> j (v:count > 4 ? "m'" . v:count . 'j' : 'gj')
+nnoremap <expr> k (v:count > 4 ? "m'" . v:count . 'k' : 'gk')
 
 if has('nvim')
   augroup vimrc_term
@@ -347,18 +347,10 @@ if has('mac')
 endif
 
 nnoremap ! :!
-cnoreabbrev qw wq
-cnoreabbrev Wq wq
-cnoreabbrev WQ wq
-cnoreabbrev Q q
-cnoreabbrev Qa qa
-cnoreabbrev Bd bd
-cnoreabbrev bD bd
 cnoreabbrev vh <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'vert help' : 'vh')<CR>
 
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
-nnoremap Q q
 
 nnoremap <C-q> <C-w>
 xnoremap < <gv
@@ -376,6 +368,9 @@ inoremap <C-u> <Esc>hgUiwea
 nnoremap <leader><CR> :nohlsearch<CR>
 nnoremap <leader>cd :lcd %:p:h<CR>:pwd<CR>
 
+nnoremap <expr> <leader><leader> ':nnoremap <buffer> <leader' . '><' . 'leader> '
+nnoremap <leader>c<space> :execute 'nunmap <buffer> <leader' . '><' . 'leader>'<CR>:echo '<leader leader> cleared.'<CR>
+
 nnoremap <leader>p "0p
 nnoremap <leader>P "0P
 xnoremap <leader>p "0p
@@ -384,7 +379,7 @@ xnoremap <leader>P "0P
 nnoremap <leader>evr :e $MYVIMRC<CR>
 nnoremap <leader>evs :e $CFGDIR/settings.vim<CR>
 nnoremap <leader>evp :e $CFGDIR/plugins.vim<CR>
-nnoremap <leader>rv :so $MYVIMRC<CR>
+nnoremap <leader>rv :so $MYVIMRC<CR>:execute 'set ft='.&ft<CR>:echo 'reloaded vimrc'<CR>
 
 nnoremap <leader>tws /\v +$<CR>
 
@@ -414,22 +409,9 @@ augroup END  " vimrc_filetype_mappings"
 " Make this window big. <C-w>= makes all windows equal.
 nnoremap <silent><C-w>b :vert resize<CR>:resize<CR>:normal! ze<CR>
 
-" copy/paste line number -/+[count] below the current line
-nnoremap - :<C-u>execute '-'.v:count1.'copy.'<CR>
-nnoremap + :<C-u>execute '+'.v:count1.'copy.'<CR>
-
-nnoremap d- :<C-u>execute '-'.v:count1.'delete'<CR><C-o>
-nnoremap d+ :<C-u>execute '+'.v:count1.'delete'<CR><C-o>
-nnoremap d= :<C-u>execute '+'.v:count1.'delete'<CR><C-o>
-
-nnoremap y- :<C-u>execute '-'.v:count1.'yank '.v:register<CR>
-nnoremap y+ :<C-u>execute '+'.v:count1.'yank '.v:register<CR>
-nnoremap y= :<C-u>execute '+'.v:count1.'yank '.v:register<CR>
-
 " Quick substitute within selected area
 xnoremap s :s//g<Left><Left>
 xnoremap gs y:%s/<C-r>"//g<Left><Left>
-" TODO: mark a region, select a region of text, hit keybinding, replace only that region.
 
 " Drag current line/s vertically and auto-indent
 xnoremap <M-j> :move '>+1<CR>gv=gv
