@@ -1,7 +1,8 @@
 " 'evolution.vim' -- Vim color scheme.
 " Author:       Matt Simmons (mtszyk@gmail.com)
-" Description:  Colors originally from gruvbox, layout from apprentice.
-" Last Change:  2018-04-11
+" Description:  Colors modified from nord:
+"               https://github.com/arcticicestudio/nord
+" Last Change:  2018-06-15
 
 hi clear
 
@@ -13,21 +14,44 @@ let g:colors_name = 'evolution'
 
 " highlight function and commmand {{{
 
-" The point of this function is simply to allow variables in the ex command,
-" it is entirely a hack, and is probably unsafe to do generally. Don't do it.
-" In this case, I think it helps make the colorscheme more readable.
+" This function is just to allow fg=DICT for cterm and gui.
+" I think it helps make the colorscheme more readable and easily edited.
+" These work:
+" Highlight Normal    bg=s:bg_0    fg=s:fg_1    attr=NONE
+" Highlight Normal    ctermbg=s:bg_0[0]  guitermbg=s:bg_0[1]   fg=s:fg_1
 
 function! s:hi(group, ...) abort
   let l:cmd = 'highlight ' . a:group
   for l:arg in a:000
     let l:term = split(l:arg, '=')
     let l:key = l:term[0]
-    if len(split(l:term[1], ':')) == 2
-      execute 'let l:color = ' . l:term[1]
+    " If the key is fg or bg, map both cterm and gui colors
+    if l:key ==# 'fg' || l:key ==# 'bg'
+      if len(split(l:term[1], ':')) == 2
+        execute 'let l:tcolor = ' . l:term[1] . '[0]'
+        execute 'let l:gcolor = ' . l:term[1] . '[1]'
+      else
+        let l:tcolor = l:term[1]
+        let l:gcolor = l:term[1]
+      endif
+      let l:cmd .= ' cterm' . l:key . '=' . l:tcolor
+      let l:cmd .= ' gui' . l:key . '=' . l:gcolor
+    elseif l:key ==# 'attr'
+      if len(split(l:term[1], ':')) == 2
+        execute 'let l:attr = ' . l:term[1]
+      else
+        let l:attr = l:term[1]
+      endif
+      let l:cmd .= ' cterm=' . l:attr . ' gui=' . l:attr
     else
-      let l:color = l:term[1]
+      " otherwise, check if still needs to be evaluated
+      if len(split(l:term[1], ':')) == 2
+        execute 'let l:value = ' . l:term[1]
+      else
+        let l:value = l:term[1]
+      endif
+      let l:cmd .= ' ' . l:key . '=' . l:value
     endif
-    let l:cmd .= ' ' . l:key . '=' . l:color
   endfor
   execute l:cmd
 endfunction
@@ -36,191 +60,120 @@ command! -nargs=+ -complete=highlight Highlight call s:hi(<f-args>)
 
 " }}}
 " color definitions {{{
+let s:dark0  = [236, '#2a303b']
+let s:dark1  = [237, '#2f3642']
+let s:dark2  = [238, '#373e4d']
+let s:dark3  = [239, '#3c4554']
 
-let s:dark0  = [234, '#1d2021']
-let s:dark1  = [235, '#282828']
-let s:dark2  = [237, '#3c3836']
-let s:dark3  = [239, '#504945']
-let s:dark4  = [241, '#665c54']
+let s:light0 = [250, '#bac0cc']
+let s:light1 = [146, '#abbdd6']
+let s:light2 = [244, '#728096']
+let s:light3 = [60 , '#64718c']
 
-" let s:dark0  = [234, '#1d2021']
-" let s:dark1  = [237, '#3c3836']
-" let s:dark2  = [239, '#504945']
-" let s:dark3  = [241, '#665c54']
-" let s:dark4  = [243, '#7c6f64']
+let s:aqua   = [109, '#8fbcbb']
+let s:laqua  = [110, '#88c0d0']
+let s:lblue  = [109, '#81a1c1']
+let s:blue   = [67 , '#5e81ac']
 
-let s:light0 = [230, '#f9f5d7']
-let s:light1 = [223, '#ebdbb2']
-let s:light2 = [250, '#d5c4a1']
-let s:light3 = [248, '#bdae93']
-let s:light4 = [246, '#a89984']
-
-" standard colors
-let s:red    = [124, '#cc241d']
-let s:grn    = [114, '#81db7d']
-let s:yel    = [172, '#d79921']
-let s:blu    = [66, '#458588']
-let s:vio    = [132, '#b16286']
-let s:aqua   = [72, '#689d6a']
-let s:orn    = [166, '#d65d0e']
-
-
-" 'focus' colors, that stand out al ittle more than the defaults
-if &background ==# 'light'
-  let s:fred  = [88,  '#9d0006']
-  let s:fgrn  = [100, '#79740e']
-  let s:fyel  = [136, '#b57614']
-  let s:fblu  = [24,  '#076678']
-  let s:fvio  = [96,  '#8f3f71']
-  let s:faqua = [66,  '#427b58']
-  let s:forn  = [130, '#af3a03']
-  let s:gray1 = [244, '#928374']
-  let s:gray2 = [243, '#7c6f64']
-else
-  let s:fred  = [167, '#fb4934']
-  let s:fgrn  = [142, '#b8bb26']
-  let s:fyel  = [214, '#fabd2f']
-  let s:fblu  = [109, '#83a598']
-  let s:fvio  = [175, '#d3869b']
-  let s:faqua = [108, '#8ec07c']
-  let s:forn  = [208, '#fe8019']
-  let s:gray1 = [245, '#928374']
-  let s:gray2 = [246, '#a89984']
-endif
-
-if &background ==# 'light'
-  let s:bg_0 = s:light0
-  let s:bg_1 = s:light1
-  let s:bg_2 = s:light2
-  let s:bg_3 = s:light3
-  let s:bg_4 = s:light4
-  let s:fg_0 = s:dark0
-  let s:fg_1 = s:dark1
-  let s:fg_2 = s:dark2
-  let s:fg_3 = s:dark3
-  let s:fg_4 = s:dark4
-else
-  let s:bg_0 = s:dark0
-  let s:bg_1 = s:dark1
-  let s:bg_2 = s:dark2
-  let s:bg_3 = s:dark3
-  let s:bg_4 = s:dark4
-  let s:fg_0 = s:light0
-  let s:fg_1 = s:light1
-  let s:fg_2 = s:light2
-  let s:fg_3 = s:light3
-  let s:fg_4 = s:light4
-endif
-
-if exists('g:evo_defhighlightmap')
-  map <F9> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name")
-        \ . '> trans<' . synIDattr(synID(line("."),col("."),0),"name")
-        \ . '> lo<' . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-endif
-
+let s:red    = [131, '#bf616a']
+let s:orange = [173, '#d08770']
+let s:yellow = [222, '#ebcb8b']
+let s:green  = [144, '#a3be8c']
+let s:violet = [139, '#b48ead']
 " }}}
-" primary highlights {{{
-" {{{
+" True and 256 colors {{{
 if ($TERM =~# '256' || &t_Co >= 256) || has('gui_running')
 
-  Highlight Normal           ctermbg=s:bg_0[0] ctermfg=s:fg_1[0]  guibg=s:bg_0[1] guifg=s:fg_1[1]  cterm=NONE      gui=NONE
-  if s:bg_0[0] == s:dark0[0]
-    set background=dark
-  else
-    set background=light
-  endif
+  Highlight Normal           fg=s:light0 bg=s:dark0  attr=NONE
+  set background=dark
 
-  Highlight LineNr           ctermbg=NONE       ctermfg=s:bg_3[0]  guibg=NONE       guifg=s:bg_3[1]       cterm=NONE      gui=NONE
-  Highlight signColumn       ctermbg=NONE       ctermfg=s:fg_1[0]  guibg=NONE       guifg=s:fg_1[1]       cterm=NONE      gui=NONE
-  Highlight FoldColumn       ctermbg=s:bg_1[0]  ctermfg=s:fg_2[0]  guibg=s:bg_1[1]  guifg=s:fg_2[1]       cterm=NONE      gui=NONE
-  Highlight Folded           ctermbg=s:bg_1[0]  ctermfg=s:fg_3[0]  guibg=s:bg_1[1]  guifg=s:fg_3[1]       cterm=NONE      gui=NONE
-  Highlight MatchParen       ctermbg=s:bg_3[0]  ctermfg=s:yel[0]   guibg=s:bg_1[1]  guifg=s:yel[1]        cterm=underline gui=underline
+  Highlight LineNr           fg=s:dark3  bg=s:dark0  attr=NONE
+  Highlight SignColumn       fg=s:dark1  bg=s:dark0  attr=NONE
+  Highlight FoldColumn       fg=s:dark3  bg=s:dark0  attr=NONE
+  Highlight MatchParen       fg=s:laqua  bg=s:dark3  attr=NONE
 
-  Highlight Comment          ctermbg=NONE       ctermfg=s:gray1[0] guibg=NONE       guifg=s:gray1[1]      cterm=italic    gui=italic
-  Highlight Constant         ctermbg=NONE       ctermfg=s:fvio[0]  guibg=NONE       guifg=s:fvio[1]       cterm=NONE      gui=NONE
-  Highlight Identifier       ctermbg=NONE       ctermfg=s:fblu[0]  guibg=NONE       guifg=s:fblu[1]       cterm=NONE      gui=NONE
-  Highlight Statement        ctermbg=NONE       ctermfg=s:fred[0]  guibg=NONE       guifg=s:fred[1]       cterm=NONE      gui=NONE
-  Highlight PreProc          ctermbg=NONE       ctermfg=s:faqua[0] guibg=NONE       guifg=s:faqua[1]      cterm=NONE      gui=NONE
-  Highlight Type             ctermbg=NONE       ctermfg=s:yel[0]   guibg=NONE       guifg=s:yel[1]        cterm=NONE      gui=NONE
-  Highlight Special          ctermbg=NONE       ctermfg=s:orn[0]   guibg=NONE       guifg=s:orn[1]        cterm=NONE      gui=NONE
-  Highlight Underlined       ctermbg=NONE       ctermfg=s:fblu[0]  guibg=NONE       guifg=s:fblu[1]       cterm=underline gui=underline
-  Highlight Ignore           ctermbg=NONE       ctermfg=NONE       guibg=NONE       guifg=NONE            cterm=NONE      gui=NONE
+  Highlight Folded           fg=s:light2 bg=s:dark1  attr=bold
+  Highlight Comment          fg=s:light3 bg=NONE     attr=italic
+  Highlight Identifier       fg=s:light0 bg=NONE     attr=NONE
+  Highlight Statement        fg=s:lblue  bg=NONE     attr=bold
+  Highlight PreProc          fg=s:lblue  bg=NONE     attr=NONE
+  Highlight Type             fg=s:lblue  bg=NONE     attr=NONE
+  Highlight Special          fg=s:light0 bg=NONE     attr=NONE
+  Highlight Function         fg=s:laqua  bg=NONE     attr=NONE
+  Highlight String           fg=s:green  bg=NONE     attr=NONE
+  Highlight Constant         fg=s:light0 bg=NONE     attr=NONE
+  Highlight Error            fg=s:dark0  bg=s:red    attr=bold
+  Highlight Todo             fg=s:yellow bg=NONE     attr=bold
+  Highlight NonText          fg=s:dark2  bg=NONE     attr=NONE
 
-  Highlight Function         ctermbg=NONE       ctermfg=s:faqua[0] guibg=NONE       guifg=s:faqua[1]      cterm=NONE      gui=NONE
-  Highlight String           ctermbg=NONE       ctermfg=s:yel[0]   guibg=NONE       guifg=s:yel[1]        cterm=NONE      gui=NONE
+  Highlight WildMenu         fg=s:laqua  bg=s:dark3  attr=NONE
+  Highlight PMenu            fg=s:light0 bg=s:dark1  attr=NONE
+  Highlight PmenuSbar        fg=s:light0 bg=s:dark1  attr=NONE
+  Highlight PMenuSel         fg=s:laqua  bg=s:dark2  attr=NONE
+  Highlight PmenuThumb       fg=s:light2 bg=s:dark2  attr=NONE
 
-  Highlight Conceal          ctermbg=NONE       ctermfg=s:fg_1[0]  guibg=NONE       guifg=s:fg_1[1]       cterm=NONE      gui=NONE
-  Highlight Error            ctermbg=s:fred[0]  ctermfg=s:bg_0[0]  guibg=s:fred[1]  guifg=s:bg_0[1]       cterm=bold      gui=bold
-  Highlight Todo             ctermbg=s:bg_0[0]  ctermfg=NONE       guibg=s:bg_0[1]  guifg=NONE            cterm=bold      gui=bold
+  Highlight ErrorMsg         fg=s:light0 bg=s:red    attr=NONE
+  Highlight ModeMsg          fg=s:light0 bg=NONE     attr=NONE
+  Highlight MoreMsg          fg=s:light0 bg=NONE     attr=NONE
+  Highlight Question         fg=s:light0 bg=NONE     attr=NONE
+  Highlight WarningMsg       fg=s:red    bg=s:dark0  attr=NONE
+  Highlight TabLine          fg=s:light3 bg=s:dark1  attr=NONE
+  Highlight TabLineFill      fg=s:light3 bg=s:dark1  attr=NONE
+  Highlight TabLineSel       fg=s:light3 bg=s:dark3  attr=NONE
+  Highlight Cursor           fg=s:dark0  bg=s:light0 attr=NONE
+  Highlight CursorColumn     fg=NONE     bg=s:dark1  attr=NONE
+  Highlight CursorLineNr     fg=s:aqua   bg=s:dark0  attr=NONE
+  Highlight CursorLine       fg=NONE     bg=s:dark1  attr=NONE
+  Highlight ColorColumn      fg=NONE     bg=s:dark1  attr=NONE
+  Highlight StatusLine       fg=s:light1 bg=s:dark1  attr=NONE
+  Highlight StatusLineNC     fg=s:light3 bg=s:dark2  attr=NONE
+  Highlight StatusLineTerm   fg=s:laqua  bg=s:dark2  attr=NONE
+  Highlight StatusLineTermNC fg=s:light0 bg=s:dark1  attr=NONE
 
-  Highlight NonText          ctermbg=NONE       ctermfg=s:gray2[0] guibg=NONE       guifg=s:gray2[1]      cterm=NONE      gui=NONE
+  Highlight Visual           fg=NONE     bg=s:dark2  attr=NONE
+  Highlight VisualNOS        fg=NONE     bg=s:dark2  attr=NONE
+  Highlight VertSplit        fg=s:dark2  bg=s:dark0  attr=NONE
+  Highlight SpecialKey       fg=s:dark3  bg=NONE     attr=NONE
+  Highlight Title            fg=s:light0 bg=NONE     attr=NONE
+  Highlight DiffAdd          fg=s:green  bg=s:dark1  attr=reverse
+  Highlight DiffChange       fg=s:yellow bg=s:dark1  attr=reverse
+  Highlight DiffDelete       fg=s:red    bg=s:dark1  attr=reverse
+  Highlight DiffText         fg=s:lblue  bg=s:dark1  attr=reverse
+  Highlight IncSearch        fg=s:dark1  bg=s:laqua  attr=NONE
+  Highlight Search           fg=s:dark1  bg=s:laqua  attr=NONE
+  Highlight Directory        fg=s:laqua  bg=NONE     attr=NONE
+  Highlight SpecialChar      fg=s:yellow bg=NONE     attr=NONE
+  Highlight SpecialComment   fg=s:laqua  bg=NONE     attr=italic
+  Highlight Number           fg=s:violet bg=NONE     attr=NONE
 
-  Highlight Pmenu            ctermbg=s:bg_3[0]  ctermfg=s:fg_1[0]  guibg=s:bg_3[1]  guifg=s:fg_1[1]       cterm=NONE      gui=NONE
-  Highlight PmenuSbar        ctermbg=s:gray1[0] ctermfg=NONE       guibg=s:gray1[1] guifg=NONE            cterm=NONE      gui=NONE
-  Highlight PmenuSel         ctermbg=s:aqua[0]  ctermfg=s:bg_1[0]  guibg=s:aqua[1]  guifg=s:bg_1[1]       cterm=NONE      gui=NONE
-  Highlight PmenuThumb       ctermbg=s:aqua[0]  ctermfg=s:aqua[0]  guibg=s:aqua[1]  guifg=s:aqua[1]       cterm=NONE      gui=NONE
+  Highlight stlTypeInfo      fg=s:blue   bg=s:dark0  attr=NONE
+  Highlight stlErrorInfo     fg=s:dark0  bg=s:orange attr=bold
+  Highlight stlDirInfo       fg=s:aqua   bg=s:dark2  attr=NONE
 
-  Highlight ErrorMsg         ctermbg=s:red[0]   ctermfg=s:bg_1[0]  guibg=s:red[1]   guifg=s:bg_1[1]       cterm=NONE      gui=NONE
-  Highlight ModeMsg          ctermbg=s:grn[0]   ctermfg=s:bg_1[0]  guibg=s:grn[1]   guifg=s:bg_1[1]       cterm=NONE      gui=NONE
-  Highlight MoreMsg          ctermbg=NONE       ctermfg=s:aqua[0]  guibg=NONE       guifg=s:aqua[1]       cterm=NONE      gui=NONE
-  Highlight Question         ctermbg=NONE       ctermfg=s:grn[0]   guibg=NONE       guifg=s:grn[1]        cterm=NONE      gui=NONE
-  Highlight WarningMsg       ctermbg=NONE       ctermfg=s:red[0]   guibg=NONE       guifg=s:red[1]        cterm=NONE      gui=NONE
+  Highlight stlNormal        fg=s:yellow bg=s:dark3  attr=bold
+  Highlight stlInsert        fg=s:dark0  bg=s:green  attr=bold
+  Highlight stlVisual        fg=s:dark0  bg=s:orange attr=NONE
+  Highlight stlReplace       fg=s:dark0  bg=s:blue   attr=NONE
+  Highlight stlSelect        fg=s:dark0  bg=s:blue   attr=NONE
+  Highlight stlTerminal      fg=s:violet bg=s:dark3  attr=NONE
 
-  Highlight TabLine          ctermbg=s:bg_2[0]  ctermfg=s:fg_1[0]  guibg=s:bg_2[1]  guifg=s:fg_1[1]       cterm=NONE      gui=NONE
-  Highlight TabLineFill      ctermbg=s:bg_2[0]  ctermfg=s:bg_2[0]  guibg=s:bg_2[1]  guifg=s:bg_2[1]       cterm=NONE      gui=NONE
-  Highlight TabLineSel       ctermbg=s:bg_3[0]  ctermfg=s:orn[0]   guibg=s:bg_3[1]  guifg=s:orn[1]        cterm=NONE      gui=NONE
-
-  Highlight Cursor           ctermbg=s:fg_1[0]  ctermfg=NONE       guibg=s:fg_1[1]  guifg=NONE            cterm=NONE      gui=NONE
-  Highlight CursorColumn     ctermbg=s:bg_1[0]  ctermfg=NONE       guibg=s:bg_1[1]  guifg=NONE            cterm=NONE      gui=NONE
-  Highlight CursorLineNr     ctermbg=s:bg_0[0]  ctermfg=s:aqua[0]  guibg=s:bg_0[1]  guifg=s:aqua[1]       cterm=NONE      gui=NONE
-  Highlight CursorLine       ctermbg=s:bg_1[0]  ctermfg=NONE       guibg=s:bg_1[1]  guifg=NONE            cterm=NONE      gui=NONE
-  Highlight ColorColumn      ctermbg=s:bg_1[0]  ctermfg=NONE       guibg=s:bg_1[1]  guifg=NONE            cterm=NONE      gui=NONE
-
-  Highlight helpLeadBlank    ctermbg=NONE       ctermfg=NONE       guibg=NONE       guifg=NONE            cterm=NONE      gui=NONE
-  Highlight helpNormal       ctermbg=NONE       ctermfg=NONE       guibg=NONE       guifg=NONE            cterm=NONE      gui=NONE
-
-  Highlight StatusLine       ctermbg=s:bg_1[0]  ctermfg=s:fg_1[0]  guibg=s:bg_1[1]  guifg=s:fg_1[1]       cterm=NONE      gui=NONE
-  Highlight StatusLineNC     ctermbg=s:bg_2[0]  ctermfg=s:fg_4[0]  guibg=s:bg_2[1]  guifg=s:fg_4[1]       cterm=NONE      gui=NONE
-
-  Highlight StatusLineTerm   ctermbg=s:orn[0]   ctermfg=s:bg_1[0]  guibg=s:orn[1]   guifg=s:bg_1[1]       cterm=NONE      gui=NONE
-  Highlight StatusLineTermNC ctermbg=s:bg_2[0]  ctermfg=s:yel[0]   guibg=s:bg_2[1]  guifg=s:yel[1]        cterm=NONE      gui=NONE
-
-  Highlight Visual           ctermbg=s:bg_1[0]  ctermfg=s:fblu[0]  guibg=s:bg_1[1]  guifg=s:fblu[1]       cterm=reverse   gui=reverse
-  Highlight VisualNOS        ctermbg=NONE       ctermfg=NONE       guibg=NONE       guifg=NONE            cterm=underline gui=underline
-
-  Highlight VertSplit        ctermbg=s:bg_0[0]  ctermfg=s:bg_2[0]  guibg=s:bg_0[1]  guifg=s:bg_2[1]       cterm=NONE      gui=NONE
-  Highlight WildMenu         ctermbg=s:blu[0]   ctermfg=s:bg_1[0]  guibg=s:blu[1]   guifg=s:bg_1[1]       cterm=NONE      gui=NONE
-
-  Highlight SpecialKey       ctermbg=NONE       ctermfg=s:gray2[0] guibg=NONE       guifg=s:gray2[1]      cterm=NONE      gui=NONE
-  Highlight Title            ctermbg=NONE       ctermfg=s:fg_0[0]  guibg=NONE       guifg=s:fg_0:white[1] cterm=NONE      gui=NONE
-
-  Highlight DiffAdd          ctermbg=s:bg_1[0]  ctermfg=s:grn[0]   guibg=s:bg_1[1]  guifg=s:grn[1]        cterm=reverse   gui=reverse
-  Highlight DiffChange       ctermbg=s:bg_1[0]  ctermfg=s:vio[0]   guibg=s:bg_1[1]  guifg=s:vio[1]        cterm=reverse   gui=reverse
-  Highlight DiffDelete       ctermbg=s:bg_1[0]  ctermfg=s:red[0]   guibg=s:bg_1[1]  guifg=s:red[1]        cterm=reverse   gui=reverse
-  Highlight DiffText         ctermbg=s:bg_1[0]  ctermfg=s:orn[0]   guibg=s:bg_1[1]  guifg=s:orn[1]        cterm=reverse   gui=reverse
-
-  Highlight IncSearch        ctermbg=s:orn[0]   ctermfg=s:bg_1[0]  guibg=s:orn[1]   guifg=s:bg_1[1]       cterm=NONE      gui=NONE
-  Highlight Search           ctermbg=s:yel[0]   ctermfg=s:bg_1[0]  guibg=s:yel[1]   guifg=s:bg_1[1]       cterm=NONE      gui=NONE
-
-  Highlight Directory        ctermbg=NONE       ctermfg=s:aqua[0]  guibg=NONE       guifg=s:aqua[1]       cterm=NONE      gui=NONE
-
-  Highlight debugPC          ctermbg=s:blu[0]  guibg=s:blu[1]
-  Highlight debugBreakpoint  ctermbg=s:red[0]  guibg=s:red[1]
+  Highlight debugPC          bg=s:blue
+  Highlight debugBreakpoint  bg=s:red
 
   if has('gui_running')
     Highlight SpellBad   ctermbg=NONE ctermfg=s:red[0]  guibg=NONE guifg=NONE      cterm=undercurl gui=undercurl guisp=s:red[1]
     Highlight SpellCap   ctermbg=NONE ctermfg=s:aqua[0] guibg=NONE guifg=NONE      cterm=undercurl gui=undercurl guisp=s:aqua[1]
-    Highlight SpellLocal ctermbg=NONE ctermfg=s:grn[0]  guibg=NONE guifg=NONE      cterm=undercurl gui=undercurl guisp=s:grn[1]
-    Highlight SpellRare  ctermbg=NONE ctermfg=s:orn[0]  guibg=NONE guifg=NONE      cterm=undercurl gui=undercurl guisp=s:orn[1]
+    Highlight SpellLocal ctermbg=NONE ctermfg=s:green[0]  guibg=NONE guifg=NONE      cterm=undercurl gui=undercurl guisp=s:green[1]
+    Highlight SpellRare  ctermbg=NONE ctermfg=s:orange[0]  guibg=NONE guifg=NONE      cterm=undercurl gui=undercurl guisp=s:orange[1]
   else
     Highlight SpellBad   ctermbg=NONE ctermfg=s:red[0]  guibg=NONE guifg=s:red[1]  cterm=undercurl gui=undercurl guisp=NONE
     Highlight SpellCap   ctermbg=NONE ctermfg=s:aqua[0] guibg=NONE guifg=s:aqua[1] cterm=undercurl gui=undercurl guisp=NONE
-    Highlight SpellLocal ctermbg=NONE ctermfg=s:grn[0]  guibg=NONE guifg=s:grn[1]  cterm=undercurl gui=undercurl guisp=NONE
-    Highlight SpellRare  ctermbg=NONE ctermfg=s:orn[0]  guibg=NONE guifg=s:orn[1]  cterm=undercurl gui=undercurl guisp=NONE
+    Highlight SpellLocal ctermbg=NONE ctermfg=s:green[0]  guibg=NONE guifg=s:green[1]  cterm=undercurl gui=undercurl guisp=NONE
+    Highlight SpellRare  ctermbg=NONE ctermfg=s:orange[0]  guibg=NONE guifg=s:orange[1]  cterm=undercurl gui=undercurl guisp=NONE
   endif
 
   " }}}
-  " {{{
+" term colors {{{
 elseif &t_Co == 8 || $TERM !~# '^linux' || &t_Co == 16
   set t_Co=16
 
@@ -310,19 +263,17 @@ elseif &t_Co == 8 || $TERM !~# '^linux' || &t_Co == 16
   highlight debugBreakpoint  ctermbg=red
 endif
 " }}}
-" }}}
 " linked groups {{{
-hi link Boolean        Constant
-hi link Character      Constant
-hi link Number         Constant
+hi link Boolean        PreProc
+hi link Character      String
 hi link Float          Number
 
-hi link Conditional    Statement
-hi link Repeat         Statement
-hi link Label          Statement
-hi link Operator       Normal
-hi link Exception      Statement
-hi link Keyword        Statement
+hi link Conditional    PreProc
+hi link Repeat         PreProc
+hi link Label          PreProc
+hi link Operator       PreProc
+hi link Exception      PreProc
+hi link Keyword        PreProc
 
 hi link Include        PreProc
 hi link Define         PreProc
@@ -331,13 +282,11 @@ hi link PreCondit      PreProc
 
 hi link Debug          Special
 hi link Delimiter      Special
-hi link SpecialChar    Special
-hi link SpecialComment Special
 hi link Tag            Special
 
-hi link StorageClass   Special
+hi link StorageClass   PreProc
 hi link Structure      PreProc
-hi link Typedef        Type
+hi link Typedef        PreProc
 
 " plugins
 hi link pythonDocstring SpecialKey
@@ -358,25 +307,6 @@ hi link User8 StatusLineTerm
 hi link User9 StatusLineTerm
 
 " }}}
-
-" hi link pythonBuiltin     Statement
-" hi link pythonBuiltinObj  Statement
-" hi link pythonBuiltinFunc Statement
-" hi link pythonFunction    Function
-" hi link pythonDecorator   Constant
-" hi link pythonInclude     PreProc
-" hi link pythonImport      PreProc
-" hi link pythonRun         Todo
-" hi link pythonCoding      Todo
-" hi link pythonOperator    Operator
-" hi link pythonException   Todo
-" hi link pythonExceptions  Todo
-" hi link pythonBoolean     Type
-" hi link pythonDot         Todo
-" hi link pythonConditional Todo
-" hi link pythonRepeat      Todo
-" hi link pythonDottedName  Todo
-" hi link pythonDoctest  SpecialComment
 
 " Cleanup
 delcommand Highlight
