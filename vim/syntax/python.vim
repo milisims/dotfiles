@@ -45,7 +45,7 @@ syntax clear
 
 setlocal foldmethod=syntax
 
-syntax keyword pythonStatement	break continue del exec pass raise
+syntax keyword pythonStatement	break continue del exec pass raise as
 syntax keyword pythonStatement	return with global assert lambda yield
 syntax keyword pythonException	try except finally
 
@@ -67,7 +67,7 @@ syntax keyword pythonRepeat	for while
 syntax keyword pythonConditional	if elif else
 syntax keyword pythonOperator	and in is not or
 " AS will be a keyword in Python 3
-syntax keyword pythonImport	import from as
+syntax keyword pythonImport	import from
 syntax keyword pythonTodo		TODO FIXME XXX contained
 
 " Decorators (new in Python 2.4)
