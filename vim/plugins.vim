@@ -81,6 +81,7 @@ let g:targets_aiAI = 'aIAi'
 " vim-filebeagle {{{
 let g:filebeagle_suppress_keymaps = 1
 nmap <silent> <leader>- <Plug>FileBeagleOpenCurrentBufferDir
+let g:loaded_netrwPlugin = 'v9999'
 " }}}
 " vim-commentary {{{
 xmap gc  <Plug>Commentary
@@ -147,12 +148,11 @@ if executable('fzf')
     autocmd FileType python let b:fzf_fsuffix = '('
 
     if has('nvim')
-      " see augroup vimrc_term
-      autocmd TermOpen *#FZF tunmap <buffer> <Esc>
-      autocmd TermOpen *#FZF tunmap <buffer> <C-h>
-      autocmd TermOpen *#FZF tunmap <buffer> <C-j>
-      autocmd TermOpen *#FZF tunmap <buffer> <C-k>
-      autocmd TermOpen *#FZF tunmap <buffer> <C-l>
+      autocmd FileType fzf tunmap <buffer> <Esc>
+      autocmd FileType fzf tunmap <buffer> <C-h>
+      autocmd FileType fzf tunmap <buffer> <C-j>
+      autocmd FileType fzf tunmap <buffer> <C-k>
+      autocmd FileType fzf tunmap <buffer> <C-l>
     endif
   augroup END
 
