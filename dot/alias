@@ -36,6 +36,10 @@ alias crontab='VIM_CRONTAB=true crontab'
 alias mvim='gvim'
 alias nev='nvim'
 
+function sudoedit() {
+  SUDO_COMMAND="sudoedit $@" command sudoedit "$@"
+}
+
 # When the first argument is modified (TARGET), run the rest of the args as cmd
 # onmodify dissertation.md pandoc dissertation.md dissertation.pdf
 onmodify() {
