@@ -7,6 +7,7 @@ alias lt='ls -lt'
 alias lm='ls -l | more'
 
 alias cl=' clear; l'
+alias cls=' clear; ls'
 
 alias grep='grep --color=auto'
 

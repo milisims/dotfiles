@@ -60,6 +60,7 @@ command! -nargs=+ -complete=highlight Highlight call s:hi(<f-args>)
 
 " }}}
 " color definitions {{{
+" OLD
 let s:dark0  = [236, '#2a303b']
 let s:dark1  = [237, '#2f3642']
 let s:dark2  = [238, '#373e4d']
@@ -80,6 +81,33 @@ let s:orange = [173, '#d08770']
 let s:yellow = [222, '#ebcb8b']
 let s:green  = [144, '#a3be8c']
 let s:violet = [139, '#b48ead']
+
+" NEW
+let s:dark0  = [234, '#1d2021']
+let s:dark1  = [235, '#282828']
+let s:dark2  = [237, '#3c3836']
+let s:dark3  = [239, '#504945']
+let s:dark4  = [241, '#665c54']
+
+let s:light0 = [250, '#d5c4a1']
+let s:light1 = [248, '#bdae93']
+let s:light2 = [246, '#a89984']
+let s:light3 = [246, '#948774']
+
+let s:aqua   = [109, '#72b7b5']
+let s:laqua  = [110, '#84d4d2']
+let s:blue   = [67 , '#6fa3a6']
+let s:lblue  = [109, '#83a598']
+let s:green  = [142, '#679a69']
+let s:lgreen  = [142, '#679a69']
+
+let s:red    = [167, '#D84A44']
+let s:orange = [166, '#d65d0e']
+let s:orange = [166, '#c7743e']
+let s:yellow = [172, '#d79921']
+let s:violet = [139, '#b48ead']
+
+
 " }}}
 " True and 256 colors {{{
 if ($TERM =~# '256' || &t_Co >= 256) || has('gui_running')
@@ -90,26 +118,28 @@ if ($TERM =~# '256' || &t_Co >= 256) || has('gui_running')
   Highlight LineNr           fg=s:dark3  bg=s:dark0  attr=NONE
   Highlight SignColumn       fg=s:dark1  bg=s:dark0  attr=NONE
   Highlight FoldColumn       fg=s:dark3  bg=s:dark0  attr=NONE
-  Highlight MatchParen       fg=s:laqua  bg=s:dark3  attr=NONE
+  Highlight MatchParen       fg=s:aqua   bg=s:dark3  attr=NONE
 
-  Highlight Folded           fg=s:light2 bg=s:dark1  attr=bold
-  Highlight Comment          fg=s:light3 bg=NONE     attr=italic
-  Highlight Identifier       fg=s:light0 bg=NONE     attr=NONE
   Highlight Statement        fg=s:lblue  bg=NONE     attr=bold
   Highlight PreProc          fg=s:lblue  bg=NONE     attr=NONE
+  Highlight Function         fg=s:blue   bg=NONE     attr=NONE
+  Highlight String           fg=s:green  bg=NONE     attr=NONE
+  Highlight Number           fg=s:violet bg=NONE     attr=NONE
+
+  Highlight Folded           fg=s:light3 bg=s:dark1  attr=NONE
+  Highlight Comment          fg=s:light3 bg=NONE     attr=italic
+  Highlight Identifier       fg=s:light0 bg=NONE     attr=NONE
   Highlight Type             fg=s:lblue  bg=NONE     attr=NONE
   Highlight Special          fg=s:light0 bg=NONE     attr=NONE
-  Highlight Function         fg=s:laqua  bg=NONE     attr=NONE
-  Highlight String           fg=s:green  bg=NONE     attr=NONE
   Highlight Constant         fg=s:light0 bg=NONE     attr=NONE
-  Highlight Error            fg=s:dark0  bg=s:red    attr=bold
+  Highlight Error            fg=s:red    bg=NONE     attr=bold
   Highlight Todo             fg=s:yellow bg=NONE     attr=bold
   Highlight NonText          fg=s:dark2  bg=NONE     attr=NONE
 
-  Highlight WildMenu         fg=s:laqua  bg=s:dark3  attr=NONE
+  Highlight WildMenu         fg=s:aqua   bg=s:dark3  attr=NONE
   Highlight PMenu            fg=s:light0 bg=s:dark1  attr=NONE
   Highlight PmenuSbar        fg=s:light0 bg=s:dark1  attr=NONE
-  Highlight PMenuSel         fg=s:laqua  bg=s:dark2  attr=NONE
+  Highlight PMenuSel         fg=s:aqua   bg=s:dark2  attr=NONE
   Highlight PmenuThumb       fg=s:light2 bg=s:dark2  attr=NONE
 
   Highlight ErrorMsg         fg=s:light0 bg=s:red    attr=NONE
@@ -122,33 +152,32 @@ if ($TERM =~# '256' || &t_Co >= 256) || has('gui_running')
   Highlight TabLineSel       fg=s:light3 bg=s:dark3  attr=NONE
   Highlight Cursor           fg=s:dark0  bg=s:light0 attr=NONE
   Highlight CursorColumn     fg=NONE     bg=s:dark1  attr=NONE
-  Highlight CursorLineNr     fg=s:aqua   bg=s:dark0  attr=NONE
+  Highlight CursorLineNr     fg=s:aqua    bg=s:dark0  attr=NONE
   Highlight CursorLine       fg=NONE     bg=s:dark1  attr=NONE
   Highlight ColorColumn      fg=NONE     bg=s:dark1  attr=NONE
   Highlight StatusLine       fg=s:light1 bg=s:dark1  attr=NONE
   Highlight StatusLineNC     fg=s:light3 bg=s:dark2  attr=NONE
-  Highlight StatusLineTerm   fg=s:laqua  bg=s:dark2  attr=NONE
+  Highlight StatusLineTerm   fg=s:aqua   bg=s:dark2  attr=NONE
   Highlight StatusLineTermNC fg=s:light0 bg=s:dark1  attr=NONE
 
   Highlight Visual           fg=NONE     bg=s:dark2  attr=NONE
   Highlight VisualNOS        fg=NONE     bg=s:dark2  attr=NONE
-  Highlight VertSplit        fg=s:dark2  bg=s:dark0  attr=NONE
-  Highlight SpecialKey       fg=s:dark3  bg=NONE     attr=NONE
+  Highlight VertSplit        fg=s:dark2  bg=NONE  attr=NONE
+  Highlight SpecialKey       fg=s:light3  bg=NONE     attr=NONE
   Highlight Title            fg=s:light0 bg=NONE     attr=NONE
   Highlight DiffAdd          fg=s:green  bg=s:dark1  attr=reverse
   Highlight DiffChange       fg=s:yellow bg=s:dark1  attr=reverse
   Highlight DiffDelete       fg=s:red    bg=s:dark1  attr=reverse
   Highlight DiffText         fg=s:lblue  bg=s:dark1  attr=reverse
-  Highlight IncSearch        fg=s:dark1  bg=s:laqua  attr=NONE
-  Highlight Search           fg=s:dark1  bg=s:laqua  attr=NONE
-  Highlight Directory        fg=s:laqua  bg=NONE     attr=NONE
+  Highlight IncSearch        fg=s:dark1  bg=s:orange   attr=NONE
+  Highlight Search           fg=s:dark1  bg=s:orange   attr=NONE
+  Highlight Directory        fg=s:aqua   bg=NONE     attr=NONE
   Highlight SpecialChar      fg=s:yellow bg=NONE     attr=NONE
-  Highlight SpecialComment   fg=s:laqua  bg=NONE     attr=italic
-  Highlight Number           fg=s:violet bg=NONE     attr=NONE
+  Highlight SpecialComment   fg=s:aqua   bg=NONE     attr=italic
 
   Highlight stlTypeInfo      fg=s:blue   bg=s:dark0  attr=NONE
   Highlight stlErrorInfo     fg=s:dark0  bg=s:orange attr=bold
-  Highlight stlDirInfo       fg=s:aqua   bg=s:dark2  attr=NONE
+  Highlight stlDirInfo       fg=s:laqua   bg=s:dark2  attr=NONE
 
   Highlight stlNormal        fg=s:yellow bg=s:dark3  attr=bold
   Highlight stlInsert        fg=s:dark0  bg=s:green  attr=bold
@@ -161,22 +190,22 @@ if ($TERM =~# '256' || &t_Co >= 256) || has('gui_running')
   Highlight debugBreakpoint  bg=s:red
 
   if has('gui_running')
-    Highlight SpellBad   ctermbg=NONE ctermfg=s:red[0]  guibg=NONE guifg=NONE      cterm=undercurl gui=undercurl guisp=s:red[1]
-    Highlight SpellCap   ctermbg=NONE ctermfg=s:aqua[0] guibg=NONE guifg=NONE      cterm=undercurl gui=undercurl guisp=s:aqua[1]
-    Highlight SpellLocal ctermbg=NONE ctermfg=s:green[0]  guibg=NONE guifg=NONE      cterm=undercurl gui=undercurl guisp=s:green[1]
-    Highlight SpellRare  ctermbg=NONE ctermfg=s:orange[0]  guibg=NONE guifg=NONE      cterm=undercurl gui=undercurl guisp=s:orange[1]
+    Highlight SpellBad   bg=NONE ctermfg=s:red[0]    guifg=NONE attr=undercurl guisp=s:red[1]
+    Highlight SpellCap   bg=NONE ctermfg=s:aqua[0]   guifg=NONE attr=undercurl guisp=s:aqua[1]
+    Highlight SpellLocal bg=NONE ctermfg=s:green[0]  guifg=NONE attr=undercurl guisp=s:green[1]
+    Highlight SpellRare  bg=NONE ctermfg=s:orange[0] guifg=NONE attr=undercurl guisp=s:orange[1]
   else
-    Highlight SpellBad   ctermbg=NONE ctermfg=s:red[0]  guibg=NONE guifg=s:red[1]  cterm=undercurl gui=undercurl guisp=NONE
-    Highlight SpellCap   ctermbg=NONE ctermfg=s:aqua[0] guibg=NONE guifg=s:aqua[1] cterm=undercurl gui=undercurl guisp=NONE
-    Highlight SpellLocal ctermbg=NONE ctermfg=s:green[0]  guibg=NONE guifg=s:green[1]  cterm=undercurl gui=undercurl guisp=NONE
-    Highlight SpellRare  ctermbg=NONE ctermfg=s:orange[0]  guibg=NONE guifg=s:orange[1]  cterm=undercurl gui=undercurl guisp=NONE
+    Highlight SpellBad   bg=NONE fg=s:red                       attr=undercurl guisp=NONE
+    Highlight SpellCap   bg=NONE fg=s:aqua                      attr=undercurl guisp=NONE
+    Highlight SpellLocal bg=NONE fg=s:green                     attr=undercurl guisp=NONE
+    Highlight SpellRare  bg=NONE fg=s:orange                    attr=undercurl guisp=NONE
   endif
 
   " }}}
 " term colors {{{
 elseif &t_Co == 8 || $TERM !~# '^linux' || &t_Co == 16
   set t_Co=16
-
+  " term colors from romainl's apprentice
   highlight Normal           ctermbg=NONE       ctermfg=white       cterm=NONE
   set       background=dark
 
