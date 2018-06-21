@@ -315,3 +315,5 @@ hi link User9 StatusLineTerm
 
 " Cleanup
 delcommand Highlight
+
+" vim: set ts=2 sw=2 et :

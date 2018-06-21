@@ -7,3 +7,5 @@ if executable('yapf')
   setlocal formatprg=yapf
   setlocal formatexpr=my#yapf#yapfify(v:lnum,v:lnum+v:count-1)
 endif
+
+" vim: set ts=2 sw=2 tw=99 et :

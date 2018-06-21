@@ -29,3 +29,5 @@ augroup vimrc_gitchdir
   endif
   autocmd BufEnter,WinEnter * call s:goto_gitdir()
 augroup END
+
+" vim: set ts=2 sw=2 tw=99 et :

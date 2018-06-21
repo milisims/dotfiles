@@ -6,4 +6,6 @@ setlocal formatoptions=12crqnw
 setlocal comments=n:>
 setlocal wrap
 setlocal breakindent
-setlocal briopt=min:50,shift:2
+setlocal breakindentopt=min:50,shift:2
+
+" vim: set ts=2 sw=2 tw=99 et :

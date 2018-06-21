@@ -451,3 +451,5 @@ endfunction
 
 command! DiffOrig call s:difforig()
 " }}}
+
+" vim: set ts=2 sw=2 tw=99 et :
