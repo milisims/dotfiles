@@ -1,8 +1,6 @@
 " 'evolution.vim' -- Vim color scheme.
 " Author:       Matt Simmons (mtszyk@gmail.com)
-" Description:  Colors modified from nord:
-"               https://github.com/arcticicestudio/nord
-" Last Change:  2018-06-15
+" Last Change:  2018-06-21
 
 hi clear
 
@@ -77,6 +75,7 @@ let s:laqua  = [116, '#84d4d2']
 let s:blue   = [73 , '#6fa3a6']
 let s:lblue  = [108, '#83a598']
 let s:green  = [65 , '#679a69']
+let s:lgreen = [65 , '#91ba93']
 let s:violet = [139, '#b48ead']
 
 let s:red    = [167, '#D84A44']
@@ -104,7 +103,7 @@ if ($TERM =~# '256' || &t_Co >= 256) || has('gui_running')
 
   Highlight Folded           fg=s:light3 bg=s:dark1  attr=NONE
   Highlight Comment          fg=s:light3 bg=NONE     attr=italic
-  Highlight Identifier       fg=s:light0 bg=NONE     attr=NONE
+  Highlight Identifier       fg=s:lgreen bg=NONE     attr=NONE
   Highlight Type             fg=s:lblue  bg=NONE     attr=NONE
   Highlight Special          fg=s:light0 bg=NONE     attr=NONE
   Highlight Constant         fg=s:light0 bg=NONE     attr=NONE
