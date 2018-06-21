@@ -60,8 +60,6 @@ xmap ; <Plug>Sneak_;
 nmap , <Plug>Sneak_,
 xmap , <Plug>Sneak_,
 
-nmap \ <Plug>Sneak_s
-nmap <leader>\ <Plug>Sneak_S
 nmap <leader>s <Plug>Sneak_s
 nmap <leader>S <Plug>Sneak_S
 " }}}
@@ -99,6 +97,7 @@ nnoremap <leader>ut :UndotreeToggle<CR>
 
 " fzf.vim {{{
 if executable('fzf')
+  " TODO: command history: https://goo.gl/aGkUbx
   set runtimepath+=~/.fzf
   source ~/local/src/fzf/plugin/fzf.vim
   packadd! fzf.vim
