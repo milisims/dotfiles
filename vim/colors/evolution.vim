@@ -61,52 +61,28 @@ command! -nargs=+ -complete=highlight Highlight call s:hi(<f-args>)
 " }}}
 " color definitions {{{
 " OLD
-let s:dark0  = [236, '#2a303b']
-let s:dark1  = [237, '#2f3642']
-let s:dark2  = [238, '#373e4d']
-let s:dark3  = [239, '#3c4554']
-
-let s:light0 = [250, '#bac0cc']
-let s:light1 = [146, '#abbdd6']
-let s:light2 = [244, '#728096']
-let s:light3 = [60 , '#64718c']
-
-let s:aqua   = [109, '#8fbcbb']
-let s:laqua  = [110, '#88c0d0']
-let s:lblue  = [109, '#81a1c1']
-let s:blue   = [67 , '#5e81ac']
-
-let s:red    = [131, '#bf616a']
-let s:orange = [173, '#d08770']
-let s:yellow = [222, '#ebcb8b']
-let s:green  = [144, '#a3be8c']
-let s:violet = [139, '#b48ead']
-
-" NEW
 let s:dark0  = [234, '#1d2021']
 let s:dark1  = [235, '#282828']
 let s:dark2  = [237, '#3c3836']
 let s:dark3  = [239, '#504945']
-let s:dark4  = [241, '#665c54']
+let s:dark4  = [59 , '#665c54']
 
-let s:light0 = [250, '#d5c4a1']
-let s:light1 = [248, '#bdae93']
-let s:light2 = [246, '#a89984']
-let s:light3 = [246, '#948774']
+let s:light0 = [187, '#d5c4a1']
+let s:light1 = [144, '#bdae93']
+let s:light2 = [138, '#a89984']
+let s:light3 = [102, '#948774']
 
-let s:aqua   = [109, '#72b7b5']
-let s:laqua  = [110, '#84d4d2']
-let s:blue   = [67 , '#6fa3a6']
-let s:lblue  = [109, '#83a598']
-let s:green  = [142, '#679a69']
-let s:lgreen  = [142, '#679a69']
+let s:aqua   = [73 , '#72b7b5']
+let s:laqua  = [116, '#84d4d2']
+let s:blue   = [73 , '#6fa3a6']
+let s:lblue  = [108, '#83a598']
+let s:green  = [65 , '#679a69']
+let s:violet = [139, '#b48ead']
 
 let s:red    = [167, '#D84A44']
 let s:orange = [166, '#d65d0e']
-let s:orange = [166, '#c7743e']
+let s:orange = [173, '#c7743e']
 let s:yellow = [172, '#d79921']
-let s:violet = [139, '#b48ead']
-
 
 " }}}
 " True and 256 colors {{{
