@@ -138,28 +138,7 @@ if has('folding')
   set foldmethod=syntax
   set foldlevelstart=99
 endif
-
-set foldtext=FoldText()
-function! FoldText() abort
-  let l:fs = v:foldstart
-  while getline(l:fs) !~# '\w'
-    let l:fs = nextnonblank(l:fs + 1)
-  endwhile
-  if l:fs > v:foldend
-    let l:line = getline(v:foldstart)
-  else
-    let l:line = substitute(getline(l:fs), '\t', repeat(' ', &tabstop), 'g')
-  endif
-
-  let l:w = winwidth(0) - &foldcolumn - &number * &numberwidth
-  let l:foldSize = 1 + v:foldend - v:foldstart
-  let l:foldSizeStr = ' ' . l:foldSize . ' lines '
-  let l:foldLevelStr = repeat('  +  ', v:foldlevel)
-  let l:lineCount = line('$')
-  let l:expansionString = repeat(' ', l:w - strwidth(l:foldSizeStr.l:line.l:foldLevelStr))
-  return l:line . l:expansionString . l:foldSizeStr . l:foldLevelStr
-endfunction
-
+set foldtext=fold#text()
 " }}}
 " Plugin setup: {{{
 if has('packages')
@@ -320,6 +299,7 @@ nnoremap <leader>rv :so $MYVIMRC<CR>:execute 'set ft='.&ft<CR>:echo 'reloaded vi
 
 nnoremap <silent> <leader>tws :let @/='\v\s+$'<CR>:set hls<CR>
 
+command! DiffOrig call difference#orig()
 nnoremap <leader>do :DiffOrig<CR>
 
 " Select last edited text. improved over `[v`], eg works with visual block
@@ -355,32 +335,20 @@ inoremap <M-j> <C-c>:move .+1<CR>==gi
 inoremap <M-k> <C-c>:move .-2<CR>==gi
 
 " }}}
-" Functions: {{{
-nnoremap <silent> <Leader>ml :call <SID>append_modeline()<CR>
-function! s:append_modeline()
-  let l:modeline = printf(' vim: set ts=%d sw=%d tw=%d %set :',
-        \ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
-  let l:modeline = substitute(&commentstring, '%s', l:modeline, '')
-  call append(line('$'), l:modeline)
-endfunction
+" Autoload: {{{
+nnoremap <silent> <Leader>ml :call modeline#append()<CR>
 
-function! s:difforig() abort
-  let l:filetype = &filetype
-  vert new
-  set buftype=nofile
-  set modifiable
-  read ++edit # | 0d_
-  let &filetype = l:filetype
-  set nomodifiable
-  nnoremap <buffer> q :diffoff!<CR>:bd<CR>
-  diffthis
-  set noscrollbind
-  wincmd p
-  diffthis
-  set foldlevel=1
-endfunction
+inoremap <silent> ( <C-r>=autopairs#check_and_insert('(')<CR>
+inoremap <silent> ) <C-r>=autopairs#check_and_insert(')')<CR>
+inoremap <silent> [ <C-r>=autopairs#check_and_insert('[')<CR>
+inoremap <silent> ] <C-r>=autopairs#check_and_insert(']')<CR>
+inoremap <silent> { <C-r>=autopairs#check_and_insert('{')<CR>
+inoremap <silent> } <C-r>=autopairs#check_and_insert('}')<CR>
+inoremap <silent> " <C-r>=autopairs#check_and_insert('"')<CR>
+inoremap <silent> ' <C-r>=autopairs#check_and_insert("'")<CR>
 
-command! DiffOrig call s:difforig()
+inoremap <silent> <BS> <C-r>=autopairs#backspace()<CR>
+
 " }}}
 
 " vim: set ts=2 sw=2 tw=99 et :
