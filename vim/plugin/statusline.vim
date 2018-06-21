@@ -7,6 +7,7 @@ function! s:gitinfo() abort
     let l:statuslinetext .= '(' . fugitive#head() . ')'
   endif
   return l:statuslinetext !=# ' ()' ? l:statuslinetext : ' '
+  " TODO: improve this for submodules
 endfunction
 
 function! s:dirinfo() abort
@@ -41,7 +42,7 @@ function! s:bufinfo() abort
 endfunction
 
 function! Statusline_active() abort
-  let l:statuslinetext  = ' %3.3('.my#statusline#modecolor().my#statusline#mode().'%)'
+  let l:statuslinetext  = ' %3.3('.statusline#modecolor().statusline#mode().'%)'
   let l:statuslinetext .= '%#stlDirInfo#'
   let l:statuslinetext .= s:dirinfo()
   let l:statuslinetext .= '%*'
@@ -50,10 +51,10 @@ function! Statusline_active() abort
   if exists('b:stl_file_info')
     let l:statuslinetext .= s:typeinfo()
   endif
-  let l:statuslinetext .= my#statusline#modecolor()
+  let l:statuslinetext .= statusline#modecolor()
   let l:statuslinetext .= s:bufinfo()
   let l:statuslinetext .= '%#stlErrorInfo#'
-  " let l:statuslinetext .= my#statusline#errors()  " TODO
+  " let l:statuslinetext .= statusline#errors()  " TODO
   return l:statuslinetext
 endfunction
 
