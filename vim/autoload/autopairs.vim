@@ -1,37 +1,41 @@
 let s:pairs = {'(': ')', '[': ']', '{': '}', '"': '"', "'": "'"}
 let s:end_pairs = {')': '(', ']': '[', '}': '{', '"': '"', "'": "'"}
-let s:empty = '[ 	)\]}' . "'" . '"' . ']'
+let s:empty = '[ 	)\]}''"]'
 
-augroup vimrc_autopairs
+augroup aupairs
   autocmd!
-  autocmd InsertLeave,InsertEnter * let b:ends_inserted = ''
+  autocmd InsertCharPre * call s:update_last()
 augroup END
 
-function! s:nextchar() abort
-  let l:pos = getcurpos()
-  let l:line = getbufline(bufname('%'), l:pos[1])[0]
-  if l:pos[2] <= strlen(l:line) 
-    return l:line[l:pos[2]-1]
+function! s:update_last() abort
+  if !has_key(s:pairs, v:char) && !has_key(s:end_pairs, v:char)
+    let s:last_inserted = v:char
   endif
-  return ''
+endfunction
+
+function! s:nextchar() abort
+  return strcharpart(getline('.'), col('.')-1, 1)
+endfunction
+
+function! s:prevchar() abort
+  return strcharpart(getline('.'), col('.')-2, 1)
 endfunction
 
 function! autopairs#backspace() abort
-  if b:ends_inserted ==# s:nextchar()
-    return "\<BS>\<Del>"
+  let l:prev = s:prevchar()
+  if has_key(s:pairs, l:prev) && s:pairs[l:prev] ==# s:nextchar()
+    return "\<BS>\<DEL>"
   endif
   return "\<BS>"
 endfunction
 
 function! autopairs#check_and_insert(char) abort
   let l:nextchar = s:nextchar()
-  echo a:char l:nextchar
-  if has_key(s:pairs, a:char) && (empty(l:nextchar) || l:nextchar =~? s:empty)
-    let b:ends_inserted = s:pairs[a:char]
-    return a:char . s:pairs[a:char] . "\<left>"
-  elseif a:char ==# l:nextchar
-    return "\<right>"
+  if has_key(s:end_pairs, a:char) && a:char ==# l:nextchar && a:char !=# get(s:, 'last_inserted', '')
+    return "\<C-g>U\<right>"
+  elseif has_key(s:pairs, a:char) && (empty(l:nextchar) || l:nextchar =~? s:empty)
+    let s:last_inserted = a:char
+    return a:char . s:pairs[a:char] . "\<C-g>U\<left>"
   endif
-
   return a:char
 endfunction
