@@ -295,12 +295,9 @@ xnoremap <leader>P "0P
 nnoremap <leader>evr :e $MYVIMRC<CR>
 nnoremap <leader>evs :e $CFGDIR/settings.vim<CR>
 nnoremap <leader>evp :e $CFGDIR/plugins.vim<CR>
-nnoremap <leader>rv :so $MYVIMRC<CR>:execute 'set ft='.&ft<CR>:echo 'reloaded vimrc'<CR>
+nnoremap <leader>rv :so $MYVIMRC<CR>:execute 'set ft='.&ft<CR>:echo 'reloaded vimrc'<CR>zv
 
 nnoremap <silent> <leader>tws :let @/='\v\s+$'<CR>:set hls<CR>
-
-command! DiffOrig call difference#orig()
-nnoremap <leader>do :DiffOrig<CR>
 
 " Select last edited text. improved over `[v`], eg works with visual block
 nnoremap <expr> <leader>v '`['.strpart(getregtype(), 0, 1).'`]'
@@ -336,6 +333,8 @@ inoremap <M-k> <C-c>:move .-2<CR>==gi
 
 " }}}
 " Autoload: {{{
+nnoremap <silent> <leader>do :call difference#orig()<cr>
+nnoremap <silent> <leader>du :call difference#undobuf()<cr>
 nnoremap <silent> <Leader>ml :call modeline#append()<CR>
 
 inoremap <silent> ( <C-r>=autopairs#check_and_insert('(')<CR>
@@ -346,7 +345,6 @@ inoremap <silent> { <C-r>=autopairs#check_and_insert('{')<CR>
 inoremap <silent> } <C-r>=autopairs#check_and_insert('}')<CR>
 inoremap <silent> " <C-r>=autopairs#check_and_insert('"')<CR>
 inoremap <silent> ' <C-r>=autopairs#check_and_insert("'")<CR>
-
 inoremap <silent> <BS> <C-r>=autopairs#backspace()<CR>
 
 " }}}
