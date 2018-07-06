@@ -5,8 +5,8 @@ function! yapf#yapfify(start, end) abort
     let l:error = getline(1, '$')
     silent undo
     silent vertical new
+    set buftype=nofile
     silent call append(0, l:error)
-    " setlocal readonly
     setlocal nomodifiable
     buffer bufnr('$')
   endif
