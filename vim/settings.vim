@@ -1,3 +1,6 @@
+if has('vim_starting')
+  set encoding=utf-8
+endif
 scriptencoding utf-8
 " Settings:
 " General: {{{
@@ -16,9 +19,6 @@ set ttyfast
 set updatetime=500
 set winaltkeys=no
 set pastetoggle=<F2>
-if has('vim_starting')
-  set encoding=utf-8
-endif
 set viewoptions=folds,cursor,slash,unix
 if has('clipboard')
   set clipboard+=unnamedplus
@@ -37,7 +37,7 @@ else
   set backup
   set directory=$DATADIR/tmp/swap//  " // necessary
   set directory+=.
-  if has("persistent_undo")
+  if has('persistent_undo')
     set undodir=$DATADIR/tmp/undo
     set undodir+=.
     set undofile
@@ -219,9 +219,15 @@ let g:maplocalleader="\\"
 inoremap jk <ESC>
 snoremap jk <ESC>
 nnoremap Y y$
-nnoremap <CR> za
-xnoremap <CR> za
-nnoremap <BS> <c-^>
+xnoremap $ $h
+
+augroup vimrc_crmap
+  autocmd!
+  autocmd BufRead * if &modifiable | nnoremap <buffer> <CR> za | endif
+  autocmd BufRead * if &modifiable | xnoremap <buffer> <CR> za | endif
+  autocmd BufRead * if &modifiable | nnoremap <buffer> <BS> <c-^> | endif
+augroup END
+
 if !exists('g:loaded_tmux_navigator')
   nnoremap <C-h> <C-W>h
   nnoremap <C-j> <C-W>j
@@ -229,7 +235,12 @@ if !exists('g:loaded_tmux_navigator')
   nnoremap <C-l> <C-W>l
 endif
 nnoremap 0 ^
+xnoremap 0 ^
+onoremap 0 ^
 nnoremap ^ 0
+xnoremap ^ 0
+onoremap ^ 0
+
 nnoremap <silent> m i_<esc>r
 nnoremap gu gU
 nnoremap gl gu
@@ -243,6 +254,7 @@ nnoremap <expr> k (v:count > 4 ? "m'" . v:count . 'k' : 'gk')
 if has('nvim')
   augroup vimrc_term
     autocmd!
+    autocmd WinEnter term://* nohlsearch
     autocmd WinEnter term://* startinsert
 
     " Currently like this so I can unmap for specific plugins/terminal progs.

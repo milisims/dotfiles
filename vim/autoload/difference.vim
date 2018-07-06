@@ -16,21 +16,40 @@ endfunction
 
 function! difference#undobuf() abort
   let l:filetype = &filetype
+  " let l:undofile = fnameescape(undofile(expand('%:p')))
   let l:undofile = undofile(expand('%:p'))
+  if !filewritable(l:undofile)
+    echom 'Unable to write to undofile: ' . l:undofile
+    return
+  endif
+  write | execute 'wundo ' . fnameescape(l:undofile)
   let l:text = getline(1, '$')
+  diffoff! | diffthis
   vert new
   set buftype=nofile
   set modifiable
-  put =l:text | 0d_
+  silent put =l:text | 0d_
   let &filetype = l:filetype
   nnoremap <buffer> q :diffoff!<CR>:bd<CR>
-  nnoremap <buffer> u u:diffupdate<CR>
-  nnoremap <buffer> <C-r> <C-r>:diffupdate<CR>
+  nnoremap <silent> <buffer> u :set ma<CR>u:dif<CR>:set noma<CR>
+  nnoremap <silent> <buffer> <C-r> :set ma<CR><C-r>:dif<CR>:set noma<CR>
   execute 'rundo ' . fnameescape(l:undofile)
-  set noscrollbind
+  set nomodifiable
   set foldlevel=1
-  diffthis | wincmd p | diffthis | wincmd p
+  diffthis
   set foldlevel=1
 endfunction
 
+function! difference#gitlog() abort
+  if !exists('g:loaded_fugitive')
+    echom 'Fugitive not loaded.'
+    return
+  endif
+  diffthis
+  vsplit
+  silent Glog
+  diffthis
+  nnoremap <buffer> q :diffoff!<CR>:bd<CR>
+  wincmd p
+endfunction
 " vim: set ts=2 sw=2 tw=99 et :
