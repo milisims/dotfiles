@@ -311,7 +311,33 @@ hi link User8 StatusLineTerm
 hi link User9 StatusLineTerm
 
 " }}}
+" terminal colors {{{
+if has('nvim')
+  let g:terminal_color_0 = s:dark0[1]
+  let g:terminal_color_8 = s:light3[1]
 
+  let g:terminal_color_1 = s:red[1]
+  let g:terminal_color_9 = s:red[1]
+
+  let g:terminal_color_2 = s:lgreen[1]
+  let g:terminal_color_10 = s:green[1]
+
+  let g:terminal_color_3 = s:orange[1]
+  let g:terminal_color_11 = s:yellow[1]
+
+  let g:terminal_color_4 = s:lblue[1]
+  let g:terminal_color_12 = s:blue[1]
+
+  let g:terminal_color_5 = s:violet[1]
+  let g:terminal_color_13 = s:violet[1]
+
+  let g:terminal_color_6 = s:laqua[1]
+  let g:terminal_color_14 = s:aqua[1]
+
+  let g:terminal_color_7 = s:light2[1]
+  let g:terminal_color_15 = s:light0[1]
+endif
+" }}}
 " Cleanup
 delcommand Highlight
 
