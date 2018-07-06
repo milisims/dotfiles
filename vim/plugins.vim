@@ -90,6 +90,9 @@ nmap gcc <Plug>CommentaryLine
 nmap cgc <Plug>ChangeCommentary
 nmap gcu <Plug>Commentary<Plug>Commentary
 " }}}
+" vim-fugitive {{{
+nnoremap <silent> <leader>dgl :call difference#gitlog()<cr>
+" }}}
 " end start
 
 packadd! vim-python-pep8-indent
