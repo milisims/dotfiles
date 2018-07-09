@@ -10,170 +10,96 @@ endif
 
 let g:colors_name = 'evolution'
 
-" highlight function and commmand {{{
-
-" This function is just to allow fg=DICT for cterm and gui.
-" I think it helps make the colorscheme more readable and easily edited.
-" These work:
-" Highlight Normal    bg=s:bg_0    fg=s:fg_1    attr=NONE
-" Highlight Normal    ctermbg=s:bg_0[0]  guitermbg=s:bg_0[1]   fg=s:fg_1
-
-function! s:hi(group, ...) abort
-  let l:cmd = 'highlight ' . a:group
-  for l:arg in a:000
-    let l:term = split(l:arg, '=')
-    let l:key = l:term[0]
-    " If the key is fg or bg, map both cterm and gui colors
-    if l:key ==# 'fg' || l:key ==# 'bg'
-      if len(split(l:term[1], ':')) == 2
-        execute 'let l:tcolor = ' . l:term[1] . '[0]'
-        execute 'let l:gcolor = ' . l:term[1] . '[1]'
-      else
-        let l:tcolor = l:term[1]
-        let l:gcolor = l:term[1]
-      endif
-      let l:cmd .= ' cterm' . l:key . '=' . l:tcolor
-      let l:cmd .= ' gui' . l:key . '=' . l:gcolor
-    elseif l:key ==# 'attr'
-      if len(split(l:term[1], ':')) == 2
-        execute 'let l:attr = ' . l:term[1]
-      else
-        let l:attr = l:term[1]
-      endif
-      let l:cmd .= ' cterm=' . l:attr . ' gui=' . l:attr
-    else
-      " otherwise, check if still needs to be evaluated
-      if len(split(l:term[1], ':')) == 2
-        execute 'let l:value = ' . l:term[1]
-      else
-        let l:value = l:term[1]
-      endif
-      let l:cmd .= ' ' . l:key . '=' . l:value
-    endif
-  endfor
-  execute l:cmd
-endfunction
-
-command! -nargs=+ -complete=highlight Highlight call s:hi(<f-args>)
-
-" }}}
-" color definitions {{{
-" OLD
-let s:dark0  = [234, '#1d2021']
-let s:dark1  = [235, '#282828']
-let s:dark2  = [237, '#3c3836']
-let s:dark3  = [239, '#504945']
-let s:dark4  = [59 , '#665c54']
-
-let s:light0 = [187, '#d5c4a1']
-let s:light1 = [144, '#bdae93']
-let s:light2 = [138, '#a89984']
-let s:light3 = [102, '#948774']
-
-let s:aqua   = [73 , '#72b7b5']
-let s:laqua  = [116, '#84d4d2']
-let s:blue   = [73 , '#6fa3a6']
-let s:lblue  = [108, '#83a598']
-let s:green  = [65 , '#679a69']
-let s:lgreen = [65 , '#91ba93']
-let s:violet = [139, '#b48ead']
-
-let s:red    = [167, '#D84A44']
-let s:orange = [166, '#d65d0e']
-let s:orange = [173, '#c7743e']
-let s:yellow = [172, '#d79921']
-
-" }}}
 " True and 256 colors {{{
 if ($TERM =~# '256' || &t_Co >= 256) || has('gui_running')
 
-  Highlight Normal           fg=s:light0 bg=s:dark0  attr=NONE
+  highlight Normal           ctermfg=187  guifg=#d5c4a1 ctermbg=234  guibg=#1d2021 cterm=NONE      gui=NONE
   set background=dark
 
-  Highlight LineNr           fg=s:dark3  bg=s:dark0  attr=NONE
-  Highlight SignColumn       fg=s:dark1  bg=s:dark0  attr=NONE
-  Highlight FoldColumn       fg=s:dark3  bg=s:dark0  attr=NONE
-  Highlight MatchParen       fg=s:aqua   bg=s:dark3  attr=NONE
+  highlight LineNr           ctermfg=239  guifg=#504945 ctermbg=234  guibg=#1d2021 cterm=NONE    gui=NONE
+  highlight SignColumn       ctermfg=235  guifg=#282828 ctermbg=234  guibg=#1d2021 cterm=NONE    gui=NONE
+  highlight FoldColumn       ctermfg=239  guifg=#504945 ctermbg=234  guibg=#1d2021 cterm=NONE    gui=NONE
+  highlight MatchParen       ctermfg=73   guifg=#72b7b5 ctermbg=239  guibg=#504945 cterm=NONE    gui=NONE
 
-  Highlight Statement        fg=s:lblue  bg=NONE     attr=bold
-  Highlight PreProc          fg=s:lblue  bg=NONE     attr=NONE
-  Highlight Function         fg=s:blue   bg=NONE     attr=NONE
-  Highlight String           fg=s:green  bg=NONE     attr=NONE
-  Highlight Number           fg=s:violet bg=NONE     attr=NONE
+  highlight Statement        ctermfg=108  guifg=#83a598 ctermbg=NONE guibg=NONE    cterm=bold    gui=bold
+  highlight PreProc          ctermfg=108  guifg=#83a598 ctermbg=NONE guibg=NONE    cterm=NONE    gui=NONE
+  highlight Function         ctermfg=73   guifg=#6fa3a6 ctermbg=NONE guibg=NONE    cterm=NONE    gui=NONE
+  highlight String           ctermfg=65   guifg=#679a69 ctermbg=NONE guibg=NONE    cterm=NONE    gui=NONE
+  highlight Number           ctermfg=139  guifg=#b48ead ctermbg=NONE guibg=NONE    cterm=NONE    gui=NONE
 
-  Highlight Folded           fg=s:light3 bg=s:dark1  attr=NONE
-  Highlight Comment          fg=s:light3 bg=NONE     attr=italic
-  Highlight Identifier       fg=s:lgreen bg=NONE     attr=NONE
-  Highlight Type             fg=s:lblue  bg=NONE     attr=NONE
-  Highlight Special          fg=s:light0 bg=NONE     attr=NONE
-  Highlight Constant         fg=s:light0 bg=NONE     attr=NONE
-  Highlight Error            fg=s:red    bg=NONE     attr=bold
-  Highlight Todo             fg=s:yellow bg=NONE     attr=bold
-  Highlight NonText          fg=s:dark2  bg=NONE     attr=NONE
+  highlight Folded           ctermfg=102  guifg=#948774 ctermbg=235  guibg=#282828 cterm=NONE    gui=NONE
+  highlight Comment          ctermfg=102  guifg=#948774 ctermbg=NONE guibg=NONE    cterm=italic  gui=italic
+  highlight Identifier       ctermfg=65   guifg=#91ba93 ctermbg=NONE guibg=NONE    cterm=NONE    gui=NONE
+  highlight Type             ctermfg=108  guifg=#83a598 ctermbg=NONE guibg=NONE    cterm=NONE    gui=NONE
+  highlight Special          ctermfg=187  guifg=#d5c4a1 ctermbg=NONE guibg=NONE    cterm=NONE    gui=NONE
+  highlight Constant         ctermfg=187  guifg=#d5c4a1 ctermbg=NONE guibg=NONE    cterm=NONE    gui=NONE
+  highlight Error            ctermfg=167  guifg=#D84A44 ctermbg=NONE guibg=NONE    cterm=bold    gui=bold
+  highlight Todo             ctermfg=172  guifg=#d79921 ctermbg=NONE guibg=NONE    cterm=bold    gui=bold
+  highlight NonText          ctermfg=237  guifg=#3c3836 ctermbg=NONE guibg=NONE    cterm=NONE    gui=NONE
 
-  Highlight WildMenu         fg=s:aqua   bg=s:dark3  attr=NONE
-  Highlight PMenu            fg=s:light0 bg=s:dark1  attr=NONE
-  Highlight PmenuSbar        fg=s:light0 bg=s:dark1  attr=NONE
-  Highlight PMenuSel         fg=s:aqua   bg=s:dark2  attr=NONE
-  Highlight PmenuThumb       fg=s:light2 bg=s:dark2  attr=NONE
+  highlight WildMenu         ctermfg=73   guifg=#72b7b5 ctermbg=239  guibg=#504945 cterm=NONE    gui=NONE
+  highlight PMenu            ctermfg=187  guifg=#d5c4a1 ctermbg=235  guibg=#282828 cterm=NONE    gui=NONE
+  highlight PmenuSbar        ctermfg=187  guifg=#d5c4a1 ctermbg=235  guibg=#282828 cterm=NONE    gui=NONE
+  highlight PMenuSel         ctermfg=73   guifg=#72b7b5 ctermbg=237  guibg=#3c3836 cterm=NONE    gui=NONE
+  highlight PmenuThumb       ctermfg=138  guifg=#a89984 ctermbg=237  guibg=#3c3836 cterm=NONE    gui=NONE
 
-  Highlight ErrorMsg         fg=s:light0 bg=s:red    attr=NONE
-  Highlight ModeMsg          fg=s:light0 bg=NONE     attr=NONE
-  Highlight MoreMsg          fg=s:light0 bg=NONE     attr=NONE
-  Highlight Question         fg=s:light0 bg=NONE     attr=NONE
-  Highlight WarningMsg       fg=s:red    bg=s:dark0  attr=NONE
-  Highlight TabLine          fg=s:light3 bg=s:dark1  attr=NONE
-  Highlight TabLineFill      fg=s:light3 bg=s:dark1  attr=NONE
-  Highlight TabLineSel       fg=s:light3 bg=s:dark3  attr=NONE
-  Highlight Cursor           fg=s:dark0  bg=s:light0 attr=NONE
-  Highlight CursorColumn     fg=NONE     bg=s:dark1  attr=NONE
-  Highlight CursorLineNr     fg=s:aqua    bg=s:dark0  attr=NONE
-  Highlight CursorLine       fg=NONE     bg=s:dark1  attr=NONE
-  Highlight ColorColumn      fg=NONE     bg=s:dark1  attr=NONE
-  Highlight StatusLine       fg=s:light1 bg=s:dark1  attr=NONE
-  Highlight StatusLineNC     fg=s:light3 bg=s:dark2  attr=NONE
-  Highlight StatusLineTerm   fg=s:aqua   bg=s:dark2  attr=NONE
-  Highlight StatusLineTermNC fg=s:light0 bg=s:dark1  attr=NONE
+  highlight ErrorMsg         ctermfg=187  guifg=#d5c4a1 ctermbg=167  guibg=#D84A44 cterm=NONE    gui=NONE
+  highlight ModeMsg          ctermfg=187  guifg=#d5c4a1 ctermbg=NONE guibg=NONE    cterm=NONE    gui=NONE
+  highlight MoreMsg          ctermfg=187  guifg=#d5c4a1 ctermbg=NONE guibg=NONE    cterm=NONE    gui=NONE
+  highlight Question         ctermfg=187  guifg=#d5c4a1 ctermbg=NONE guibg=NONE    cterm=NONE    gui=NONE
+  highlight WarningMsg       ctermfg=167  guifg=#D84A44 ctermbg=234  guibg=#1d2021 cterm=NONE    gui=NONE
+  highlight TabLine          ctermfg=102  guifg=#948774 ctermbg=235  guibg=#282828 cterm=NONE    gui=NONE
+  highlight TabLineFill      ctermfg=102  guifg=#948774 ctermbg=235  guibg=#282828 cterm=NONE    gui=NONE
+  highlight TabLineSel       ctermfg=102  guifg=#948774 ctermbg=239  guibg=#504945 cterm=NONE    gui=NONE
+  highlight Cursor           ctermfg=234  guifg=#1d2021 ctermbg=187  guibg=#d5c4a1 cterm=NONE    gui=NONE
+  highlight CursorColumn     ctermfg=NONE guifg=NONE    ctermbg=235  guibg=#282828 cterm=NONE    gui=NONE
+  highlight CursorLineNr     ctermfg=73   guifg=#72b7b5 ctermbg=234  guibg=#1d2021 cterm=NONE    gui=NONE
+  highlight CursorLine       ctermfg=NONE guifg=NONE    ctermbg=235  guibg=#282828 cterm=NONE    gui=NONE
+  highlight ColorColumn      ctermfg=NONE guifg=NONE    ctermbg=235  guibg=#282828 cterm=NONE    gui=NONE
+  highlight StatusLine       ctermfg=144  guifg=#bdae93 ctermbg=235  guibg=#282828 cterm=NONE    gui=NONE
+  highlight StatusLineNC     ctermfg=102  guifg=#948774 ctermbg=237  guibg=#3c3836 cterm=NONE    gui=NONE
 
-  Highlight Visual           fg=NONE     bg=s:dark2  attr=NONE
-  Highlight VisualNOS        fg=NONE     bg=s:dark2  attr=NONE
-  Highlight VertSplit        fg=s:dark2  bg=NONE  attr=NONE
-  Highlight SpecialKey       fg=s:light3  bg=NONE     attr=NONE
-  Highlight Title            fg=s:light0 bg=NONE     attr=NONE
-  Highlight DiffAdd          fg=s:green  bg=s:dark1  attr=reverse
-  Highlight DiffChange       fg=s:yellow bg=s:dark1  attr=reverse
-  Highlight DiffDelete       fg=s:red    bg=s:dark1  attr=reverse
-  Highlight DiffText         fg=s:lblue  bg=s:dark1  attr=reverse
-  Highlight IncSearch        fg=s:dark1  bg=s:orange   attr=NONE
-  Highlight Search           fg=s:dark1  bg=s:orange   attr=NONE
-  Highlight Directory        fg=s:aqua   bg=NONE     attr=NONE
-  Highlight SpecialChar      fg=s:yellow bg=NONE     attr=NONE
-  Highlight SpecialComment   fg=s:aqua   bg=NONE     attr=italic
+  highlight StatusLineTerm   ctermfg=73   guifg=#72b7b5 ctermbg=237  guibg=#3c3836 cterm=NONE    gui=NONE
+  highlight StatusLineTermNC ctermfg=187  guifg=#d5c4a1 ctermbg=235  guibg=#282828 cterm=NONE    gui=NONE
+  highlight Visual           ctermfg=NONE guifg=NONE    ctermbg=237  guibg=#3c3836 cterm=NONE    gui=NONE
+  highlight VisualNOS        ctermfg=NONE guifg=NONE    ctermbg=237  guibg=#3c3836 cterm=NONE    gui=NONE
+  highlight VertSplit        ctermfg=237  guifg=#3c3836 ctermbg=NONE guibg=NONE    cterm=NONE    gui=NONE
+  highlight SpecialKey       ctermfg=102  guifg=#948774 ctermbg=NONE guibg=NONE    cterm=NONE    gui=NONE
+  highlight Title            ctermfg=187  guifg=#d5c4a1 ctermbg=NONE guibg=NONE    cterm=NONE    gui=NONE
+  highlight DiffAdd          ctermfg=65   guifg=#679a69 ctermbg=235  guibg=#282828 cterm=reverse gui=reverse
+  highlight DiffChange       ctermfg=172  guifg=#d79921 ctermbg=235  guibg=#282828 cterm=reverse gui=reverse
+  highlight DiffDelete       ctermfg=167  guifg=#D84A44 ctermbg=235  guibg=#282828 cterm=reverse gui=reverse
+  highlight DiffText         ctermfg=108  guifg=#83a598 ctermbg=235  guibg=#282828 cterm=reverse gui=reverse
+  highlight IncSearch        ctermfg=235  guifg=#282828 ctermbg=173  guibg=#c7743e cterm=NONE    gui=NONE
+  highlight Search           ctermfg=235  guifg=#282828 ctermbg=173  guibg=#c7743e cterm=NONE    gui=NONE
+  highlight Directory        ctermfg=73   guifg=#72b7b5 ctermbg=NONE guibg=NONE    cterm=NONE    gui=NONE
+  highlight SpecialChar      ctermfg=172  guifg=#d79921 ctermbg=NONE guibg=NONE    cterm=NONE    gui=NONE
+  highlight SpecialComment   ctermfg=73   guifg=#72b7b5 ctermbg=NONE guibg=NONE    cterm=italic  gui=italic
 
-  Highlight stlTypeInfo      fg=s:blue   bg=s:dark0  attr=NONE
-  Highlight stlErrorInfo     fg=s:dark0  bg=s:orange attr=bold
-  Highlight stlDirInfo       fg=s:laqua   bg=s:dark2  attr=NONE
+  highlight stlTypeInfo      ctermfg=73   guifg=#6fa3a6 ctermbg=234  guibg=#1d2021 cterm=NONE    gui=NONE
+  highlight stlErrorInfo     ctermfg=234  guifg=#1d2021 ctermbg=173  guibg=#c7743e cterm=bold    gui=bold
+  highlight stlDirInfo       ctermfg=116  guifg=#84d4d2 ctermbg=237  guibg=#3c3836 cterm=NONE    gui=NONE
 
-  Highlight stlNormal        fg=s:yellow bg=s:dark3  attr=bold
-  Highlight stlInsert        fg=s:dark0  bg=s:green  attr=bold
-  Highlight stlVisual        fg=s:dark0  bg=s:orange attr=NONE
-  Highlight stlReplace       fg=s:dark0  bg=s:blue   attr=NONE
-  Highlight stlSelect        fg=s:dark0  bg=s:blue   attr=NONE
-  Highlight stlTerminal      fg=s:violet bg=s:dark3  attr=NONE
+  highlight stlNormal        ctermfg=172  guifg=#d79921 ctermbg=239  guibg=#504945 cterm=bold    gui=bold
+  highlight stlInsert        ctermfg=234  guifg=#1d2021 ctermbg=65   guibg=#679a69 cterm=bold    gui=bold
+  highlight stlVisual        ctermfg=234  guifg=#1d2021 ctermbg=173  guibg=#c7743e cterm=NONE    gui=NONE
+  highlight stlReplace       ctermfg=234  guifg=#1d2021 ctermbg=73   guibg=#6fa3a6 cterm=NONE    gui=NONE
+  highlight stlSelect        ctermfg=234  guifg=#1d2021 ctermbg=73   guibg=#6fa3a6 cterm=NONE    gui=NONE
+  highlight stlTerminal      ctermfg=139  guifg=#b48ead ctermbg=239  guibg=#504945 cterm=NONE    gui=NONE
 
-  Highlight debugPC          bg=s:blue
-  Highlight debugBreakpoint  bg=s:red
+  highlight debugPC          ctermbg=73   guibg=#6fa3a6
+  highlight debugBreakpoint  ctermbg=167  guibg=#D84A44
 
   if has('gui_running')
-    Highlight SpellBad   bg=NONE ctermfg=s:red[0]    guifg=NONE attr=undercurl guisp=s:red[1]
-    Highlight SpellCap   bg=NONE ctermfg=s:aqua[0]   guifg=NONE attr=undercurl guisp=s:aqua[1]
-    Highlight SpellLocal bg=NONE ctermfg=s:green[0]  guifg=NONE attr=undercurl guisp=s:green[1]
-    Highlight SpellRare  bg=NONE ctermfg=s:orange[0] guifg=NONE attr=undercurl guisp=s:orange[1]
+    highlight SpellBad   ctermbg=NONE guibg=NONE ctermfg=167 guifg=NONE    cterm=undercurl gui=undercurl guisp=#D84A44
+    highlight SpellCap   ctermbg=NONE guibg=NONE ctermfg=73  guifg=NONE    cterm=undercurl gui=undercurl guisp=#72b7b5
+    highlight SpellLocal ctermbg=NONE guibg=NONE ctermfg=65  guifg=NONE    cterm=undercurl gui=undercurl guisp=#679a69
+    highlight SpellRare  ctermbg=NONE guibg=NONE ctermfg=173 guifg=NONE    cterm=undercurl gui=undercurl guisp=#c7743e
   else
-    Highlight SpellBad   bg=NONE fg=s:red                       attr=undercurl guisp=NONE
-    Highlight SpellCap   bg=NONE fg=s:aqua                      attr=undercurl guisp=NONE
-    Highlight SpellLocal bg=NONE fg=s:green                     attr=undercurl guisp=NONE
-    Highlight SpellRare  bg=NONE fg=s:orange                    attr=undercurl guisp=NONE
+    highlight SpellBad   ctermbg=NONE guibg=NONE ctermfg=167 guifg=#D84A44 cterm=undercurl gui=undercurl guisp=NONE
+    highlight SpellCap   ctermbg=NONE guibg=NONE ctermfg=73  guifg=#72b7b5 cterm=undercurl gui=undercurl guisp=NONE
+    highlight SpellLocal ctermbg=NONE guibg=NONE ctermfg=65  guifg=#679a69 cterm=undercurl gui=undercurl guisp=NONE
+    highlight SpellRare  ctermbg=NONE guibg=NONE ctermfg=173 guifg=#c7743e cterm=undercurl gui=undercurl guisp=NONE
   endif
 
   " }}}
@@ -313,32 +239,30 @@ hi link User9 StatusLineTerm
 " }}}
 " terminal colors {{{
 if has('nvim')
-  let g:terminal_color_0 = s:dark0[1]
-  let g:terminal_color_8 = s:light3[1]
+  let g:terminal_color_0 = '#1d2021'
+  let g:terminal_color_8 = '#948774'
 
-  let g:terminal_color_1 = s:red[1]
-  let g:terminal_color_9 = s:red[1]
+  let g:terminal_color_1 = '#D84A44'
+  let g:terminal_color_9 = '#D84A44'
 
-  let g:terminal_color_2 = s:lgreen[1]
-  let g:terminal_color_10 = s:green[1]
+  let g:terminal_color_2 = '#91ba93'
+  let g:terminal_color_10 = '#679a69'
 
-  let g:terminal_color_3 = s:orange[1]
-  let g:terminal_color_11 = s:yellow[1]
+  let g:terminal_color_3 = '#d65d0e'
+  let g:terminal_color_11 = '#d79921'
 
-  let g:terminal_color_4 = s:lblue[1]
-  let g:terminal_color_12 = s:blue[1]
+  let g:terminal_color_4 = '#83a598'
+  let g:terminal_color_12 = '#6fa3a6'
 
-  let g:terminal_color_5 = s:violet[1]
-  let g:terminal_color_13 = s:violet[1]
+  let g:terminal_color_5 = '#b48ead'
+  let g:terminal_color_13 = '#b48ead'
 
-  let g:terminal_color_6 = s:laqua[1]
-  let g:terminal_color_14 = s:aqua[1]
+  let g:terminal_color_6 = '#84d4d2'
+  let g:terminal_color_14 = '#72b7b5'
 
-  let g:terminal_color_7 = s:light2[1]
-  let g:terminal_color_15 = s:light0[1]
+  let g:terminal_color_7 = '#a89984'
+  let g:terminal_color_15 = '#d5c4a1'
 endif
 " }}}
-" Cleanup
-delcommand Highlight
 
 " vim: set ts=2 sw=2 et :
