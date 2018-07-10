@@ -191,3 +191,5 @@ if version >= 508 || !exists("did_python_syn_inits")
 endif
 
 let b:current_syntax = 'python'
+
+" vim: set ts=2 sw=2 tw=99 et :

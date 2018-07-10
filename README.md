@@ -1,5 +1,4 @@
 ## dotfiles
 
-Some more dotfiles. Vim config isn't set up for windows yet.
-
-TODO: add fzf install?
+Some dotfiles. Primarily vim stuff. Once upon a time it was a working windows 
+install, someday I would like that again.

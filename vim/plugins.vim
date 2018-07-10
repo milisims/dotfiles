@@ -60,10 +60,9 @@ xmap ; <Plug>Sneak_;
 nmap , <Plug>Sneak_,
 xmap , <Plug>Sneak_,
 
-nmap \ <Plug>Sneak_s
-nmap <leader>\ <Plug>Sneak_S
-nmap <leader>s <Plug>Sneak_s
-nmap <leader>S <Plug>Sneak_S
+nmap s <Plug>Sneak_s
+nmap S <Plug>Sneak_S
+
 " }}}
 " vim-highlightedyank {{{
 if !exists('##TextYankPost')
@@ -91,14 +90,22 @@ nmap gcc <Plug>CommentaryLine
 nmap cgc <Plug>ChangeCommentary
 nmap gcu <Plug>Commentary<Plug>Commentary
 " }}}
-" undotree {{{
-let g:undotree_WindowLayout=3
-nnoremap <leader>ut :UndotreeToggle<CR>
+" vim-fugitive {{{
+nnoremap <silent> <leader>dgl :call difference#gitlog()<cr>
 " }}}
 " end start
 
+packadd! vim-python-pep8-indent
+packadd! python_match.vim
+packadd! vim-pythonsense
+" vim-pandoc {{{
+" packadd! vim-pandoc
+" packadd! vim-pandoc-syntax
+let g:pandoc#folding#fdc = 0
+" }}}
 " fzf.vim {{{
 if executable('fzf')
+  " TODO: command history: https://goo.gl/aGkUbx
   set runtimepath+=~/.fzf
   source ~/local/src/fzf/plugin/fzf.vim
   packadd! fzf.vim
@@ -118,7 +125,7 @@ if executable('fzf')
 
   " TODO: :h K and :h 'keywordprg'
   nnoremap <expr> <silent> K ':Ag<CR>' . get(b:, 'fzf_defprefix', '') . "'" . expand('<cword>') . ' '
-  nnoremap <expr> <silent> K ':Ag<CR>' . get(b:, 'fzf_defprefix', '') . "'" . expand('<cword>') . ' '
+  xnoremap <expr> <silent> K ':y a<CR>:Ag<CR>' . get(b:, 'fzf_defprefix', '') . "'" . @a . ' '
   nnoremap <expr> <silent> <F5> ':Ag<CR>' . "'" . expand('<cword>') . get(b:, 'fzf_fsuffix', '')
   nnoremap <silent> <leader>gal :Commits<CR>
   nnoremap <silent> <leader>gl :BCommits<CR>
@@ -158,17 +165,6 @@ if executable('fzf')
 
 endif
 " }}}
-
-" ft specific
-packadd! vim-python-pep8-indent
-packadd! python_match.vim
-packadd! vim-pythonsense
-" vim-pandoc {{{
-" packadd vim-pandoc
-" packadd vim-pandoc-syntax
-let g:pandoc#folding#fdc = 0
-" }}}
-
 
 " Deferred:
 " syntax-vim-ex {{{
@@ -247,3 +243,5 @@ endif
 
 delcommand Dpackadd
 delcommand Defer
+
+" vim: set ts=2 sw=2 tw=99 et :

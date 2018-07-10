@@ -16,15 +16,40 @@ endif
 let $1 = 1$3
 endsnippet
 
-snippet f "function" b
-fun ${1:function_name}($2)
-	${3:" code}
-endf
+# TODO: check for autoload and insert appropriate text
+snippet fun "function" b
+function! ${1:function_name}($2) abort
+	${0:${VISUAL}}
+endfunction
 endsnippet
+
 
 snippet { "fold makers" b
 "$1 {{{
 ${0:${VISUAL}}
 " }}}
 endsnippet
+
+snippet if "if" b
+if ${1}
+	${0:${VISUAL}}
+endif
+endsnippet
+
+snippet ife "if else" b
+if ${1}
+	${2:${VISUAL}}
+else
+	${3:${VISUAL}}
+endif
+endsnippet
+
+snippet ifei "if elseif" b
+if ${1}
+	${2:${VISUAL}}
+elseif ${3}
+	${4:${VISUAL}}
+endif
+endsnippet
+
 # vim:ft=snippets:
