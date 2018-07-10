@@ -6,4 +6,5 @@ setlocal formatoptions=12crqnw
 setlocal comments=n:>
 setlocal wrap
 setlocal breakindent
-setlocal briopt=min:50,shift:2
+setlocal breakindentopt=min:50,shift:2
+setlocal commentstring=<!--%s-->
