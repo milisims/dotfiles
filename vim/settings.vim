@@ -187,9 +187,10 @@ augroup vimrc_filetype
   endif
   autocmd FileType qfreplace setlocal nofoldenable
   autocmd BufNewFile,BufRead *.yapf set filetype=cfg
-  autocmd Filetype sh let g:is_bash=1
-  autocmd Filetype sh let g:sh_fold_enabled=5
-augroup END
+  autocmd FileType sh let g:is_bash=1
+  autocmd FileType sh let g:sh_fold_enabled=5
+  autocmd BufRead * if empty(&filetype) | set commentstring=#%s | endif
+augroup END    " vimrc_filetype
 " }}}
 " Numbertoggle: {{{
 " -------------
