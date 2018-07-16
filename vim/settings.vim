@@ -216,10 +216,16 @@ nnoremap <Right> <nop>
 
 let g:mapleader=' '
 let g:maplocalleader="\\"
-inoremap jk <ESC>
-snoremap jk <ESC>
+inoremap jk <Esc>
+snoremap jk <Esc>
 nnoremap Y y$
 xnoremap $ $h
+
+inoremap <M-n> <Esc>
+vnoremap <M-n> <Esc>
+if has('nvim')
+  tnoremap <M-n> <C-\><C-n>
+endif
 
 augroup vimrc_crmap
   autocmd!
