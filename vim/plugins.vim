@@ -93,6 +93,22 @@ nmap gcu <Plug>Commentary<Plug>Commentary
 " vim-fugitive {{{
 nnoremap <silent> <leader>dgl :call difference#gitlog()<cr>
 " }}}
+" vim-signify {{{
+highlight link SignifyLineAdd             String
+highlight link SignifyLineChange          Todo
+highlight link SignifyLineDelete          Error
+highlight link SignifyLineChangeDelete    SignifyLineChange
+highlight link SignifyLineDeleteFirstLine SignifyLineDelete
+
+highlight link SignifySignAdd             String
+highlight link SignifySignChange          Todo
+highlight link SignifySignDelete          Error
+highlight link SignifySignChangeDelete    SignifyLineChange
+highlight link SignifySignDeleteFirstLine SignifyLineDelete
+let g:signify_vcs_list = ['git']
+let g:signify_sign_delete = '-'
+let g:signify_sign_change = '~'
+" }}}
 " end start
 
 packadd! vim-python-pep8-indent
@@ -160,11 +176,6 @@ endif
 " Deferred:
 " syntax-vim-ex {{{
 Dpackadd syntax-vim-ex
-" }}}
-" vim-gitgutter {{{
-Dpackadd vim-gitgutter
-Defer gitgutter#all(1)
-let g:gitgutter_max_signs = 1000
 " }}}
 
 if has('nvim')

@@ -50,10 +50,6 @@
 	path = vim/pack/bundle/start/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive
 	ignore = dirty
-[submodule "vim/pack/bundle/opt/vim-gitgutter"]
-	path = vim/pack/bundle/opt/vim-gitgutter
-	url = https://github.com/airblade/vim-gitgutter
-	ignore = dirty
 [submodule "vim/pack/bundle/opt/vim-gutentags"]
 	path = vim/pack/bundle/opt/vim-gutentags
 	url = https://github.com/ludovicchabant/vim-gutentags
@@ -119,3 +115,6 @@
 [submodule "vim/pack/bundle/start/undotree"]
 	path = vim/pack/bundle/start/undotree
 	url = https://github.com/mbbill/undotree.git
+[submodule "vim/pack/bundle/start/vim-signify"]
+	path = vim/pack/bundle/start/vim-signify
+	url = https://github.com/mhinz/vim-signify.git
