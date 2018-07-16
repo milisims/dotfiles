@@ -116,10 +116,9 @@ if executable('fzf')
   nnoremap <silent> <leader>gst :GFiles?<CR>
   nnoremap <silent> <leader>b   :Buffers<CR>
   nnoremap <silent> <leader>l   :Lines<CR>
-  nnoremap <silent> <leader>L   :BLines<CR>
+  nnoremap <silent> <leader>/   :BLines<CR>
   nnoremap <expr> <silent> <leader>O    ':Tags<CR>' . "'" . expand('<cword>') . ' '
   nnoremap <silent> <leader>mr  :History<CR>
-  nnoremap <silent> <leader>/   :execute 'Ag ' . input('Ag/')<CR>
   nnoremap <silent> <leader>A   :Ag<CR>
   nnoremap <silent> <leader>ht  :Helptags<CR>
 
@@ -129,14 +128,6 @@ if executable('fzf')
   nnoremap <expr> <silent> <F5> ':Ag<CR>' . "'" . expand('<cword>') . get(b:, 'fzf_fsuffix', '')
   nnoremap <silent> <leader>gal :Commits<CR>
   nnoremap <silent> <leader>gl :BCommits<CR>
-
-  imap <c-x><c-k> <Plug>(fzf-complete-word)
-  imap <c-x><c-f> <Plug>(fzf-complete-path)
-  imap <c-x><c-j> <Plug>(fzf-complete-file-ag)
-  imap <c-x><c-l> <Plug>(fzf-complete-line)
-
-  imap <C-x><C-f> <Plug>(fzf-complete-file-ag)
-  imap <C-x><C-l> <Plug>(fzf-complete-line)
 
     function! s:build_quickfix_list(lines)
       call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
