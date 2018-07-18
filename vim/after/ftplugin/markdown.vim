@@ -7,5 +7,6 @@ setlocal comments=n:>
 setlocal wrap
 setlocal breakindent
 setlocal breakindentopt=min:50,shift:2
+setlocal commentstring=<!--%s-->
 
 " vim: set ts=2 sw=2 tw=99 et :

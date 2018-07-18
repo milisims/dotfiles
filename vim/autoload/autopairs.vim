@@ -14,11 +14,11 @@ function! s:update_last() abort
 endfunction
 
 function! s:nextchar() abort
-  return strcharpart(getline('.'), col('.')-1, 1)
+  return strpart(getline('.'), col('.')-1, 1)
 endfunction
 
 function! s:prevchar() abort
-  return strcharpart(getline('.'), col('.')-2, 1)
+  return strpart(getline('.'), col('.')-2, 1)
 endfunction
 
 function! autopairs#backspace() abort
