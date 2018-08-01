@@ -2,10 +2,10 @@ function! difference#orig() abort
   let l:filetype = &filetype
   vert new
   set buftype=nofile
-  set modifiable
+  setlocal modifiable
   read ++edit # | 0d_
   let &filetype = l:filetype
-  set nomodifiable
+  setlocal nomodifiable
   nnoremap <buffer> q :diffoff!<CR>:bd<CR>
   diffthis
   set noscrollbind
@@ -27,14 +27,14 @@ function! difference#undobuf() abort
   diffoff! | diffthis
   vert new
   set buftype=nofile
-  set modifiable
+  setlocal modifiable
   silent put =l:text | 0d_
   let &filetype = l:filetype
   nnoremap <buffer> q :diffoff!<CR>:bd<CR>
   nnoremap <silent> <buffer> u :set ma<CR>u:dif<CR>:set noma<CR>
   nnoremap <silent> <buffer> <C-r> :set ma<CR><C-r>:dif<CR>:set noma<CR>
   execute 'rundo ' . fnameescape(l:undofile)
-  set nomodifiable
+  setlocal nomodifiable
   set foldlevel=1
   diffthis
   set foldlevel=1
