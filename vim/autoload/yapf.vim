@@ -4,11 +4,10 @@ function! yapf#yapfify(start, end) abort
   if v:shell_error  " restore buffer and put error into a new buffer
     let l:error = getline(1, '$')
     silent undo
-    silent vertical new
-    set buftype=nofile
-    silent call append(0, l:error)
-    setlocal nomodifiable
-    buffer bufnr('$')
+    echom l:error
+    echohl WarningMsg
+    echom 'Check syntax and :messages. yapf returned an error.'
+    echohl None
   endif
   call setpos('.', l:cursor)
 endfunction
