@@ -10,6 +10,9 @@ function! statusline#gitinfo() abort
 endfunction
 
 function! statusline#dirinfo() abort
+  if exists('b:term_title')
+    return ' ' . b:term_title . ' '
+  endif
   let l:statuslinetext = expand('%:h')
   if l:statuslinetext !=# '.'
     let l:statuslinetext .= '/'
