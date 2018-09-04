@@ -221,6 +221,7 @@ inoremap jk <Esc>
 snoremap jk <Esc>
 nnoremap Y y$
 xnoremap $ $h
+nnoremap cr /\<<C-r>"\><CR>cgn<C-r>.<ESC>
 
 inoremap <M-n> <Esc>
 vnoremap <M-n> <Esc>
