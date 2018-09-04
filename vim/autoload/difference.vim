@@ -52,4 +52,5 @@ function! difference#gitlog() abort
   nnoremap <buffer> q :diffoff!<CR>:bd<CR>
   wincmd p
 endfunction
+
 " vim: set ts=2 sw=2 tw=99 et :
