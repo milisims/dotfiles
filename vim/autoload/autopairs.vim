@@ -39,3 +39,5 @@ function! autopairs#check_and_insert(char) abort
   endif
   return a:char
 endfunction
+
+" vim: set ts=2 sw=2 tw=99 et :
