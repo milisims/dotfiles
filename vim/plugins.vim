@@ -221,21 +221,6 @@ if has('nvim')
     let g:gutentags_enabled = 0
   endif
   " }}}
-  " iron.nvim {{{
-  Dpackadd iron.nvim
-  let g:iron_map_defaults = 0
-
-  augroup vimrc_iron
-    autocmd!
-    autocmd Filetype python nmap <buffer> <leader>e     <Plug>(iron-send-motion)
-    autocmd Filetype python xmap <buffer> <leader>e     <Plug>(iron-send-motion)
-    autocmd Filetype python nmap <buffer> <leader>el   V<Plug>(iron-send-motion)
-    autocmd Filetype python nmap <buffer> <leader>eh    <Nop>
-    autocmd Filetype python nmap <buffer> <leader>e<cr> <Plug>(iron-cr)
-    autocmd Filetype python nmap <buffer> <leader>er    <Plug>(iron-repeat-cmd)
-  augroup END
-
-  " }}}
   " thesaurus_query.vim {{{
   Dpackadd thesaurus_query.vim
   let g:tq_map_keys = 0

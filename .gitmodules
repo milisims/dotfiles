@@ -2,10 +2,6 @@
 	path = vim/pack/bundle/opt/fzf.vim
 	url = https://github.com/junegunn/fzf.vim
 	ignore = dirty
-[submodule "vim/pack/bundle/opt/iron.nvim"]
-	path = vim/pack/bundle/opt/iron.nvim
-	url = https://github.com/BurningEther/iron.nvim
-	ignore = dirty
 [submodule "vim/pack/bundle/opt/neco-vim"]
 	path = vim/pack/bundle/opt/neco-vim
 	url = https://github.com/Shougo/neco-vim

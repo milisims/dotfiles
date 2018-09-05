@@ -250,10 +250,6 @@ xnoremap ^ 0
 onoremap ^ 0
 
 nnoremap <silent> m i_<esc>r
-nnoremap gu gU
-nnoremap gl gu
-xnoremap gu gU
-xnoremap gl gu
 nnoremap Q q
 
 nnoremap <expr> j (v:count > 4 ? "m'" . v:count . 'j' : 'gj')
@@ -290,7 +286,7 @@ cnoremap <C-e> <End>
 
 nnoremap <C-q> <C-w>
 xnoremap < <gv
-xnoremap > >gv|
+xnoremap > >gv
 cmap W!! w !sudo tee % >/dev/null
 nnoremap cp yap<S-}>p
 
