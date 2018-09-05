@@ -54,8 +54,11 @@ bindkey -M viins '^[[3~' delete-char            # Del
 bindkey -M vicmd "^[[1~" vi-beginning-of-line
 bindkey -M vicmd "^[[4~" vi-end-of-line
 bindkey -M vicmd '^[[2~' beep
+bindkey -M vicmd 'q'     edit-command-line
 
 autoload zmv  # zmv with no clargs shows example usage
+autoload edit-command-line
+zle -N edit-command-line
 
 # Mmm. Vim.
 export EDITOR=$(command -v vim)
