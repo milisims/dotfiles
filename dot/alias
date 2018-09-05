@@ -44,15 +44,20 @@ function sudoedit() {
 # When the first argument is modified (TARGET), run the rest of the args as cmd
 # onmodify dissertation.md pandoc dissertation.md dissertation.pdf
 onmodify() {
-    TARGET=${1:-.}; shift
-    CMD="$@"
+  TARGET=${1:-.}; shift
+  CMD="$@"
 
-    echo "$TARGET" "$CMD"
-    while inotifywait --exclude '.git' -qq -r -e close_write,moved_to,move_self $TARGET; do
-        sleep 0.2
-        bash -c "$CMD"
-        echo
-    done
+  echo "$TARGET" "$CMD"
+  while inotifywait --exclude '.git' -qq -r -e close_write,moved_to,move_self $TARGET; do
+    sleep 0.2
+    bash -c "$CMD"
+    echo
+  done
+}
+
+# TODO: check for options (-l, -c, etc)
+wccl() {
+  wc -l $@ | cut -f1 -d' '
 }
 
 alias tls='tmux ls'
