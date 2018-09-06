@@ -31,35 +31,29 @@ syntax keyword pythonException	try except finally
 
 syntax match pythonDefStatement	/^\s*\%(def \|class \)/ nextgroup=pythonFunction skipwhite
 syntax match pythonFunction	"[a-zA-Z_][a-zA-Z0-9_]*" contained
-syntax match pythonKeywordArg	"\v[\(\,]\s{-}\zs\w+\ze\s{-}\=(\=)@!"
-
-" TODO: use old folding depending on an option
-" syntax region pythonFunctionFold	start="^\z(\s*\)\%(def\|class\)\>"
-"   \ end="\ze\%(\s*\n\)\+\%(\z1\s\)\@!." fold transparent
+" TODO: syntax match pythonKeywordArg	"\v[\(\,]\s{-}\zs\w+\ze\s{-}\=(\=)@!"
 
 syntax region pythonFunctionFold	start="^\%(def\)\>"
-  \ end="\%(\s*\n\)\{1,3}\ze\%(\s*\n\)*\%(\s\)\@!." fold transparent
+      \ end="\%(\s*\n\)\{1,2}\ze\%(\s*\n\)*\%(\s\)\@!." fold transparent
 
 syntax region pythonMethodFold	start="^\z(\s\+\)\%(def\)\>"
       \ end="\%(\s*\n\)\{1,2}\ze\%(\s*\n\)*\%(\z1\s\)\@!." fold transparent
 
 syntax region pythonClassFold	start="^\z(\s*\)\%(class\)\>"
-  \ end="\%(\s*\n\)\{1}\ze\%(\s*\n\)*\%(\z1\s\)\@!." fold transparent
+      \ end="\ze\%(\s*\n\)\+\%(\z1\s\)\@!." fold transparent
 
 syntax match   pythonComment /#\%(.\%({{{\|}}}\)\@!\)*$/
-  \ contains=pythonTodo,@Spell
+      \ contains=pythonTodo,@Spell
 syntax region  pythonFold matchgroup=pythonComment
-  \ start='#.*{{{.*$' end='#.*}}}.*$' fold transparent
+      \ start='#.*{{{.*$' end='#.*}}}.*$' fold transparent
 
 syntax keyword pythonClassVar	self cls
 syntax keyword pythonRepeat	for while
 syntax keyword pythonConditional	if elif else
 syntax keyword pythonOperator	and in is not or
-" AS will be a keyword in Python 3
-syntax keyword pythonImport	import from
+syntax keyword pythonImport	import from nonlocal
 syntax keyword pythonTodo		TODO FIXME XXX contained
 
-" Decorators (new in Python 2.4)
 syntax match   pythonDecorator	"@" display nextgroup=pythonFunction skipwhite
 
 " strings
@@ -142,52 +136,38 @@ endif
 " triple quoted string is to start from the beginning of the file. If
 " you have a fast machine you can try uncommenting the "sync minlines"
 " and commenting out the rest.
-"syntax sync match pythonSync grouphere NONE "):$"
-"syntax sync maxlines=200
-syntax sync minlines=2000
-syntax sync linebreaks=1
+" syntax sync match pythonSync grouphere NONE "):$"
+" syntax sync maxlines=200
+" syntax sync minlines=2000
+" syntax sync linebreaks=1
+syntax sync fromstart
 
-if version >= 508 || !exists("did_python_syn_inits")
-  if version <= 508
-    let did_python_syn_inits = 1
-    command -nargs=+ HiLink hi link <args>
-  else
-    command -nargs=+ HiLink hi def link <args>
-  endif
-
-  " The default methods for highlighting.  Can be overridden later
-  HiLink pythonStatement	Statement
-  HiLink pythonDefStatement	Statement
-  HiLink pythonFunction		Function
-  HiLink pythonConditional	Conditional
-  HiLink pythonRepeat		Repeat
-  HiLink pythonString		String
-  HiLink pythonDocString		Comment
-  HiLink pythonRawString	String
-  HiLink pythonEscape		Special
-  HiLink pythonOperator		Operator
-  HiLink pythonImport		Include
-  HiLink pythonComment		Comment
-  HiLink pythonTodo		Todo
-  HiLink pythonDecorator	Define
-  HiLink pythonClassVar		Identifier
-  if exists('python_highlight_numbers')
-    HiLink pythonNumber	Number
-  endif
-  if exists('python_highlight_builtins')
-    HiLink pythonBuiltin	Function
-  endif
-  if exists('python_highlight_exceptions')
-    HiLink pythonException	Exception
-  endif
-  if exists('python_highlight_space_errors')
-    HiLink pythonSpaceError	Error
-  endif
-  if exists('python_highlight_keyword_arguments')
-    HiLink pythonKeywordArg	Keyword
-  endif
-
-  delcommand HiLink
+hi def link pythonStatement	Statement
+hi def link pythonDefStatement	Statement
+hi def link pythonFunction		Function
+hi def link pythonConditional	Conditional
+hi def link pythonRepeat		Repeat
+hi def link pythonString		String
+hi def link pythonDocString		Comment
+hi def link pythonRawString	String
+hi def link pythonEscape		Special
+hi def link pythonOperator		Operator
+hi def link pythonImport		Include
+hi def link pythonComment		Comment
+hi def link pythonTodo		Todo
+hi def link pythonDecorator	Define
+hi def link pythonClassVar		Identifier
+if exists('python_highlight_numbers')
+  hi def link pythonNumber	Number
+endif
+if exists('python_highlight_builtins')
+  hi def link pythonBuiltin	Function
+endif
+if exists('python_highlight_exceptions')
+  hi def link pythonException	Exception
+endif
+if exists('python_highlight_space_errors')
+  hi def link pythonSpaceError	Error
 endif
 
 let b:current_syntax = 'python'
