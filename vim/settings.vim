@@ -221,7 +221,6 @@ inoremap jk <Esc>
 snoremap jk <Esc>
 nnoremap Y y$
 xnoremap $ $h
-nnoremap cr /\<<C-r>"\><CR>cgn<C-r>.<ESC>
 
 inoremap <M-n> <Esc>
 vnoremap <M-n> <Esc>
@@ -231,9 +230,9 @@ endif
 
 augroup vimrc_crmap
   autocmd!
-  autocmd BufRead * if &modifiable | nnoremap <buffer> <CR> za | endif
-  autocmd BufRead * if &modifiable | xnoremap <buffer> <CR> za | endif
-  autocmd BufRead * if &modifiable | nnoremap <buffer> <BS> <c-^> | endif
+  autocmd BufRead * if &modifiable | nnoremap <buffer> <CR> za| endif
+  autocmd BufRead * if &modifiable | xnoremap <buffer> <CR> za| endif
+  autocmd BufRead * if &modifiable | nnoremap <buffer> <BS> <c-^>| endif
 augroup END
 
 if !exists('g:loaded_tmux_navigator')
@@ -289,6 +288,8 @@ xnoremap < <gv
 xnoremap > >gv
 cmap W!! w !sudo tee % >/dev/null
 nnoremap cp yap<S-}>p
+nnoremap cr /\<<C-r>"\><CR>cgn<C-r>.<ESC>
+xnoremap / y/\<<C-r>"\><CR>zv
 
 nnoremap g= gg=G``zz
 nnoremap gQ gggqG``
@@ -299,9 +300,6 @@ inoremap <C-u> <Esc>hgUiwea
 " Leader: {{{
 nnoremap <leader><CR> :nohlsearch<CR>
 nnoremap <leader>cd :lcd %:p:h<CR>:pwd<CR>
-
-nnoremap <expr> <leader><leader> ':nnoremap <buffer> <leader' . '><' . 'leader> '
-nnoremap <leader>c<space> :execute 'nunmap <buffer> <leader' . '><' . 'leader>'<CR>:echo '<leader leader> cleared.'<CR>
 
 nnoremap <leader>p "0p
 nnoremap <leader>P "0P
