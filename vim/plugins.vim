@@ -189,8 +189,30 @@ if has('nvim')
   " }}}
   " nvim-completion-manager {{{
   " Better if loaded after ultisnips (ncm checks for it)
-  Dpackadd nvim-completion-manager
-  Dpackadd neco-vim
+  " Dpackadd nvim-completion-manager
+  " Dpackadd neco-vim
+  packadd! ncm2
+  packadd! ncm2-bufword
+  packadd! ncm2-highprio-pop
+  packadd! ncm2-jedi
+  packadd! ncm2-look.vim
+  packadd! ncm2-markdown-subscope
+  packadd! ncm2-path
+  packadd! ncm2-syntax
+  packadd! ncm2-tagprefix
+  packadd! ncm2-tmux
+  packadd! ncm2-ultisnips
+  packadd! neco-syntax
+  packadd! nvim-yarp
+
+  function! s:setup_ncm2() abort
+    call ncm2#enable_for_buffer()
+    augroup vimrc_ncm2
+      autocmd BufEnter * call ncm2#enable_for_buffer()
+    augroup END
+  endfunction
+
+  Defer s:setup_ncm2()
 
   inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
   inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
