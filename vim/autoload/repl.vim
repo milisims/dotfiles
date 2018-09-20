@@ -1,27 +1,29 @@
-function! repl#send() abort
+function! repl#send(...) abort
   if a:0 == 0
     call s:send_line_or_fold()
+  elseif type(a:1) == 1  " string
+    call s:send_lines([a:1])
+  elseif type(a:1) == 3  " list
+    call s:send_lines(a:1)
   endif
 endfunction
 
 function! s:send_line_or_fold() abort
   let l:fold_close = foldclosedend(line('.'))
-  if l:fold_close != -1
-    call s:send_lines(getline('.', l:fold_close))
-  else
-    call s:send_lines(getline('.', '.'))
+  if l:fold_close == -1
+    l:fold_close = '.'
   endif
+  call s:send_lines(getline('.', l:fold_close))
 endfunction
 
 function! s:send_lines(lines) abort
   if g:repl_termid == -1
     throw 'g:repl_termid is default value, term might not be open'
   endif
-  for l:line in a:lines
-    " TODO: make this an option, trimming stuff
-    let l:line = substitute(l:line, '^\s*\(.\{-}\)\s*$', '\1\n', '')
-    call jobsend(g:repl_termid, l:line)
-  endfor
+  call chansend(g:repl_termid, [join(a:lines, "\<CR>\<C-u>"), ''])
+  if &filetype ==# 'python' && len(a:lines) > 1
+    call chansend(g:repl_termid, "\<CR>")
+  endif
 endfunction
 
 function! repl#opfunc(type) abort

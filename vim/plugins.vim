@@ -187,10 +187,8 @@ if has('nvim')
   let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
   let g:UltiSnipsRemoveSelectModeMappings = 0
   " }}}
-  " nvim-completion-manager {{{
+  " ncm2 {{{
   " Better if loaded after ultisnips (ncm checks for it)
-  " Dpackadd nvim-completion-manager
-  " Dpackadd neco-vim
   packadd! ncm2
   packadd! ncm2-bufword
   packadd! ncm2-highprio-pop

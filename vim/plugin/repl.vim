@@ -4,8 +4,10 @@ endif
 
 nnoremap <silent> <Plug>ReplSendline :<C-u>call repl#send()<CR>j
       \:call repeat#set("\<Plug>ReplSendline")<CR>
-nmap gl <Plug>ReplSendline
-nnoremap <silent> gr :<C-u>set opfunc=repl#opfunc<CR>g@
+
+nmap gxl <Plug>ReplSendline
+nnoremap gx<CR> :<C-u>call repl#send("\<lt>CR>")<CR>
+nnoremap <silent> gx :<C-u>set opfunc=repl#opfunc<CR>g@
 
 let g:repl_termid = -1
 augroup vimrc_repl
