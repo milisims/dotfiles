@@ -361,6 +361,10 @@ inoremap <silent> " <C-r>=autopairs#check_and_insert('"')<CR>
 inoremap <silent> ' <C-r>=autopairs#check_and_insert("'")<CR>
 inoremap <silent> <BS> <C-r>=autopairs#backspace()<CR>
 
+onoremap <silent>ai :<C-u>call textobjects#indent(0)<CR>
+onoremap <silent>ii :<C-u>call textobjects#indent(1)<CR>
+xnoremap <silent>ai <Esc>:call textobjects#indent(0)<CR><Esc>gv
+xnoremap <silent>ii <Esc>:call textobjects#indent(1)<CR><Esc>gv
 " }}}
 
 " vim: set ts=2 sw=2 tw=99 et :
