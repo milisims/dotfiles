@@ -6,7 +6,6 @@ function! statusline#gitinfo() abort
     let l:statuslinetext .= '(' . fugitive#head() . ')'
   endif
   return l:statuslinetext !=# ' ()' ? l:statuslinetext : ' '
-  " TODO: improve this for submodules
 endfunction
 
 function! statusline#dirinfo() abort
@@ -44,7 +43,7 @@ function! statusline#bufinfo() abort
 endfunction
 
 let s:modes ={
-      \ 'n'  : ['%#stlNormal#', '⊳'],
+      \ 'n'  : ['%#stlNormal#', 'n'],
       \ 'i'  : ['%#stlInsert#', 'i'],
       \ 'v'  : ['%#stlVisual#', 'v'],
       \ 'V'  : ['%#stlVisual#', '☴'],
