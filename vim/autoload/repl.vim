@@ -1,6 +1,8 @@
-function! repl#send(...) abort
+function! repl#send(...) range abort
   if a:0 == 0
     call s:send_line_or_fold()
+  elseif exists('a:firstline')
+    call s:send_lines(getline(a:firstline, a:lastline))
   elseif type(a:1) == 1  " string
     call s:send_lines([a:1])
   elseif type(a:1) == 3  " list
@@ -11,7 +13,7 @@ endfunction
 function! s:send_line_or_fold() abort
   let l:fold_close = foldclosedend(line('.'))
   if l:fold_close == -1
-    l:fold_close = '.'
+    let l:fold_close = '.'
   endif
   call s:send_lines(getline('.', l:fold_close))
 endfunction
@@ -20,7 +22,7 @@ function! s:send_lines(lines) abort
   if g:repl_termid == -1
     throw 'g:repl_termid is default value, term might not be open'
   endif
-  call chansend(g:repl_termid, [join(a:lines, "\<CR>\<C-u>"), ''])
+  call chansend(g:repl_termid, ["\<C-u>" . join(a:lines, "\<CR>\<C-u>"), ''])
   if &filetype ==# 'python' && len(a:lines) > 1
     call chansend(g:repl_termid, "\<CR>")
   endif
