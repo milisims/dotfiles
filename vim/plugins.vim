@@ -14,11 +14,15 @@ function! s:idledefer() abort
     execute 'doautocmd User ' . l:deferfile
     execute 'autocmd! User ' . l:deferfile
   endfor
+
+  delcommand Dpackadd
+  delcommand Defer
 endfunction
 
 augroup IdleCmd
   if has('vim_starting')
     autocmd CursorHold,InsertEnter,TextChanged * call s:idledefer()
+    " autocmd InsertEnter,TextChanged * call s:idledefer()
   endif
 augroup END
 
@@ -36,7 +40,8 @@ endif
 command -nargs=1 Dpackadd call s:defer('DeferVimPack', 'packadd ' . <f-args>)
 command -nargs=1 Defer call s:defer('DeferVimCall', 'call ' . <f-args>)
 call s:defer('DeferVimFinal', 'set updatetime=' . &updatetime)
-set updatetime=20
+set updatetime=100  " windows needs
+
 " }}}
 
 " start:
@@ -204,6 +209,9 @@ if has('nvim')
   packadd! nvim-yarp
 
   function! s:setup_ncm2() abort
+    if has('win32')
+      return
+    endif
     call ncm2#enable_for_buffer()
     augroup vimrc_ncm2
       autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -248,7 +256,14 @@ if has('nvim')
   " }}}
 endif
 
-delcommand Dpackadd
-delcommand Defer
+" Windows
+if has('win32')
+  " fonts {{{
+  function! s:setup_guifont() abort
+    Guifont! DejaVu Sans Mono:h9
+  endfunction
+  Defer s:setup_guifont()
+  " }}}
+endif
 
 " vim: set ts=2 sw=2 tw=99 et :
