@@ -113,6 +113,7 @@ highlight link SignifySignDeleteFirstLine SignifyLineDelete
 let g:signify_vcs_list = ['git']
 let g:signify_sign_delete = '-'
 let g:signify_sign_change = '~'
+let g:signify_skip_filetype = { 'markdown': 1 }
 " }}}
 " end start
 
@@ -265,5 +266,8 @@ if has('win32')
   Defer s:setup_guifont()
   " }}}
 endif
+
+" Temporary fix for slow git loading
+Defer git_dir#gotodir()
 
 " vim: set ts=2 sw=2 tw=99 et :
