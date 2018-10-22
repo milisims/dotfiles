@@ -14,7 +14,7 @@ endsnippet
 
 snippet safe "safe bash options" b
 #!/usr/bin/env bash
-set -euo pipefail
+set -o errexit -o pipefail -o noclobber -o nounset
 IFS=$'\n\t'
 
 $0
