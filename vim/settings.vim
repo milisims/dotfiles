@@ -203,8 +203,6 @@ augroup END
 
 " Mappings:
 " Simple: {{{
-nnoremap K       <nop>
-xnoremap K       <nop>
 nnoremap <Space> <nop>
 xnoremap <Space> <nop>
 nnoremap '       <nop>
