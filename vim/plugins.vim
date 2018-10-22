@@ -142,24 +142,24 @@ if executable('fzf')
   nnoremap <silent> <leader>mr  :History<CR>
   nnoremap <silent> <leader>A   :Ag<CR>
   nnoremap <silent> <leader>ht  :Helptags<CR>
-
-  " TODO: :h K and :h 'keywordprg'
-  nnoremap <expr> <silent> K ':Ag<CR>' . get(b:, 'fzf_defprefix', '') . "'" . expand('<cword>') . ' '
-  xnoremap <expr> <silent> K ':y a<CR>:Ag<CR>' . get(b:, 'fzf_defprefix', '') . "'" . @a . ' '
-  nnoremap <expr> <silent> <F5> ':Ag<CR>' . "'" . expand('<cword>') . get(b:, 'fzf_fsuffix', '')
   nnoremap <silent> <leader>gal :Commits<CR>
   nnoremap <silent> <leader>gl :BCommits<CR>
 
-    function! s:build_quickfix_list(lines)
-      call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
-      copen
-      cc
-    endfunction
+  " TODO: :h K and :h 'keywordprg'
+  nnoremap <expr> <silent> <F3> ':Ag<CR>' . get(b:, 'fzf_defprefix', '') . "'" . expand('<cword>') . ' '
+  xnoremap <expr> <silent> <F3> ':y a<CR>:Ag<CR>' . get(b:, 'fzf_defprefix', '') . "'" . @a . ' '
+  nnoremap <expr> <silent> <F5> ':Ag<CR>' . "'" . expand('<cword>') . get(b:, 'fzf_fsuffix', '')
 
-    let g:fzf_action = {
-      \ 'ctrl-q': function('s:build_quickfix_list'),
-      \ 'ctrl-s': 'split',
-      \ 'ctrl-v': 'vsplit' }
+  function! s:build_quickfix_list(lines)
+    call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+    copen
+    cc
+  endfunction
+
+  let g:fzf_action = {
+        \ 'ctrl-q': function('s:build_quickfix_list'),
+        \ 'ctrl-s': 'split',
+        \ 'ctrl-v': 'vsplit' }
 
   augroup vimrc_term_fzf
     autocmd!
