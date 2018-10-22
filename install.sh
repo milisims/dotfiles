@@ -1,16 +1,20 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -o errexit -o errtrace -o pipefail -o noclobber -o nounset
+IFS=$'\n\t'
 
 install_dir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $install_dir
-[ -z "$XDG_CONFIG_HOME" ] && XDG_CONFIG_HOME="${HOME}/.config"
+CONF_HOME=${XDG_CONFIG_HOME:-${HOME}/.config}
+logfile=$(mktemp)
+trap "cp -f $logfile $install_dir/install.log" ERR
 
 function install_zsh_syntax_highlighting() {
   echo 'Installing zsh-syntax-highlighting... '
-  local zsh_git_dir="$XDG_CONFIG_HOME/zsh/zsh-syntax-highlighting"
+  local zsh_git_dir="$CONF_HOME/zsh/zsh-syntax-highlighting"
   local zsh_git_repo='https://github.com/zsh-users/zsh-syntax-highlighting.git'
 
   [ -d $zsh_git_dir ] && rm -rf $zsh_git_dir
-  git clone --depth 1 $zsh_git_repo $zsh_git_dir > /dev/null 2>&1
+  git clone --depth 1 $zsh_git_repo $zsh_git_dir 2>&1
   echo "########"
   echo
 }
@@ -34,7 +38,6 @@ function install_fzf() {
   echo
 }
 
-# TODO: execute and log to file, remove if exit 0, quit and report if nonzero
 function install_tmux() {
   echo 'Installing tmux... '
   local tmux_src_dir="$HOME/local/src"
@@ -114,49 +117,90 @@ function install_ctags() {
 }
 
 function install_vim_settings() {
-  rm_broken_links $XDG_CONFIG_HOME
+  echo "Installing vim and neovim settings... "
+  rm_broken_links $CONF_HOME
   [ -L $HOME/.vim ] && rm $HOME/.vim
   ln -sf $install_dir/vim $HOME/.vim
-  [ -L $XDG_CONFIG_HOME/nvim ] && rm $XDG_CONFIG_HOME/nvim
-  ln -sf $install_dir/vim $XDG_CONFIG_HOME/nvim
+  [ -L $CONF_HOME/nvim ] && rm $CONF_HOME/nvim
+  ln -sf $install_dir/vim $CONF_HOME/nvim
   for d in backup swap undo view; do
     mkdir -p $HOME/.local/share/vim/tmp/$d
   done
+
+  # vim plugins
+  git submodule update --init --recursive 2>&1
+  nvim +'doautocmd User DeferVimPack' +UpdateRemotePlugins +qa
+  echo "Done"
 }
 
-function rm_broken_links {
-  find $1/* -prune -type l ! -exec test -e {} \; -exec rm {} +
-}
-
-function main() {
+function install_sh_settings() {
   # ZSH Settings
   echo "Linking dotfiles and setting up zsh... "
   rm_broken_links $HOME
-  rm_broken_links $XDG_CONFIG_HOME
+  rm_broken_links $CONF_HOME
   for dotfile in alias bashrc gitconfig gvimrc pylintrc pythonrc scripts zshrc tmux.conf; do
     rm $HOME/.$dotfile 2> /dev/null
     ln -s $install_dir/dot/$dotfile $HOME/.$dotfile
   done
 
 
-  mkdir -p $XDG_CONFIG_HOME/zsh
-  rm_broken_links $XDG_CONFIG_HOME/zsh
-  ln -sf $install_dir/zsh/* $XDG_CONFIG_HOME/zsh
+  mkdir -p $CONF_HOME/zsh
+  rm_broken_links $CONF_HOME/zsh
+  ln -sf $install_dir/zsh/* $CONF_HOME/zsh
 
   echo "Done"
-
-  install_zsh_syntax_highlighting
-  [ ! -f $HOME/local/bin/fzf ] && install_fzf
-  [ ! -f $HOME/local/bin/tmux ] && install_tmux
-  [ ! -f $HOME/local/bin/ctags ] && install_ctags
-
-  echo "Installing vim and neovim settings... "
-  install_vim_settings
-  echo "Done"
-
-  # vim plugins
-  git submodule update --init --recursive > /dev/null 2>&1
-  nvim +'doautocmd User DeferVimPack' +UpdateRemotePlugins +qa
 }
 
-main
+function rm_broken_links {
+  find $1/* -prune -type l ! -exec test -e {} \; -exec rm {} +
+}
+
+function print_status() {
+  echo NYI
+}
+
+function print_help() {
+  echo 'Usage:'
+  echo '  install.sh [options]'
+  echo
+  echo 'Options:'
+  echo '  -s   print installed software status'
+  echo
+  echo '  -a   install all'
+  echo '  -c   install ctags'
+  echo '  -f   install fzf'
+  echo '  -n   install neovim'
+  echo '  -t   install tmux'
+  echo '  -z   install zsh'
+}
+
+function parse_args() {
+  zsh_syn_hl=0 install_tmux=0 install_ctags=0 install_neovim=0 install_fzf=0
+  local OPTIND
+  while getopts hsztcnfa name; do
+    case $name in
+      h) print_help;  exit 0;;
+      s) print_status;    exit 0;;
+      z) zsh_syn_hl=1;;
+      t) install_tmux=1;;
+      c) install_ctags=1;;
+      n) install_neovim=1;;
+      f) install_fzf=1;;
+      a) zsh_syn_hl=1 install_tmux=1 install_ctags=1 install_neovim=1 install_fzf=1;;
+    esac
+  done
+}
+
+function main() {
+  parse_args $@
+
+  install_sh_settings >> $logfile 2>&1
+  install_vim_settings >> $logfile 2>&1
+  [ $install_ctags -eq 1 ] && install_ctags >> $logfile 2>&1
+  [ $install_fzf -eq 1 ] && install_fzf >> $logfile 2>&1
+  [ $install_tmux -eq 1 ] && install_tmux >> $logfile 2>&1
+  [ $zsh_syn_hl -eq 1 ] && install_zsh_syntax_highlighting >> $logfile 2>&1
+}
+
+main $@
+rm -f $logfile
