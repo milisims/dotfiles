@@ -3,15 +3,15 @@
 	url = https://github.com/junegunn/fzf.vim
 	ignore = dirty
 [submodule "python_match.vim"]
-	path = vim/pack/coding/opt/python_match.vim
+	path = vim/pack/coding/start/python_match.vim
 	url = https://github.com/vim-scripts/python_match.vim
 	ignore = dirty
 [submodule "syntax-vim-ex"]
-	path = vim/pack/coding/opt/syntax-vim-ex
+	path = vim/pack/coding/start/syntax-vim-ex
 	url = https://github.com/vim-jp/syntax-vim-ex
 	ignore = dirty
 [submodule "thesaurus_query.vim"]
-	path = vim/pack/misc/opt/thesaurus_query.vim
+	path = vim/pack/misc/start/thesaurus_query.vim
 	url = https://github.com/Ron89/thesaurus_query.vim
 	ignore = dirty
 [submodule "ultisnips"]
@@ -59,7 +59,7 @@
 	url = https://github.com/vim-pandoc/vim-pandoc-syntax
 	ignore = dirty
 [submodule "vim-python-pep8-indent"]
-	path = vim/pack/coding/opt/vim-python-pep8-indent
+	path = vim/pack/coding/start/vim-python-pep8-indent
 	url = https://github.com/Vimjas/vim-python-pep8-indent
 	ignore = dirty
 [submodule "vim-repeat"]
@@ -93,7 +93,7 @@
 	path = vim/pack/coding/opt/ale
 	url = https://github.com/w0rp/ale.git
 [submodule "vim-pythonsense"]
-	path = vim/pack/coding/opt/vim-pythonsense
+	path = vim/pack/coding/start/vim-pythonsense
 	url = https://github.com/jeetsukumaran/vim-pythonsense.git
 [submodule "vim-filebeagle"]
 	path = vim/pack/misc/start/vim-filebeagle
@@ -105,7 +105,7 @@
 	path = vim/pack/misc/start/undotree
 	url = https://github.com/mbbill/undotree.git
 [submodule "vim-signify"]
-	path = vim/pack/misc/start/vim-signify
+	path = vim/pack/misc/opt/vim-signify
 	url = https://github.com/mhinz/vim-signify.git
 [submodule "nvim-yarp"]
 	path = vim/pack/completion/opt/nvim-yarp

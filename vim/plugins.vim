@@ -21,7 +21,7 @@ endfunction
 
 augroup IdleCmd
   if has('vim_starting')
-    autocmd CursorHold,InsertEnter,TextChanged * call s:idledefer()
+    autocmd CursorHold,InsertEnter * call s:idledefer()
     " autocmd InsertEnter,TextChanged * call s:idledefer()
   endif
 augroup END
@@ -98,31 +98,13 @@ nmap gcu <Plug>Commentary<Plug>Commentary
 " vim-fugitive {{{
 nnoremap <silent> <leader>dgl :call difference#gitlog()<cr>
 " }}}
-" vim-signify {{{
-highlight link SignifyLineAdd             String
-highlight link SignifyLineChange          Todo
-highlight link SignifyLineDelete          Error
-highlight link SignifyLineChangeDelete    SignifyLineChange
-highlight link SignifyLineDeleteFirstLine SignifyLineDelete
-
-highlight link SignifySignAdd             String
-highlight link SignifySignChange          Todo
-highlight link SignifySignDelete          Error
-highlight link SignifySignChangeDelete    SignifyLineChange
-highlight link SignifySignDeleteFirstLine SignifyLineDelete
-let g:signify_vcs_list = ['git']
-let g:signify_sign_delete = '-'
-let g:signify_sign_change = '~'
-let g:signify_skip_filetype = { 'markdown': 1 }
+" thesaurus_query.vim {{{
+let g:tq_map_keys = 0
+let g:tq_use_vim_autocomplete = 0
 " }}}
 " end start
 
-packadd! vim-python-pep8-indent
-packadd! python_match.vim
-packadd! vim-pythonsense
 " vim-pandoc {{{
-" packadd! vim-pandoc
-" packadd! vim-pandoc-syntax
 let g:pandoc#folding#fdc = 0
 " }}}
 " fzf.vim {{{
@@ -179,9 +161,24 @@ if executable('fzf')
 endif
 " }}}
 
-" Deferred:
-" syntax-vim-ex {{{
-Dpackadd syntax-vim-ex
+" Deferred
+" vim-signify {{{
+Dpackadd vim-signify
+highlight link SignifyLineAdd             String
+highlight link SignifyLineChange          Todo
+highlight link SignifyLineDelete          Error
+highlight link SignifyLineChangeDelete    SignifyLineChange
+highlight link SignifyLineDeleteFirstLine SignifyLineDelete
+
+highlight link SignifySignAdd             String
+highlight link SignifySignChange          Todo
+highlight link SignifySignDelete          Error
+highlight link SignifySignChangeDelete    SignifyLineChange
+highlight link SignifySignDeleteFirstLine SignifyLineDelete
+let g:signify_vcs_list = ['git']
+let g:signify_sign_delete = '-'
+let g:signify_sign_change = '~'
+let g:signify_skip_filetype = { 'markdown': 1 }
 " }}}
 
 if has('nvim')
@@ -242,18 +239,12 @@ if has('nvim')
   " }}}
   " vim-gutentags {{{
   if executable($HOME.'/local/bin/ctags')
-    Dpackadd vim-gutentags
-    Defer gutentags#setup_gutentags()
+    packadd! vim-gutentags
     let g:gutentags_cache_dir = $DATADIR.'/tags'
     let g:gutentags_ctags_executable = $HOME.'/local/bin/ctags'
   else
     let g:gutentags_enabled = 0
   endif
-  " }}}
-  " thesaurus_query.vim {{{
-  Dpackadd thesaurus_query.vim
-  let g:tq_map_keys = 0
-  let g:tq_use_vim_autocomplete = 0
   " }}}
 endif
 
