@@ -239,7 +239,7 @@ if has('nvim')
   " }}}
   " vim-gutentags {{{
   if executable($HOME.'/local/bin/ctags')
-    packadd! vim-gutentags
+    Dpackadd vim-gutentags
     let g:gutentags_cache_dir = $DATADIR.'/tags'
     let g:gutentags_ctags_executable = $HOME.'/local/bin/ctags'
   else
