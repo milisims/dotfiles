@@ -8,4 +8,9 @@ if executable('yapf')
   setlocal formatexpr=yapf#yapfify(v:lnum,v:lnum+v:count-1)
 endif
 
+augroup vimrc_python
+  autocmd!
+  autocmd BufWritePre *.py %s/\s\+$//e | ''
+augroup END
+
 " vim: set ts=2 sw=2 tw=99 et :
