@@ -29,11 +29,24 @@ function! autopairs#backspace() abort
   return "\<BS>"
 endfunction
 
+function! s:completing_pair(char) abort
+  if has_key(s:end_pairs, a:char) && !(index(get(b:, 'autopairs_skip', []), a:char) >= 0)
+    return a:char ==# s:nextchar() && a:char !=# get(s:, 'last_inserted', '')
+  endif
+  return 0
+endfunction
+
+function! s:is_pair(char) abort
+  if has_key(s:pairs, a:char) && !(index(get(b:, 'autopairs_skip', []), a:char) >= 0)
+    return (empty(s:nextchar()) || s:nextchar() =~? s:empty)
+  endif
+  return 0
+endfunction
+
 function! autopairs#check_and_insert(char) abort
-  let l:nextchar = s:nextchar()
-  if has_key(s:end_pairs, a:char) && a:char ==# l:nextchar && a:char !=# get(s:, 'last_inserted', '')
+  if s:completing_pair(a:char)
     return "\<C-g>U\<right>"
-  elseif has_key(s:pairs, a:char) && (empty(l:nextchar) || l:nextchar =~? s:empty)
+  elseif s:is_pair(a:char)
     let s:last_inserted = a:char
     return a:char . s:pairs[a:char] . "\<C-g>U\<left>"
   endif

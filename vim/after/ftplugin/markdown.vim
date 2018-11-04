@@ -11,6 +11,8 @@ setlocal commentstring=<!--%s-->
 
 let b:ncm2_look_enabled = 1
 
+let b:autopairs_skip = ["'"]
+
 " wiki stuff:
 nnoremap <silent> <buffer> gf :call wiki#follow(0)<CR>
 nnoremap <silent> <buffer> yf :call wiki#follow(1)<CR>
