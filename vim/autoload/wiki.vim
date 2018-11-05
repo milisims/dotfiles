@@ -17,9 +17,13 @@ function! wiki#follow(force) abort
   endif
 endfunction
 
-function! wiki#create_link_opfunc(type) abort
-  exe "normal! `[v`]c[\<C-r>\"]()"
-  startinsert
+function! wiki#create_link(...) abort
+  " Call without arg to work on visual selection. Arg allows usage as opfunc
+  let l:prefix = a:0 > 0 ? '`[v`]' : 'gv'
+  let l:unnamed_register = @"
+  exe 'normal! ' . l:prefix . "c[\<C-r>\"]()\<esc>P"
+  let @" = l:unnamed_register
+  exe "normal! `[v`]\<C-g>"
 endfunction
 
 " TODO: rename link
