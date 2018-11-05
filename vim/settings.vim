@@ -363,6 +363,11 @@ onoremap <silent>ai :<C-u>call textobjects#indent(0)<CR>
 onoremap <silent>ii :<C-u>call textobjects#indent(1)<CR>
 xnoremap <silent>ai <Esc>:call textobjects#indent(0)<CR><Esc>gv
 xnoremap <silent>ii <Esc>:call textobjects#indent(1)<CR><Esc>gv
+
+xnoremap il ^og_
+xnoremap al 0o$
+onoremap il :<C-u>normal! ^vg_<CR>
+onoremap al :<C-u>normal! 0v$<CR>
 " }}}
 
 " vim: set ts=2 sw=2 tw=99 et :
