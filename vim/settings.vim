@@ -79,9 +79,9 @@ set switchbuf=useopen,usetab
 set backspace=indent,eol,start
 set diffopt=filler,iwhite
 set showfulltag
-set completeopt=menuone         " Show menu even for one item
+set completeopt=menuone
 if has('patch-7.4.784')
-  set completeopt+=noselect       " Do not select a match in the menu
+  set completeopt+=noselect
   set completeopt+=noinsert
 endif
 if exists('+inccommand')
