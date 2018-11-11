@@ -10,7 +10,7 @@ endif
 
 augroup vimrc_python
   autocmd!
-  autocmd BufWritePre *.py %s/\s\+$//e | ''
+  autocmd BufWritePre *.py %s/\s\+$//e
 augroup END
 
 " vim: set ts=2 sw=2 tw=99 et :
