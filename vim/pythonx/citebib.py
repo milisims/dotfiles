@@ -4,24 +4,6 @@ import bibtexparser
 
 
 def parse_bibtex(fname):
-    col = {'black': 'ESCCODE[30m',
-           'red': 'ESCCODE[31m',
-           'green': 'ESCCODE[32m',
-           'yellow': 'ESCCODE[33m',
-           'blue': 'ESCCODE[34m',
-           'magenta': 'ESCCODE[35m',
-           'cyan': 'ESCCODE[36m',
-           'white': 'ESCCODE[37m'}
-    bold = {'black': 'ESCCODE[30;1m',
-            'red': 'ESCCODE[31;1m',
-            'green': 'ESCCODE[32;1m',
-            'yellow': 'ESCCODE[33;1m',
-            'blue': 'ESCCODE[34;1m',
-            'magenta': 'ESCCODE[35;1m',
-            'cyan': 'ESCCODE[36;1m',
-            'white': 'ESCCODE[37;1m'}
-    reset = 'ESCCODE[0m'
-
     with open(fname) as bf:
         parser = bibtexparser.bparser.BibTexParser(common_strings=True)
         bd = bibtexparser.load(bf, parser=parser)
@@ -51,13 +33,7 @@ def parse_bibtex(fname):
         d['author'] = ', '.join(d['author'])
 
         nodes = ['entrytype', 'author', 'journal', 'year', 'title', 'id']
-        colors = [col['yellow'], bold['blue'], bold['yellow'],
-                  col['magenta'], col['white'], bold['green']]
-        line = []
-        for n, c in zip(nodes, colors):
-            if d[n]:
-                line.append(str(c) + d[n] + str(reset))
-        bib.append('  '.join(line))
+        bib.append([d[n] for n in nodes if d[n]])
     vim.command('let l:return = {}'.format(str(bib)))
     return bib
 
