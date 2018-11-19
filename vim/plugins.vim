@@ -246,6 +246,9 @@ if has('nvim')
     let g:gutentags_enabled = 0
   endif
   " }}}
+  " vim-yass {{{
+  packadd! vim-yass
+  " }}}
 endif
 
 " Windows
