@@ -1,7 +1,9 @@
-if has('vim_starting')
+if has ('vim_starting')
   set encoding=utf-8
 endif
 scriptencoding utf-8
+" Note: Settings only wrapped with an 'if has...' if it
+" has caused an issue on one of the systems I vim on.
 " Settings:
 " General: {{{
 set mouse=niv
@@ -35,6 +37,7 @@ else
   set backupdir=$DATADIR/tmp/backup
   set backupdir+=.
   set backup
+  set backupext=.bak
   set directory=$DATADIR/tmp/swap//  " // necessary
   set directory+=.
   if has('persistent_undo')
@@ -73,7 +76,15 @@ set nowrap
 set linebreak
 set breakat=\ \	;:,!?
 set nostartofline
-set whichwrap+=h,l,[,],~
+set whichwrap+=[,]
+
+" Save when exiting a buffer/window. Saving on idle is too aggressive for me.
+set autowriteall
+augroup vimrc_writeall
+  autocmd!
+  autocmd WinLeave * if &modifiable && &modified && filereadable(expand('%')) | write | endif
+augroup END
+
 set splitright
 set switchbuf=useopen,usetab
 set backspace=indent,eol,start
@@ -234,23 +245,39 @@ augroup vimrc_crmap
 augroup END
 
 if !exists('g:loaded_tmux_navigator')
-  nnoremap <C-h> <C-W>h
-  nnoremap <C-j> <C-W>j
-  nnoremap <C-k> <C-W>k
-  nnoremap <C-l> <C-W>l
+  nnoremap <C-h> <C-w>h
+  nnoremap <C-j> <C-w>j
+  nnoremap <C-k> <C-w>k
+  nnoremap <C-l> <C-w>l
 endif
-nnoremap 0 ^
-xnoremap 0 ^
-onoremap 0 ^
+" TODO: get window layout, sensibly use left/right to move the split, rather
+" than 'increase or decrease size'. Also have up/down not function on cmd window
+nnoremap <C-Left> <C-w><
+nnoremap <C-Right> <C-w>>
+
+nnoremap 0 g^
+xnoremap 0 g^
+onoremap 0 g^
 nnoremap ^ 0
 xnoremap ^ 0
 onoremap ^ 0
 
-nnoremap <silent> m i_<esc>r
 nnoremap Q q
 
 nnoremap <expr> j (v:count > 4 ? "m'" . v:count . 'j' : 'gj')
+xnoremap <expr> j (v:count > 4 ? "m'" . v:count . 'j' : 'gj')
 nnoremap <expr> k (v:count > 4 ? "m'" . v:count . 'k' : 'gk')
+xnoremap <expr> k (v:count > 4 ? "m'" . v:count . 'k' : 'gk')
+nnoremap gj j
+xnoremap gj j
+nnoremap gk k
+xnoremap gk k
+
+nnoremap $ g$
+xnoremap $ g$
+nnoremap g$ $
+xnoremap g$ $
+
 
 if has('nvim')
   augroup vimrc_term
@@ -265,7 +292,6 @@ if has('nvim')
     autocmd TermOpen * tnoremap <buffer> <C-l> <C-\><C-n><C-w>l
     autocmd TermOpen * tnoremap <buffer> <Esc> <C-\><C-n>
   augroup END
-
 endif
 
 " Make cmd work as alt in MacVim
