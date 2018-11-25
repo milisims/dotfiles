@@ -1,3 +1,8 @@
+if exists('g:loaded_git_dir')
+  finish
+endif
+let g:loaded_git_dir = 1
+
 set noautochdir
 
 augroup vimrc_gitchdir

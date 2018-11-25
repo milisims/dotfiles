@@ -1,4 +1,10 @@
 scriptencoding utf-8
+
+if exists('g:loaded_statusline')
+  finish
+endif
+let g:loaded_statusline = 1
+
 set laststatus=2
 
 function! Statusline_active() abort

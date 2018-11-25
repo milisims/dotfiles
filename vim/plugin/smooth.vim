@@ -3,13 +3,13 @@
 
 scriptencoding utf-8
 
-" if exists('g:loaded_smooth')
-"   finish
-" endif
-" if !has('patch-7.4.1285') && !has('nvim')
-"   finish
-" endif
-" let g:loaded_smooth = 1
+if exists('g:loaded_smooth')
+  finish
+endif
+if !has('patch-7.4.1285') && !has('nvim')
+  finish
+endif
+let g:loaded_smooth = 1
 
 let s:save_cpo = &cpo
 set cpo&vim
