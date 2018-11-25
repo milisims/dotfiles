@@ -78,10 +78,6 @@
 	path = vim/pack/misc/start/vim-unimpaired
 	url = https://github.com/tpope/vim-unimpaired
 	ignore = dirty
-[submodule "vim-yass"]
-	path = vim/pack/misc/opt/vim-yass
-	url = git@github.com:matthsims/vim-yass.git
-	ignore = dirty
 [submodule "targets.vim"]
 	path = vim/pack/misc/start/targets.vim
 	url = https://github.com/wellle/targets.vim.git
