@@ -4,11 +4,6 @@
 
 scriptencoding utf-8
 
-if !exists('g:loaded_smooth')
-  finish
-endif
-let g:loaded_smooth = 1
-
 let s:save_cpo = &cpo
 set cpo&vim
 
