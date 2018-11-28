@@ -18,12 +18,12 @@ nnoremap <silent> <Plug>(SmoothUp)        :call smooth#scroll(-&scroll, 1)<CR>
 nnoremap <silent> <Plug>(SmoothDown)      :call smooth#scroll(&scroll, 1)<CR>
 nnoremap <silent> <Plug>(SmoothPageUp)    :call smooth#scroll(-&scroll * 2, 0)<CR>
 nnoremap <silent> <Plug>(SmoothPageDown)  :call smooth#scroll(&scroll * 2, 0)<CR>
-nnoremap <silent> <Plug>(Smooth_zCR)     ^:<C-u>call smooth#scroll(winline() - &scrolloff, 0, 1)<CR>
-nnoremap <silent> <Plug>(Smooth_zt)       :<C-u>call smooth#scroll(winline() - &scrolloff - 1, 0, 1)<CR>
-nnoremap <silent> <Plug>(Smooth_z.)      ^:<C-u>call smooth#scroll(winline() - winheight(0)/2, 0, 1)<CR>
-nnoremap <silent> <Plug>(Smooth_zz)       :<C-u>call smooth#scroll(winline() - winheight(0)/2, 0, 1)<CR>
-nnoremap <silent> <Plug>(Smooth_z-)      ^:<C-u>call smooth#scroll(winline() - winheight(0) + &scrolloff, 0, 1)<CR>
-nnoremap <silent> <Plug>(Smooth_zb)       :<C-u>call smooth#scroll(winline() - winheight(0) + &scrolloff, 0, 1)<CR>
+nnoremap <silent> <Plug>(Smooth_zCR)     ^:<C-u>call smooth#scroll(winline() - &scrolloff, 0)<CR>
+nnoremap <silent> <Plug>(Smooth_zt)       :<C-u>call smooth#scroll(winline() - &scrolloff - 1, 0)<CR>
+nnoremap <silent> <Plug>(Smooth_z.)      ^:<C-u>call smooth#scroll(winline() - winheight(0)/2, 0)<CR>
+nnoremap <silent> <Plug>(Smooth_zz)       :<C-u>call smooth#scroll(winline() - winheight(0)/2, 0)<CR>
+nnoremap <silent> <Plug>(Smooth_z-)      ^:<C-u>call smooth#scroll(winline() - winheight(0) + &scrolloff, 0)<CR>
+nnoremap <silent> <Plug>(Smooth_zb)       :<C-u>call smooth#scroll(winline() - winheight(0) + &scrolloff, 0)<CR>
 nnoremap <silent> <Plug>(SmoothC-e)       :<C-u>call smooth#scroll(v:count1, 0)<CR>
 nnoremap <silent> <Plug>(SmoothC-y)       :<C-u>call smooth#scroll(- v:count1, 0)<CR>
 

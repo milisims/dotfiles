@@ -10,9 +10,6 @@ set cpo&vim
 " Defaults
 let g:smooth_interval = exists('g:smooth_interval') ? g:smooth_interval : 16
 let g:smooth_minimum = exists('g:smooth_minimum') ? g:smooth_minimum : 10
-if g:smooth_minimum < 0
-  let g:smooth_minimum = 10
-endif
 
 if !exists('g:Smooth#speed')
   function s:speed(y)
@@ -23,22 +20,18 @@ if !exists('g:Smooth#speed')
 endif
 
 function! s:scroll_handler(timer) abort
-  if (line('.') == 1 && s:direction < 0) || (line('.') == line('$') && s:direction > 0)
+  if s:remaining <= 0
     call smooth#reset()
-    return
-  endif
-  if s:remaining <= 0 ||
-        \ (line('.') == 1 && s:direction == -1) ||
-        \ (line('.') == line('$') && s:direction == 1)
-    call timer_stop(a:timer)
-    silent! unlet s:timer_id  " silent for the looped version in #scroll
-    let s:direction = 0
     return
   endif
 
   " calculate dy ...
   let l:speed = g:Smooth#speed(s:remaining + s:dy)
+
   if l:speed <= g:smooth_minimum
+    if g:smooth_minimum <= 0
+      let g:smooth_minimum = 10
+    endif
     let l:speed = g:smooth_minimum
   endif
 
@@ -53,14 +46,11 @@ function! s:scroll_handler(timer) abort
 
   " scroll ...
   let l:cmd = 'normal! '
-  if !(line('$') == line('w$')) || (s:direction < 0)
+  if !s:scroll_with_cursor || !(line('$') == line('w$')) || (s:direction < 0)
     let l:cmd .= string(l:dy_step) . (s:direction > 0 ? "\<C-e>" : "\<C-y>")
   endif
   if s:scroll_with_cursor
     let l:cmd .= string(l:dy_step) . (s:direction > 0 ? 'gj' : 'gk')
-  endif
-  if l:cmd ==# 'normal! '
-    return
   endif
   execute l:cmd
   redraw
@@ -78,16 +68,21 @@ function! smooth#reset() abort
   endif
 endfunction
 
-function! smooth#scroll(distance, ...) abort
-  let s:scroll_with_cursor = (a:0 >= 1) ? a:1 : 0
-  let l:override = (a:0 >= 2) ? a:2 : 0
-  if l:override
+function! smooth#scroll(distance, scroll_with_cursor) abort
+  let s:scroll_with_cursor = a:scroll_with_cursor
+  if !s:scroll_with_cursor
     call smooth#reset()
   endif
   let s:remaining = s:direction * s:remaining + float2nr(a:distance)
   let s:direction = s:remaining > 0 ? 1 : -1
   let s:remaining = abs(s:remaining)
   let s:relt = reltime()
+  if s:scroll_with_cursor && (s:direction < 0) && (s:remaining > line('.'))
+    let s:remaining = line('.')
+  endif
+  if s:scroll_with_cursor && (s:direction > 0) && (s:remaining > line('$') - line('.'))
+    let s:remaining = line('$') - line('.')
+  endif
 
   let l:interval = float2nr(round(g:smooth_interval))
   if !has('timers')
