@@ -103,42 +103,9 @@
 [submodule "vim-signify"]
 	path = vim/pack/misc/opt/vim-signify
 	url = https://github.com/mhinz/vim-signify.git
-[submodule "nvim-yarp"]
-	path = vim/pack/completion/opt/nvim-yarp
-	url = https://github.com/roxma/nvim-yarp.git
-[submodule "ncm2"]
-	path = vim/pack/completion/opt/ncm2
-	url = https://github.com/ncm2/ncm2.git
-[submodule "ncm2-jedi"]
-	path = vim/pack/completion/opt/ncm2-jedi
-	url = https://github.com/ncm2/ncm2-jedi.git
-[submodule "ncm2-bufword"]
-	path = vim/pack/completion/opt/ncm2-bufword
-	url = https://github.com/ncm2/ncm2-bufword.git
-[submodule "ncm2-path"]
-	path = vim/pack/completion/opt/ncm2-path
-	url = https://github.com/ncm2/ncm2-path.git
-[submodule "ncm2-tmux"]
-	path = vim/pack/completion/opt/ncm2-tmux
-	url = https://github.com/ncm2/ncm2-tmux.git
-[submodule "ncm2-tagprefix"]
-	path = vim/pack/completion/opt/ncm2-tagprefix
-	url = https://github.com/ncm2/ncm2-tagprefix.git
-[submodule "ncm2-syntax"]
-	path = vim/pack/completion/opt/ncm2-syntax
-	url = https://github.com/ncm2/ncm2-syntax.git
-[submodule "neco-syntax"]
-	path = vim/pack/completion/opt/neco-syntax
-	url = https://github.com/Shougo/neco-syntax.git
-[submodule "ncm2-markdown-subscope"]
-	path = vim/pack/completion/opt/ncm2-markdown-subscope
-	url = https://github.com/ncm2/ncm2-markdown-subscope.git
-[submodule "ncm2-highprio-pop"]
-	path = vim/pack/completion/opt/ncm2-highprio-pop
-	url = https://github.com/ncm2/ncm2-highprio-pop.git
-[submodule "ncm2-ultisnips"]
-	path = vim/pack/completion/opt/ncm2-ultisnips
-	url = https://github.com/ncm2/ncm2-ultisnips.git
-[submodule "ncm2-look.vim"]
-	path = vim/pack/completion/opt/ncm2-look.vim
-	url = https://github.com/filipekiss/ncm2-look.vim.git
+[submodule "coc.nvim"]
+	path = vim/pack/completion/opt/coc.nvim
+	url = https://github.com/neoclide/coc.nvim.git
+[submodule "jsonc.vim"]
+	path = vim/pack/coding/start/jsonc.vim
+	url = https://github.com/neoclide/jsonc.vim.git
