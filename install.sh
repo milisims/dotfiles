@@ -34,8 +34,9 @@ function install_node() {
 }
 
 function install_coc() {
-  install_yarn()
-  install_node()
+  install_yarn
+  install_node
+  nvim --noplugin +'packadd coc.nvim' +'call coc#util#install()' +qa
 }
 
 function install_fzf() {
@@ -138,10 +139,6 @@ function install_ctags() {
 function install_vim_settings() {
   echo "Installing vim and neovim settings... "
   rm_broken_links $CONF_HOME
-  [ -L $HOME/.vim ] && rm $HOME/.vim
-  ln -sf $install_dir/vim $HOME/.vim
-  [ -L $CONF_HOME/nvim ] && rm $CONF_HOME/nvim
-  ln -sf $install_dir/vim $CONF_HOME/nvim
   for d in backup swap undo view; do
     mkdir -p $HOME/.local/share/vim/tmp/$d
   done
@@ -157,13 +154,13 @@ function install_sh_settings() {
   echo "Linking dotfiles and setting up zsh... "
   rm_broken_links $HOME
   rm_broken_links $CONF_HOME
-  for dotfile in alias vim bashrc gitconfig gvimrc vim pylintrc pythonrc scripts zshrc tmux.conf; do
-    rm $HOME/.$dotfile 2> /dev/null
+  for dotfile in alias profile bashrc gitconfig gvimrc vim pylintrc pythonrc scripts zshrc tmux.conf; do
+    [ -e $HOME/.$dotfile ] && rm $HOME/.$dotfile
     ln -s $install_dir/dot/$dotfile $HOME/.$dotfile
   done
 
-  for cfgfile in zsh nvim kitty; do  # glob expands with config in front
-    rm $CONF_HOME/$cfgfile 2> /dev/null
+  for cfgfile in nvim kitty; do  # glob expands with config in front
+    [ -e $CONF_HOME/$cfgfile ] && rm $CONF_HOME/$cfgfile
     ln -s $install_dir/config/$cfgfile $CONF_HOME/$cfgfile
   done
 
@@ -226,4 +223,5 @@ function main() {
 }
 
 main $@
+
 rm -f $logfile
