@@ -138,11 +138,15 @@ function install_sh_settings() {
   echo "Linking dotfiles and setting up zsh... "
   rm_broken_links $HOME
   rm_broken_links $CONF_HOME
-  for dotfile in alias bashrc gitconfig gvimrc pylintrc pythonrc scripts zshrc tmux.conf; do
+  for dotfile in alias vim bashrc gitconfig gvimrc vim pylintrc pythonrc scripts zshrc tmux.conf; do
     rm $HOME/.$dotfile 2> /dev/null
     ln -s $install_dir/dot/$dotfile $HOME/.$dotfile
   done
 
+  for cfgfile in zsh nvim kitty; do  # glob expands with config in front
+    rm $CONF_HOME/$cfgfile 2> /dev/null
+    ln -s $install_dir/config/$cfgfile $CONF_HOME/$cfgfile
+  done
 
   mkdir -p $CONF_HOME/zsh
   rm_broken_links $CONF_HOME/zsh
