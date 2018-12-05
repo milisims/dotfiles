@@ -1,7 +1,4 @@
-# ignore dumb
-# If we've sourced this, don't do it again.
-[ -z $MYBASH ] || return
-MYBASH_SET="set"
+source $HOME/.profile
 
 # Color definitions
 CBLK='\[\e[0;30m\]' # Black - Regular
@@ -107,8 +104,6 @@ pushd()
 
 alias cd='pushd'
 
-source ~/.alias
-
 #------------------------------------------////
 # Color man pages:
 #------------------------------------------////
@@ -122,8 +117,6 @@ export LESS_TERMCAP_ue=$'\E[0m'          # end underline
 export LESS_TERMCAP_us=$'\E[01;32m'      # begin underline
 
 # If we have a machine specific thing to source, do et.
-[[ -f ~/.bashrc.local ]] && source ~/.bashrc.local
-
-[[ -d $HOME/miniconda3/bin ]] && export PATH=$HOME/miniconda3/bin:$PATH
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -f ~/.bashrc.local ] && source ~/.bashrc.local
+[ -d $HOME/miniconda3/bin ] && export PATH=$HOME/miniconda3/bin:$PATH
+[ -d "$HOME/local/src/fzf" ] && source "$HOME/local/src/fzf/shell/key-bindings.bash"

@@ -1,5 +1,6 @@
 #!/usr/bin/zsh
 
-for zsh_config in $HOME/.config/zsh/[0-9][0-9]*.zsh; do
-    source $zsh_config
-done
+CONF_HOME=${XDG_CONFIG_HOME:-${HOME}/.config}
+
+source $HOME/.profile
+source $CONF_HOME/zsh/zshrc

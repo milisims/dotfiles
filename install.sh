@@ -19,6 +19,25 @@ function install_zsh_syntax_highlighting() {
   echo
 }
 
+function install_yarn() {
+  echo 'Installing yarn... '
+  curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
+  echo "########"
+  echo
+}
+
+function install_node() {
+  echo 'Installing node... '
+  curl -Ls install-node.now.sh | sh -s -- --prefix=$HOME/local
+  echo "########"
+  echo
+}
+
+function install_coc() {
+  install_yarn()
+  install_node()
+}
+
 function install_fzf() {
   echo 'Installing fzf... '
   local fzf_git_dir="$HOME/local/src/fzf"
