@@ -26,30 +26,49 @@ nnoremap <silent> <Plug>(Smooth_z-)      ^:<C-u>call smooth#scroll(winline() - w
 nnoremap <silent> <Plug>(Smooth_zb)       :<C-u>call smooth#scroll(winline() - winheight(0) + &scrolloff, 0)<CR>
 nnoremap <silent> <Plug>(SmoothC-e)       :<C-u>call smooth#scroll(v:count1, 0)<CR>
 nnoremap <silent> <Plug>(SmoothC-y)       :<C-u>call smooth#scroll(- v:count1, 0)<CR>
+nnoremap <silent> <Plug>(SmoothTop)       :<C-u>call smooth#scroll(-line('.'), 1)<CR>
+nnoremap <silent> <Plug>(SmoothBottom)    :<C-u>call smooth#scroll(line('$') - line('.'), 1)<CR>
 
 
-let s:bindings = {
-      \  '<C-u>' : '<Plug>(SmoothUp)',
-      \  '<C-d>' : '<Plug>(SmoothDown)',
-      \  '<C-b>' : '<Plug>(SmoothPageUp)',
-      \  '<C-f>' : '<Plug>(SmoothPageDown)',
-      \  'z<CR>' : '<Plug>(Smooth_zCR)',
-      \  'zt'    : '<Plug>(Smooth_zt)',
-      \  'z.'    : '<Plug>(Smooth_z.)',
-      \  'zz'    : '<Plug>(Smooth_zz)',
-      \  'z-'    : '<Plug>(Smooth_z-)',
-      \  'zb'    : '<Plug>(Smooth_zb)',
-      \  '<C-e>' : '<Plug>(SmoothC-e)',
-      \  '<C-y>' : '<Plug>(SmoothC-y)'
-      \ }
-
-if !exists('g:smooth_nobind')
-  for s:bind in keys(s:bindings)
-    if !hasmapto(s:bindings[s:bind]) && maparg(s:bind, 'n') ==# ''
-      execute	'nmap ' . s:bind . ' ' . s:bindings[s:bind]
-    endif
-  endfor
+if !exists('g:smooth_bindings')
+  let g:smooth_bindings = {
+        \  '<C-u>' : '<Plug>(SmoothUp)',
+        \  '<C-d>' : '<Plug>(SmoothDown)',
+        \  '<C-b>' : '<Plug>(SmoothPageUp)',
+        \  '<C-f>' : '<Plug>(SmoothPageDown)',
+        \  'z<CR>' : '<Plug>(Smooth_zCR)',
+        \  'zt'    : '<Plug>(Smooth_zt)',
+        \  'z.'    : '<Plug>(Smooth_z.)',
+        \  'zz'    : '<Plug>(Smooth_zz)',
+        \  'z-'    : '<Plug>(Smooth_z-)',
+        \  'zb'    : '<Plug>(Smooth_zb)',
+        \  '<C-e>' : '<Plug>(SmoothC-e)',
+        \  '<C-y>' : '<Plug>(SmoothC-y)',
+        \  'gg'    : '<Plug>(SmoothTop)',
+        \  'G'     : '<Plug>(SmoothBottom)'
+        \ }
 endif
+
+function! s:bind() abort
+    for s:bind in keys(g:smooth_bindings)
+      if !hasmapto(g:smooth_bindings[s:bind]) && maparg(s:bind, 'n') ==# ''
+        execute	'nmap ' . s:bind . ' ' . g:smooth_bindings[s:bind]
+      endif
+    endfor
+endfunction
+
+function! s:unbind() abort
+  for s:bind in keys(g:smooth_bindings)
+      if maparg(s:bind, 'n') ==# g:smooth_bindings[s:bind]
+        execute 'nunmap ' . s:bind
+      endif
+  endfor
+endfunction
+
+command! -nargs=0 SmoothEnable call smooth#reset() | call s:bind()
+command! -nargs=0 SmoothDisable call s:unbind()
+
+call s:bind()
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

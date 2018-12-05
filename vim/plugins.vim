@@ -102,8 +102,6 @@ nnoremap <silent> <leader>dgl :call difference#gitlog()<cr>
 let g:tq_map_keys = 0
 let g:tq_use_vim_autocomplete = 0
 " }}}
-" exchange
-xmap x <Plug>(Exchange)
 " end start
 
 " vim-pandoc {{{
