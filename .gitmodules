@@ -1,3 +1,4 @@
 [submodule "dot/vim"]
 	path = dot/vim
 	url = git@github.com:matthsims/vimfiles.git
+	ignore=dirty
