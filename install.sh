@@ -172,7 +172,9 @@ function install_sh_settings() {
 }
 
 function rm_broken_links {
-  find $1/* -prune -type l ! -exec test -e {} \; -exec rm {} +
+  for f in $1/*; do
+    find $f -prune -type l ! -exec test -e {} \; -exec rm {} +
+  done
 }
 
 function print_status() {
