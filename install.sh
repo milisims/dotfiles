@@ -84,8 +84,12 @@ function install_neovim() {
 
 function install_python_via_conda() {
   local ext=$(lscpu | grep 'CPU op-mode' | grep -q 64-bit && echo '_64.sh' || echo '.sh')
-  local url=https://repo.anaconda.com/miniconda/Miniconda3-4.5.12-Linux-x86$ext
-  local fname=Miniconda3-4.5.12-Linux-x86$ext
+  if [ "$(uname)" = 'Linux' ]; then
+    local fname=Miniconda3-4.5.12-Linux-x86$ext
+  else
+    local fname=Miniconda3-4.5.12-MacOSX-x86$ext
+  fi
+  local url=https://repo.anaconda.com/miniconda/$fname
   wget $url -O $fname
   bash $fname
   source deactivate
