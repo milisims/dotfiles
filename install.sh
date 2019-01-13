@@ -250,9 +250,12 @@ function install_vim_settings() {
   ln -sf $vimdir $HOME/.vim
   local minpac_dir="$HOME/.vim/pack/minpac/opt/minpac"
   local minpac_url="https://github.com/k-takata/minpac.git"
-  rmdir --ignore-fail-on-non-empty $minpac_dir
-  [ -d $minpac_dir ] || git clone $minpac_url $minpac_dir
-  [ command -v nvim > /dev/null 2>&1 ] && nvim +'PackUpdate' +UpdateRemotePlugins +qa
+  if [ ! -d $minpac_dir/.git ]; then
+    mkdir -p $minpac_dir
+    rm -rI $minpac_dir
+    git clone $minpac_url $minpac_dir
+  fi
+  [ command -v nvim > /dev/null 2>&1 ] && nvim +'PackUpdate' +UpdateRemotePlugins
   install_coc
   echo "Done"
 }
