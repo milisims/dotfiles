@@ -82,6 +82,19 @@ function install_neovim() {
 
 }
 
+function install_python_via_conda() {
+  local ext=$(lscpu | grep 'CPU op-mode' | grep -q 64-bit && echo '_64.sh' || echo '.sh')
+  local url=https://repo.anaconda.com/miniconda/Miniconda3-4.5.12-Linux-x86$ext
+  local fname=Miniconda3-4.5.12-Linux-x86$ext
+  wget $url -O $fname
+  bash $fname
+  source deactivate
+  conda install python pip
+  pip install --upgrade pip
+  pip install --upgrade pynvim
+  rm $fname
+}
+
 function install_fzf() {
   local fzf_git_dir="$srcdir/fzf"
   if [ $op_uninstall -eq 1 ]; then
@@ -306,6 +319,7 @@ function print_help() {
   echo '  -c   ctags'
   echo '  -f   fzf'
   echo '  -n   neovim'
+  echo '  -p   python'
   echo '  -t   tmux'
   echo '  -z   zsh syntax highlighting'
   echo '  -e   sh and vim settings (default)'
@@ -319,9 +333,10 @@ function parse_args() {
   op_tmux=0
   op_ctags=0
   op_neovim=0
+  op_python=0
   op_settings=1
   # local OPTIND
-  while getopts hsuztcnfea name; do
+  while getopts hsuztcnpfea name; do
     case $name in
       h) print_help;     exit 0;;
       s) print_status;   exit 0;;
@@ -331,22 +346,25 @@ function parse_args() {
       t) op_tmux=1;         op_settings=0;;
       c) op_ctags=1;        op_settings=0;;
       n) op_neovim=1;       op_settings=0;;
+      n) op_python=1;       op_settings=0;;
       e) op_settings=1;;
-      a) op_zsh_syn_hl=1 op_fzf=1 op_tmux=1 op_ctags=1 op_neovim=1 op_settings=1;;
+      a) op_zsh_syn_hl=1 op_fzf=1 op_tmux=1 op_ctags=1 op_neovim=1 op_python=1 op_settings=1;;
     esac
   done
 }
 
 function main() {
   parse_args $@
-  echo $op_uninstall $op_zsh_syn_hl $op_fzf $op_tmux $op_ctags $op_neovim $op_settings
 
   [ $op_neovim -eq 1 ]     && install_neovim                  | tee $logfile
   [ $op_settings -eq 1 ]   && install_sh_settings             | tee $logfile
-  [ $op_settings -eq 1 ]   && install_vim_settings            | tee $logfile
+  if [ $op_settings -eq 1 ] || [ $op_neovim -eq 1 ]; then
+    install_vim_settings                                      | tee $logfile
+  fi
   [ $op_fzf -eq 1 ]        && install_fzf                     | tee $logfile
   [ $op_tmux -eq 1 ]       && install_tmux                    | tee $logfile
   [ $op_ctags -eq 1 ]      && install_ctags                   | tee $logfile
+  [ $op_python -eq 1 ]     && install_python_via_conda        | tee $logfile
   [ $op_zsh_syn_hl -eq 1 ] && install_zsh_syntax_highlighting | tee $logfile
 }
 
