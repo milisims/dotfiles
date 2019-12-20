@@ -115,6 +115,8 @@ precmd () {print -Pn "\e]0;%n@%m: %~\a"}
 #------------------------------------------////
 # Completion options
 #------------------------------------------////
+fpath=($CONF_HOME/zsh/site-functions $fpath)
+
 autoload -Uz compinit && compinit
 
 zmodload -i zsh/complist    # colored menu for completion
