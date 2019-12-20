@@ -1,3 +1,4 @@
+#!/bin/bash
 [ -z "$LSOPTS" ] && LSOPTS='-h --color=auto'
 alias ls=" ls $LSOPTS"
 alias l='ls -l'
@@ -36,10 +37,27 @@ alias du='du -sh'
 alias crontab='VIM_CRONTAB=true crontab'
 alias mvim='gvim'
 alias nev='nvim'
+alias nevs='nvim -S Session.vim'
+alias vims='vim -S Session.vim'
 
 function sudoedit() {
   SUDO_COMMAND="sudoedit $@" command sudoedit "$@"
 }
+
+alias please='sudo'
+
+function numpy() {
+pyscript="
+from numpy import *
+out = "$@"
+try:
+  print(*out, sep='\n')
+except:
+  print(out)
+"
+python -c $pyscript
+}
+alias np='noglob numpy'
 
 # When the first argument is modified (TARGET), run the rest of the args as cmd
 # onmodify dissertation.md pandoc dissertation.md dissertation.pdf
@@ -63,6 +81,11 @@ wccl() {
 alias tls='tmux ls'
 alias tns='tmux new -s'
 alias tat='tmux attach -t'
+function tnp() {
+if cd ~/Projects/$1; then
+  tmux new-session -A -s $1
+fi
+}
 
 alias gst='git status'
 alias cst='clear; git status'
