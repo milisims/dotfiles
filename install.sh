@@ -5,7 +5,6 @@ IFS=$'\n\t'
 install_dir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $install_dir
 CONF_HOME=${XDG_CONFIG_HOME:-${HOME}/.config}
-logfile=$install_dir/install.log
 
 bindir=$HOME/local/bin
 srcdir=$HOME/local/src
@@ -26,34 +25,6 @@ function install_zsh_syntax_highlighting() {
   echo
 }
 
-function install_coc() {
-  if [ $op_uninstall -eq 1 ]; then
-    rm -rf $HOME/.yarn
-    rm -rf $HOME/local/{lib/node{,/.npm,_modules},bin,share/man}/npm*
-    echo Uninstalled yarn and node
-    return 0
-  fi
-
-  # Yarn is stupid and modifies my zshrc/bashrc.
-  if [ ! -d $HOME/.yarn ]; then
-    echo 'Installing yarn... '
-    cp $install_dir/dot/zshrc $install_dir/dot/zshrc.bak
-    cp $install_dir/dot/bashrc $install_dir/dot/bashrc.bak
-    curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
-    mv -f $install_dir/dot/zshrc.bak $install_dir/dot/zshrc
-    mv -f $install_dir/dot/bashrc.bak $install_dir/dot/bashrc
-    echo "########"
-    echo
-  fi
-  if [ ! command -v npm > /dev/null 2>&1 ]; then
-    echo 'Installing node... '
-    curl -Ls install-node.now.sh | sh -s -- --prefix=$HOME/local
-    echo "########"
-    echo
-  fi
-  nvim --noplugin +'packadd coc.nvim' +'call coc#util#install()' +qa
-}
-
 function install_neovim() {
   # Cleanup previous install
   [ -f $bindir/nvim ] && rm $bindir/nvim
@@ -64,8 +35,9 @@ function install_neovim() {
 
   echo 'Installing neovim... '
   # get exe, test if appimage can open, otherwise extract.
-  nvim_file='nvim.appimage'
-  nvim_url='https://github.com/neovim/neovim/releases/download/v0.3.3/nvim.appimage'
+  [ $op_unstable -eq 1 ] && tag='nightly' || tag='stable'
+  nvim_file="nvim.appimage"
+  nvim_url="https://github.com/neovim/neovim/releases/download/${tag}/nvim.appimage"
   wget -O $nvim_file $nvim_url
   chmod 755 $nvim_file
   # if it doesn't execute, extract the file
@@ -76,8 +48,9 @@ function install_neovim() {
     mv squashfs-root $srcdir/squashfs-root-nvim
     ln -s $srcdir/squashfs-root-nvim/usr/bin/nvim $bindir/nvim
   else  # if it does, just plop it in the bin dir
-    mv $nvim_file $bindir/$nvim_file
-    ln -s $bindir/$nvim_file $bindir/nvim
+    version=$(./$nvim_file --version | head -n1 | cut -f2 -d' ')
+    mv $nvim_file $bindir/$nvim_file-$version
+    ln -sf $bindir/$nvim_file-$version $bindir/nvim
   fi
 
 }
@@ -226,7 +199,6 @@ function install_vim_settings() {
     for d in backup swap undo view; do
       rm -rf $HOME/.local/share/vim/tmp/$d
     done
-    install_coc
     # rm -r $install_dir/vim
     echo Uninstalled vim settings
     return 0
@@ -256,7 +228,6 @@ function install_vim_settings() {
     git clone $minpac_url $minpac_dir
   fi
   [ command -v nvim > /dev/null 2>&1 ] && nvim +'PackUpdate' +UpdateRemotePlugins
-  install_coc
   echo "Done"
 }
 
@@ -315,13 +286,14 @@ function print_help() {
   echo
   echo 'Options:'
   echo '  -s   print installed software status'
-  echo '  -u   uninstall flag -- before any other options'
+  echo '  -x   uninstall flag -- before any other options'
   echo
   echo '(Un)install:'
-  echo '  -a   all'
+  echo '  -a   all (with neovim stable)'
   echo '  -c   ctags'
   echo '  -f   fzf'
-  echo '  -n   neovim'
+  echo '  -n   neovim stable'
+  echo '  -u   neovim nightly (unstable)'
   echo '  -p   python'
   echo '  -t   tmux'
   echo '  -z   zsh syntax highlighting'
@@ -336,6 +308,7 @@ function parse_args() {
   op_tmux=0
   op_ctags=0
   op_neovim=0
+  op_unstable=0
   op_python=0
   op_settings=1
   # local OPTIND
@@ -343,15 +316,16 @@ function parse_args() {
     case $name in
       h) print_help;     exit 0;;
       s) print_status;   exit 0;;
-      u) op_uninstall=1;    op_settings=0;;
+      x) op_uninstall=1;    op_settings=0;;
       z) op_zsh_syn_hl=1;   op_settings=0;;
       f) op_fzf=1;          op_settings=0;;
       t) op_tmux=1;         op_settings=0;;
       c) op_ctags=1;        op_settings=0;;
+      p) op_python=1;       op_settings=0;;
       n) op_neovim=1;       op_settings=0;;
-      n) op_python=1;       op_settings=0;;
+      u) op_neovim=1; op_unstable=1;  op_settings=0;;
       e) op_settings=1;;
-      a) op_zsh_syn_hl=1 op_fzf=1 op_tmux=1 op_ctags=1 op_neovim=1 op_python=1 op_settings=1;;
+      a) op_zsh_syn_hl=1 op_fzf=1 op_tmux=1 op_ctags=1 op_neovim=1 op_python=1;;
     esac
   done
 }
@@ -359,17 +333,16 @@ function parse_args() {
 function main() {
   parse_args $@
 
-  [ $op_neovim -eq 1 ]     && install_neovim                  | tee $logfile
-  [ $op_settings -eq 1 ]   && install_sh_settings             | tee $logfile
+  [ $op_neovim -eq 1 ]     && install_neovim
+  [ $op_settings -eq 1 ]   && install_sh_settings
   if [ $op_settings -eq 1 ] || [ $op_neovim -eq 1 ]; then
-    install_vim_settings                                      | tee $logfile
+    install_vim_settings
   fi
-  [ $op_fzf -eq 1 ]        && install_fzf                     | tee $logfile
-  [ $op_tmux -eq 1 ]       && install_tmux                    | tee $logfile
-  [ $op_ctags -eq 1 ]      && install_ctags                   | tee $logfile
-  [ $op_python -eq 1 ]     && install_python_via_conda        | tee $logfile
-  [ $op_zsh_syn_hl -eq 1 ] && install_zsh_syntax_highlighting | tee $logfile
+  [ $op_fzf -eq 1 ]        && install_fzf
+  [ $op_tmux -eq 1 ]       && install_tmux
+  [ $op_ctags -eq 1 ]      && install_ctags
+  [ $op_python -eq 1 ]     && install_python_via_conda
+  [ $op_zsh_syn_hl -eq 1 ] && install_zsh_syntax_highlighting
 }
 
 main $@
-rm -f $logfile
