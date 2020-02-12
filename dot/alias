@@ -107,8 +107,4 @@ alias gco='git checkout'
 alias gcob='git checkout -b'
 alias gcot='git checkout -t'
 alias gcotb='git checkout --track -b'
-alias glo='git log -n 5'
-alias glog='git log'
-alias glogp='git log --pretty=format:"%h %s" --graph'
-
-# vim: ft=sh
+alias glo='git log --all --oneline --decorate --graph -n 20'
