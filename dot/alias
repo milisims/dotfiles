@@ -26,7 +26,7 @@ fi
 
 alias md='mkdir -p'
 alias rd='rmdir'
-mcd () { mkdir -p $1; cd $1; }
+md () { mkdir -p $1; cd $1; }
 
 alias which='type -a'
 alias .='popd'
@@ -46,37 +46,13 @@ function sudoedit() {
 
 alias please='sudo'
 
-function numpy() {
-pyscript="
-from numpy import *
-out = "$@"
-try:
-  print(*out, sep='\n')
-except:
-  print(out)
-"
-python -c $pyscript
-}
 alias np='noglob numpy'
+
+alias wget='noglob wget'
 
 # When the first argument is modified (TARGET), run the rest of the args as cmd
 # onmodify dissertation.md pandoc dissertation.md dissertation.pdf
-onmodify() {
-  TARGET=${1:-.}; shift
-  CMD="$@"
-
-  echo "$TARGET" "$CMD"
-  while inotifywait --exclude '.git' -qq -r -e close_write,moved_to,move_self $TARGET; do
-    sleep 0.2
-    bash -c "$CMD"
-    echo
-  done
-}
-
 # TODO: check for options (-l, -c, etc)
-wccl() {
-  wc -l $@ | cut -f1 -d' '
-}
 
 alias tls='tmux ls'
 alias tns='tmux new -s'
