@@ -1,6 +1,6 @@
 [user]
-    name = Matt Simmons
-    email = matt.simmons@compbiol.org
+    name = Emilia Simmons
+    email = emilia.simmons@gmail.com
 [core]
     editor = vim
     whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
