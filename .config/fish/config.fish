@@ -6,10 +6,6 @@ set -x LESS_TERMCAP_so (printf "\033[01;44;33m")   # begin standout-mode - info 
 set -x LESS_TERMCAP_ue (printf "\033[0m")          # end underline
 set -x LESS_TERMCAP_us (printf "\033[01;32m")      # begin underline
 
-function add_path
-  contains $argv $fish_user_paths; or set -Ua fish_user_paths $argv
-end
-
 add_path ~/local/bin
 add_path ~/bin
 
