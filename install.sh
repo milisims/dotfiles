@@ -30,3 +30,4 @@ else
   echo "Checked out config."
 fi
 
+git clone git@github.com:milisims/vimfiles.git ~/.vim
