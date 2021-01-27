@@ -10,6 +10,7 @@ abbr --add fg 'fg'
 abbr --add md 'mkdir -p'
 abbr --add rd 'rmdir'
 abbr --add which 'type -a'
+abbr --add whomst 'type -a'
 abbr --add d cdh
 abbr --add path 'string replace --all : \n "$PATH"'
 abbr --add du 'du -sh'
