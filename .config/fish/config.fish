@@ -8,5 +8,6 @@ set -x LESS_TERMCAP_us (printf "\033[01;32m")      # begin underline
 
 add_path ~/local/bin
 add_path ~/bin
+add_path ./node_modules/.bin
 
 fish_vi_key_bindings
