@@ -1,2 +1,4 @@
-vim
 __pycache__
+Session.vim
+sessions
+*.npz
