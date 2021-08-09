@@ -14,6 +14,7 @@ echo '/*
 
 config config core.sparseCheckout true
 config config status.showUntrackedFiles no
+config read-tree -mu HEAD # This might need to be moved
 
 set +o errexit
 config checkout
