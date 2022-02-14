@@ -6,8 +6,11 @@ set -x LESS_TERMCAP_so (printf "\033[01;44;33m")   # begin standout-mode - info 
 set -x LESS_TERMCAP_ue (printf "\033[0m")          # end underline
 set -x LESS_TERMCAP_us (printf "\033[01;32m")      # begin underline
 
-add_path ~/local/bin
-add_path ~/bin
-add_path ./node_modules/.bin
+set EDITOR nvim
+
+fish_add_path ~/local/bin
+fish_add_path ~/bin
+fish_add_path ./node_modules/.bin
+fish_add_path ~/.cargo/bin
 
 fish_vi_key_bindings
