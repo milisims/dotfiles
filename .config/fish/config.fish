@@ -14,3 +14,12 @@ fish_add_path ./node_modules/.bin
 fish_add_path ~/.cargo/bin
 
 fish_vi_key_bindings
+
+# insert space with a S-space or C-space (esc code sent via kitty, see conf)
+bind -M insert \e\[32\;2u 'commandline -i " "'
+bind -M insert \e\[32\;5u 'commandline -i " "'
+
+# S-Cr, add line under current line
+bind -M insert \e\[13\;2u insert-line-under
+# C-Cr, add line above current line
+bind -M insert \e\[13\;5u insert-line-over

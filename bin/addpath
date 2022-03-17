@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-# Add a path only if it exists and it's not already in PATH
-newpath=$1
-if [[ -d $newpath ]] && [[ ":$PATH:" != *":$newpath:"* ]]; then
-  echo $newpath:$PATH
-else
-  echo $PATH
-fi
