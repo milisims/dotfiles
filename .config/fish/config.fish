@@ -8,6 +8,7 @@ set -x LESS_TERMCAP_us (printf "\033[01;32m")      # begin underline
 
 set EDITOR nvim
 
+fish_add_path ~/.local/bin
 fish_add_path ~/local/bin
 fish_add_path ~/bin
 fish_add_path ./node_modules/.bin

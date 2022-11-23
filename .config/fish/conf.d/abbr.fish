@@ -3,6 +3,7 @@ abbr --add la 'ls -Alh'
 abbr --add lx 'ls -lXh'
 abbr --add lt 'ls -lth'
 abbr --add lm 'ls -lh | more'
+abbr --add lb "ls -lh -I'*-bak'"
 abbr --add cl 'clear; ls -lh'
 abbr --add cls 'clear; ls'
 abbr --add grep 'grep --color=auto'
@@ -57,6 +58,8 @@ abbr --add ccim 'config commit -m'
 abbr --add cbr 'config branch'
 abbr --add cco 'config checkout'
 abbr --add clo 'config log --all --oneline --decorate --graph -n 20'
+
+abbr --add icat 'kitty +kitten icat'
 
 abbr --add pd prevd
 abbr --add nd nextd
