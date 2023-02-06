@@ -33,4 +33,5 @@ fi
 
 git clone git@github.com:milisims/vimfiles.git ~/.vim
 git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac
-echo 'Execute "nvim +PackUpdate" to update vim packages if nvim is installed.'
+git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+echo 'Execute "nvim +PackUpdate +PackerInstall" to set up packages if nvim is installed.'
