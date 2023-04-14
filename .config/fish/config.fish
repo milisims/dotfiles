@@ -24,9 +24,3 @@ bind -M insert \e\[32\;5u 'commandline -i " "'
 bind -M insert \e\[13\;2u insert-line-under
 # C-Cr, add line above current line
 bind -M insert \e\[13\;5u insert-line-over
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-eval /data/elsimmons/miniconda3/bin/conda "shell.fish" "hook" $argv | source
-# <<< conda initialize <<<
-
