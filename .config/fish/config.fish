@@ -26,7 +26,7 @@ bind -M insert \e\[13\;2u insert-line-under
 bind -M insert \e\[13\;5u insert-line-over
 
 if [ -z "$SSH_CLIENT" ]
-  set -g fish_color_current_host $fish_color_host
+  set -g fish_color_current_host fish_color_host
 else
-  set -g fish_color_current_host $fish_color_host_remote
+  set -g fish_color_current_host fish_color_host_remote
 end
