@@ -1,8 +1,8 @@
 abbr --add l 'ls -lh'
 abbr --add la 'ls -Alh'
 abbr --add lx 'ls -lXh'
-abbr --add lt 'ls -lth | head'
-abbr --add lm 'ls -lh | more'
+abbr --add --set-cursor lt 'ls -lth %| head'
+abbr --add --set-cursor lm 'ls -lh %| more'
 abbr --add lb "ls -lh -I'*-bak'"
 abbr --add cl 'clear; ls -lh'
 abbr --add cls 'clear; ls'
