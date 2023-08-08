@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -eo pipefail
+IFS=$'\n\t'
+
+function update_nvim() {
+  cd $HOME/src
+
+  local build=nightly
+  if [[ "$1" = "-s" || "$1" = "--stable" ]]; then
+    build=stable
+  fi
+
+  if [[ -f nvim.appimage ]]; then
+    local version=$(./nvim.appimage --version | head -n1 | cut -f2 -d' ')
+    mv ~/src/nvim.appimage ~/src/nvim-${version}.appimage
+  fi
+
+  local url=https://github.com/neovim/neovim/releases/download/$build/nvim.appimage
+  wget $url -O nvim.appimage > /dev/null 2>&1
+  rm -rf nvim-runtime
+  chmod 755 nvim.appimage
+  ./nvim.appimage --appimage-extract > /dev/null 2>&1
+  mv squashfs-root nvim-runtime
+
+  echo "Installed $(nvim-runtime/AppRun --version | head -n1 | cut -f2 -d' ')"
+}
+
+update_nvim $1
