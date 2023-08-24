@@ -27,6 +27,7 @@ abbr --add tls 'tmux ls'
 abbr --add tns 'tmux new -s'
 abbr --add tat 'tmux attach -t'
 abbr --add org 'nvim +OrgAgenda'
+abbr --add ssh 'kitty +kitten ssh'
 
 abbr --add gst 'git status'
 abbr --add gpl 'git pull'
