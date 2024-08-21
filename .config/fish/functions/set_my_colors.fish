@@ -1,33 +1,36 @@
 function set_my_colors
-  set -U fish_color_normal cdd6f4
-  set -U fish_color_command 89b4fa
-  set -U fish_color_param f2cdcd
-  set -U fish_color_keyword f38ba8
-  set -U fish_color_quote a6e3a1
-  set -U fish_color_redirection f5c2e7
-  set -U fish_color_end fab387
-  set -U fish_color_comment 7f849c
-  set -U fish_color_error f38ba8
-  set -U fish_color_gray 6c7086
-  set -U fish_color_selection --background=313244
-  set -U fish_color_search_match --background=313244
-  set -U fish_color_operator f5c2e7
-  set -U fish_color_escape eba0ac
-  set -U fish_color_autosuggestion 6c7086
-  set -U fish_color_cancel f38ba8
-  set -U fish_color_cwd f5c2e7
-  set -U fish_color_user 94e2d5
-  set -U fish_color_host cba6f7
-  set -U fish_color_host_remote eba0ac
-  set -U fish_color_status f38ba8
-  set -U fish_pager_color_progress 6c7086
-  set -U fish_pager_color_prefix f5c2e7
-  set -U fish_pager_color_completion cdd6f4
-  set -U fish_pager_color_description 6c7086
+  # -- my editor displays hex colors prefixed with, so: echo | tr
+  set -U fish_color_normal                    (echo '#cdd6f4' | tr -d '#')
+  set -U fish_color_command                   (echo '#89b4fa' | tr -d '#')
+  set -U fish_color_param                     (echo '#f2cdcd' | tr -d '#')
+  set -U fish_color_keyword                   (echo '#f38ba8' | tr -d '#')
+  set -U fish_color_quote                     (echo '#a6e3a1' | tr -d '#')
+  set -U fish_color_redirection               (echo '#f5c2e7' | tr -d '#')
+  set -U fish_color_end                       (echo '#fab387' | tr -d '#')
+  set -U fish_color_comment                   (echo '#7f849c' | tr -d '#')
+  set -U fish_color_error                     (echo '#f38ba8' | tr -d '#')
+  set -U fish_color_gray                      (echo '#6c7086' | tr -d '#')
+  set -U fish_color_selection    --background=(echo '#313244' | tr -d '#')
+  set -U fish_color_search_match --background=(echo '#313244' | tr -d '#')
+  set -U fish_color_operator                  (echo '#f5c2e7' | tr -d '#')
+  set -U fish_color_escape                    (echo '#eba0ac' | tr -d '#')
+  set -U fish_color_autosuggestion            (echo '#6c7086' | tr -d '#')
+  set -U fish_color_cancel                    (echo '#f38ba8' | tr -d '#')
+  set -U fish_color_cwd                       (echo '#f5c2e7' | tr -d '#')
+  set -U fish_color_user                      (echo '#94e2d5' | tr -d '#')
+  set -U fish_color_host                      (echo '#cba6f7' | tr -d '#')
+  set -U fish_color_host_remote               (echo '#eba0ac' | tr -d '#')
+  set -U fish_color_status                    (echo '#f38ba8' | tr -d '#')
+  set -U fish_pager_color_progress            (echo '#6c7086' | tr -d '#')
+  set -U fish_pager_color_prefix              (echo '#f5c2e7' | tr -d '#')
+  set -U fish_pager_color_completion          (echo '#cdd6f4' | tr -d '#')
+  set -U fish_pager_color_description         (echo '#6c7086' | tr -d '#')
 
-  set -U fish_color_vimode_normal cba6f7
-  set -U fish_color_vimode_insert 89dceb
-  set -U fish_color_vimode_replace_one a6e3a1
-  set -U fish_color_vimode_replace a6d189
-  set -U fish_color_vimode_visual a6e3a1
+  set -U fish_color_conda_env                 (echo '#a6e3a1' | tr -d '#')
+
+  set -U fish_color_vimode_normal             (echo '#cba6f7' | tr -d '#')
+  set -U fish_color_vimode_insert             (echo '#89dceb' | tr -d '#')
+  set -U fish_color_vimode_replace_one        (echo '#a6e3a1' | tr -d '#')
+  set -U fish_color_vimode_replace            (echo '#a6d189' | tr -d '#')
+  set -U fish_color_vimode_visual             (echo '#a6e3a1' | tr -d '#')
 end
