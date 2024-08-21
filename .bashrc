@@ -118,7 +118,7 @@ export LESS_TERMCAP_us=$'\E[01;32m'      # begin underline
 
 # If we have a machine specific thing to source, do et.
 [ -f ~/.bashrc.local ] && source ~/.bashrc.local
-[ -d $HOME/miniconda3/bin ] && export PATH=$HOME/miniconda3/bin:$PATH
+# [ -d $HOME/miniconda3/bin ] && export PATH=$HOME/miniconda3/bin:$PATH
 [ -d "$HOME/local/src/fzf" ] && source "$HOME/local/src/fzf/shell/key-bindings.bash"
 
 # >>> conda initialize >>>
