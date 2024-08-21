@@ -1,26 +1,23 @@
 function fish_mode_prompt
-  echo '['
+  if not set -q fish_bind_mode
+    or set -q fish_mode_hide
+    set -e fish_mode_hide
+    return
+  end
   switch $fish_bind_mode
     case default
-      set_color --bold $fish_color_vimode_normal
-      echo 'n'
+      set -f color $fish_color_vimode_normal 'n'
     case insert
-      set_color --bold $fish_color_vimode_insert
-      echo 'i'
+      set -f color $fish_color_vimode_insert 'i'
     case replace_one
-      set_color --bold $fish_color_vimode_replace_one
-      echo 'r'
+      set -f color $fish_color_vimode_replace_one 'r'
     case replace
-      set_color --bold $fish_color_vimode_replace
-      echo 'R'
+      set -f color $fish_color_vimode_replace 'R'
     case visual
-      set_color --bold $fish_color_vimode_visual
-      echo 'v'
+      set -f color $fish_color_vimode_visual 'v'
     case '*'
-      set_color --bold red
-      echo $fish_bind_mode
+      set -f color 'red' $fish_bind_mode
   end
-  set_color normal
-  echo '] '
+  printf '[%s%s%s] ' (set_color --bold $color[1]) $color[2] (set_color normal)
 end
 

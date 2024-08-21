@@ -1,6 +1,5 @@
 function fish_prompt --description 'Screen Savvy prompt'
-  on_prompt
-  printf '%s%s%s@%s%s %s%s%s%s%s%s> ' \
+  printf "%s%s%s@%s%s %s%s%s%s%s%s> " \
     (set_color $fish_color_user) $USER (set_color white) \
     (set_color $$fish_color_current_host) (prompt_hostname) \
     (set_color $fish_color_cwd) (prompt_pwd) \

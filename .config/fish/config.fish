@@ -30,3 +30,12 @@ if [ -z "$SSH_CLIENT" ]
 else
   set -g fish_color_current_host fish_color_host_remote
 end
+
+# content in >>> <<< managed by conda, wrapped to make it check for changes
+# asynchronously. Sends the call to conf.d/conda.fish functions for execution
+# and verification.
+set -l conda_setup_file (mktemp)
+emit compute_conda_setup $conda_setup_file (echo '
+# >>> conda initialize >>>
+# <<< conda initialize <<<
+' | sed -e '/# .*/d' -e '/^$/d' -e 's/$/;/' -e "s@ | source@ | head -n-2 > $conda_setup_file@")
