@@ -40,7 +40,7 @@ function update-conda
   if not test -f $_CONDA_CFG_UPDATE
     return
   end
-  diff -p $_CONDA_CFG {$_CONDA_CFG}.new
+  diff -p $_CONDA_CFG $_CONDA_CFG_UPDATE
   printf "\n%sOriginal%s --- %sNew%s\n" (set_color red) (set_color normal) (set_color green) (set_color normal)
 
   while true
@@ -51,7 +51,7 @@ function update-conda
     end
     switch $confirm
       case '' y Y
-        mv {$_CONDA_CFG}.new $_CONDA_CFG
+        mv $_CONDA_CFG_UPDATE $_CONDA_CFG
         break
       case n N
         break
