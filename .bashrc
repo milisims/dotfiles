@@ -122,5 +122,4 @@ export LESS_TERMCAP_us=$'\E[01;32m'      # begin underline
 [ -d "$HOME/local/src/fzf" ] && source "$HOME/local/src/fzf/shell/key-bindings.bash"
 
 # >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
 # <<< conda initialize <<<

@@ -71,7 +71,7 @@ function __auto_conda_base --on-event fish_preexec -d "Activate conda base env i
     __fix_conda_prompt
   end
 
-  if test $CONDA_SHLVL -eq 0
+  if test "$CONDA_SHLVL" -eq 0
     and not conda activate base
     set -g _FAILED_CONDA_ACTIVATION
   end

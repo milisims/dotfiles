@@ -6,7 +6,6 @@ source $HOME/.profile
 source $CONF_HOME/zsh/zshrc
 
 # >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
 # <<< conda initialize <<<
 
 if pgrep tmux &> /dev/null; then
