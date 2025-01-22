@@ -9,8 +9,7 @@ PREFIX=${PREFIX:-${XDG_DATA_HOME:-"$HOME/.local/share"}/miniconda3}
 
 function install_dotfiles(){
 
-  # git clone --bare $GIT/dotfiles.git $HOME/.cfg
-  git clone --bare $HOME/.config/dotfiles $HOME/.cfg
+  git clone --bare $GIT/dotfiles.git $HOME/.cfg
 
   function cfg { git --git-dir=$HOME/.cfg --work-tree=$HOME "$@"; }
 
@@ -57,6 +56,6 @@ function install_vimfiles(){
 }
 
 [ -d $HOME/.cfg ]        || install_dotfiles
-# [ -d $PREFIX ]           || install_conda
-# [ -d $SRC/nvim-runtime ] || bash $BIN/update-nvim
-# [ -d $CFG/nvim ]         || install_vimfiles
+[ -d $PREFIX ]           || install_conda
+[ -d $SRC/nvim-runtime ] || bash $BIN/update-nvim
+[ -d $CFG/nvim ]         || install_vimfiles
