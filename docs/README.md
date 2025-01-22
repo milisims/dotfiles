@@ -1,3 +1,3 @@
-Simple one liner for a new setup:
+To install:
 
-`curl https://raw.githubusercontent.com/milisims/dotfiles/refs/heads/master/docs/install.sh | bash`
+`wget https://raw.githubusercontent.com/milisims/dotfiles/refs/heads/master/docs/makefile && make`

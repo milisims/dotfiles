@@ -31,8 +31,9 @@ function __check_conda_setup --on-event _verify -d "Update conda setup file if n
   if not test -f $_CONDA_CFG
     mv $fname $_CONDA_CFG
   else if not diff -q $_CONDA_CFG $fname > /dev/null 2>&1
-    # When this is set, fish_right_prompt will display a notification
-    mv $fname $_CONDA_CFG_UPDATE
+    # # When this is set, fish_right_prompt will display a notification
+    # mv $fname $_CONDA_CFG_UPDATE
+    mv $fname $_CONDA_CFG
   end
 end
 
