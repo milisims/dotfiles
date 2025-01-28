@@ -5,7 +5,7 @@ IFS=$'\n\t'
 function update_nvim() {
   SRC=$HOME/.local/src
   mkdir -p $SRC
-  cd $HOME/src
+  cd $SRC
 
   local build=nightly
   if [[ "$1" = "-s" || "$1" = "--stable" ]]; then
