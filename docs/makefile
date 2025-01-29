@@ -23,7 +23,7 @@ CEND=\033[0m\n
 all: dot conda nvim
 
 dot: | $(LOCAL) $(SSH)
-config: | $(LOCAL)
+config: | $(LOCAL) $(SHARE)/fonts/SymbolsNerdFontMono-Regular.ttf
 conda: | $(CONDA) $(CFG)/fish/conf.d/_conda_setup.fish
 nvim: | $(BIN)/nvim $(SRC)/nvim-runtime $(CONDA)/envs/nvim-base vimfiles
 vimfiles: | $(CFG)/nvim $(SHARE)/nvim/lazy
@@ -55,6 +55,14 @@ $(LOCAL): | $(DOTCFG)
 	git cfg config filter.ignore_lines.clean "sed '/^# >>> conda initialize >>>$$/,/^# <<< conda initialize <<<$$/{//!d}; /gitignore$$/d'"
 	git cfg config filter.ignore_lines.smudge cat
 	@echo -e "$(CGRN)== Installed dotfiles$(CEND)"
+
+$(SHARE)/fonts/SymbolsNerdFontMono-Regular.ttf:
+	@echo -e "$(CYLW)> Installing font symbols$(CGREY)"
+	mkdir -p $(SHARE)/fonts
+	wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.tar.xz -O $(SHARE)/fonts/NerdFontsSymbolsOnly.tar.xz
+	tar -C $(SHARE)/fonts -xvJf $(SHARE)/fonts/NerdFontsSymbolsOnly.tar.xz --wildcards '*.ttf'
+	rm $(SHARE)/fonts/NerdFontsSymbolsOnly.tar.xz
+	@echo -e "$(CGRN)== Installed font symbols$(CEND)"
 
 $(CONDA): | $(CONDA_INSTALLER)
 	@echo -e "$(CYLW)> Installing conda$(CGREY)"
@@ -110,7 +118,7 @@ clean-install:
 	rm -f $(HOME)/makefile $(CONDA_INSTALLER)
 
 # not install
-clean-all: clean-cfg clean-conda clean-vimfiles
+clean-all: clean-cfg clean-conda clean-vimfiles clean-fonts
 
 clean-cfg:
 	@echo -e "$(CRED)"
@@ -128,4 +136,9 @@ clean-vimfiles:
 	@echo -e "$(CRED)"
 	rm -rf $(CFG)/nvim $(SHARE)/nvim
 
-.PHONY: clean-install clean-all clean-cfg clean-conda clean-vimfiles
+clean-fonts:
+	@echo -e "$(CRED)"
+	rm -f $(SHARE)/fonts/SymbolsNerdFont-Regular.ttf
+	rm -f $(SHARE)/fonts/SymbolsNerdFontMono-Regular.ttf
+
+.PHONY: clean-install clean-all clean-cfg clean-conda clean-vimfiles clean-fonts
