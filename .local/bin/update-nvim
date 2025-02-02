@@ -17,7 +17,7 @@ function update_nvim() {
     mv $SRC/nvim.appimage $SRC/nvim-${version}.appimage
   fi
 
-  local url=https://github.com/neovim/neovim/releases/download/$build/nvim.appimage
+  local url=https://github.com/neovim/neovim/releases/download/$build/nvim-linux-x86_64.appimage
   wget $url -O nvim.appimage > /dev/null 2>&1
   rm -rf nvim-runtime
   chmod 755 nvim.appimage
