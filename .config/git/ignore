@@ -5,3 +5,4 @@ sessions
 tags
 *.egg-info
 tmp*
+.aider*
