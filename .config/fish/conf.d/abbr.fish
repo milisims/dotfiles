@@ -6,7 +6,6 @@ abbr --add --set-cursor lm 'ls -lh %| more'
 abbr --add lb "ls -lh -I'*-bak'"
 abbr --add cl 'clear; ls -lh'
 abbr --add cls 'clear; ls'
-abbr --add grep 'grep --color=auto'
 abbr --add fg 'fg'
 abbr --add md 'mkdir -p'
 abbr --add rd 'rmdir'
@@ -28,7 +27,11 @@ abbr --add tls 'tmux ls'
 abbr --add tns 'tmux new -s'
 abbr --add tat 'tmux attach -t'
 abbr --add org 'nvim +OrgAgenda'
-abbr --add ssh 'kitty +kitten ssh'
+
+if string match -rq -- "kitty" "$TERM"
+  abbr --add ssh 'kitty +kitten ssh'
+  abbr --add icat 'kitty +kitten icat'
+end
 
 abbr --add gst 'git status'
 abbr --add gpl 'git pull'
@@ -62,8 +65,6 @@ abbr --add ccim 'config commit -m'
 abbr --add cbr 'config branch'
 abbr --add cco 'config checkout'
 abbr --add clo 'config log --all --oneline --decorate --graph -n 20'
-
-abbr --add icat 'kitty +kitten icat'
 
 abbr --add pd prevd
 abbr --add nd nextd
