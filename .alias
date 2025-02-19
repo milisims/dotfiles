@@ -26,7 +26,6 @@ fi
 
 alias md='mkdir -p'
 alias rd='rmdir'
-md () { mkdir -p $1; cd $1; }
 
 alias which='type -a'
 alias .='popd'

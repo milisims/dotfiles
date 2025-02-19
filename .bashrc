@@ -69,8 +69,8 @@ else
   export LSCOLORS=Gxfxcxdxbxegedabagacad # Maybe?
 fi
 
-[[ -f /usr/share/bash-completion/bash_completion ]] && \
-  source /usr/share/bash-completion/bash_completion
+# [[ -f /usr/share/bash-completion/bash_completion ]] && \
+#   source /usr/share/bash-completion/bash_completion
 
 #------------------------------------------////
 # bash options
