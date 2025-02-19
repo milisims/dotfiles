@@ -1,0 +1,59 @@
+#!/usr/bin/env python3
+
+import os
+import socket
+
+import requests
+
+def main():
+    HOME = os.environ["HOME"]
+    api_key = open(f"{HOME}/.config/secrets/nextdns.key").read().strip()
+    profile_id = open(f"{HOME}/.config/secrets/nextdns.id").read().strip()
+    cache_dir = f"{HOME}/.local/state/ip"
+    os.makedirs(cache_dir, exist_ok=True)
+    hostname = socket.gethostname()
+
+    try:
+        with open(f"{cache_dir}/{hostname}.txt", "r") as f:
+            ip = f.read().strip()
+    except FileNotFoundError:
+        ip = None
+
+    # curl ifconfig.me
+    _ip = requests.get("https://ifconfig.me").text.strip()
+
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    local_ip = s.getsockname()[0]
+    s.close()
+
+    if ip == _ip:
+        return
+
+    endpoint = f"https://api.nextdns.io/profiles/{profile_id}"
+
+    headers = {"X-Api-Key": api_key}
+    # headers = {"X-Api-Key": api_key, "Content-Type": "application/json"}
+    rewrites = requests.get(f"{endpoint}/rewrites", headers=headers).json()["data"]
+    rewrites = [r for r in rewrites if r["name"].startswith(hostname)]
+
+    for rw in rewrites:
+        requests.delete(f"{endpoint}/rewrites/{rw['id']}", headers=headers)
+
+    if local_ip == _ip:
+        data = {"name": f"{hostname}", "content": _ip}
+        requests.post(f"{endpoint}/rewrites", headers=headers, json=data)
+
+    else:
+        data = {"name": f"{hostname}.lan", "content": local_ip}
+        requests.post(f"{endpoint}/rewrites", headers=headers, json=data)
+
+        data = {"name": f"{hostname}.wan", "content": _ip}
+        requests.post(f"{endpoint}/rewrites", headers=headers, json=data)
+
+    with open(f"{cache_dir}/{hostname}.txt", "w") as f:
+        f.write(_ip)
+
+
+if __name__ == "__main__":
+    main()
