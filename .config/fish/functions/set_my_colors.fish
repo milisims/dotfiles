@@ -26,7 +26,7 @@ function set_my_colors
   set -U fish_pager_color_completion          (echo '#cdd6f4' | tr -d '#')
   set -U fish_pager_color_description         (echo '#6c7086' | tr -d '#')
 
-  set -U fish_color_conda_env                 (echo '#a6e3a1' | tr -d '#')
+  set -U fish_color_venv                      (echo '#a6e3a1' | tr -d '#')
 
   set -U fish_color_vimode_normal             (echo '#cba6f7' | tr -d '#')
   set -U fish_color_vimode_insert             (echo '#89dceb' | tr -d '#')
