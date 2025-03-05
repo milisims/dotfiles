@@ -16,6 +16,7 @@ fish_add_path -g ~/.cargo/bin
 
 fish_vi_key_bindings
 
+set -gx VIRTUAL_ENV_DISABLE_PROMPT 1
 uvenv activate base
 
 # insert space with a S-space or C-space (esc code sent via kitty, see conf)

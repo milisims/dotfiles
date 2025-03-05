@@ -24,8 +24,10 @@ function __auto_venv_selection --on-event fish_prompt -d "Auto-select project ve
     printf "== Activated .venv in %s%s%s\n" (set_color green) $project (set_color normal)
   else if __env_ready $project
     __env_select $project
+    printf "== Activated %s(%s)%s\n" (set_color green) $project (set_color normal)
   else if __env_ready (string lower $project)
     __env_select (string lower $project)
+    printf "== Activated %s(%s)%s\n" (set_color green) $project (set_color normal)
   else
     return
   end
@@ -36,7 +38,6 @@ end
 # helpers
 function __env_select -a project
   source ~/.local/share/venv/$project/bin/activate.fish
-  printf "== Activated %s(%s)%s\n" (set_color green) $project (set_color normal)
 end
 
 function __env_ready -a name
